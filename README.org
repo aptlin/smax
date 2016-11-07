@@ -28,12 +28,12 @@ This emacs configuration tree, based on the work of [[https://github.com/purcell
   Upon starting up Emacs for the first time, further third-party
   packages will be automatically downloaded and installed. If you
   encounter any errors at that stage, try restarting Emacs, and possibly
-  running `M-x package-refresh-contents` before doing so.
+  running ~M-x package-refresh-contents~ before doing so.
 
 * Updates
 
-  Enter the ~/.emacs.d directory and execute #git pull#.
+  Enter the ~/.emacs.d~ directory and execute ~git pull~.
 
   To update the third-party packages, proceed as follows with emacs open:
 
-  #M-x package-list-packages#, then #U# followed by #x#.
+  ~M-x package-list-packages~, then ~U~ followed by ~x~.
