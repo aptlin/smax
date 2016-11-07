@@ -11,9 +11,9 @@ This emacs configuration tree, based on the work of [[https://github.com/purcell
   - Haskell
   - Common Lisp (with Slime)
 
-+ Autocompletion with [company](https://company-mode.github.io/)
++ Autocompletion with [[company][https://company-mode.github.io/]]
 
-+ Syntax checking with [flycheck](http://www.flycheck.org)
++ Syntax checking with [[flycheck][http://www.flycheck.org]]
 
 + ido-mode completion in the minibuffer wherever possible
 
