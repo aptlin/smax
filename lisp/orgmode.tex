@@ -1,46 +1,56 @@
-#+TITLE: Org Mode - Organize Your Life In Plain Text!
-#+LANGUAGE:  en
-#+OPTIONS:   H:3 num:t   toc:3 \n:nil @:t ::t |:t ^:nil -:t f:t *:t <:nil
-#+OPTIONS:   TeX:t LaTeX:nil skip:nil d:nil todo:t pri:nil tags:not-in-toc
-#+OPTIONS:   author:t creator:t timestamp:t
-#+DESCRIPTION: A description of how I currently use org-mode
-#+KEYWORDS:  org-mode Emacs organization GTD getting-things-done git
-#+INFOJS_OPT: view:nil toc:t ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
-#+EXPORT_SELECT_TAGS: export
-#+EXPORT_EXCLUDE_TAGS: noexport
+% Created 2016-11-07 Mon 21:39
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
+\documentclass[11pt]{scrartcl}
+\usepackage[beaue, href]{scrartcl}
+\author{aleph}
+\date{\today}
+\title{Org Mode - Organize Your Life In Plain Text!}
+\hypersetup{
+ pdfauthor={aleph},
+ pdftitle={Org Mode - Organize Your Life In Plain Text!},
+ pdfkeywords={org-mode Emacs organization GTD getting-things-done git},
+ pdfsubject={A description of how I currently use org-mode},
+ pdfcreator={Emacs 24.4.1 (Org mode 8.3.6)}, 
+ pdflang={English}}
+\begin{document}
 
-* Initialization
-** Variables
-#+header: :tangle yes
-#+begin_src emacs-lisp
+\maketitle
+\setcounter{tocdepth}{3}
+\tableofcontents
+
+
+\section{Initialization}
+\label{sec:orgheadline5}
+\subsection{Variables}
+\label{sec:orgheadline1}
+\begin{verbatim}
 (setq org-startup-truncated nil)
-#+end_src
+\end{verbatim}
 
-#+RESULTS:
+\subsection{Auto-load main packages}
+\label{sec:orgheadline2}
 
-** Auto-load main packages
-
-#+header: :tangle yes
-#+begin_src emacs-lisp
+\begin{verbatim}
 ;(require-package 'org)
 (require-package 'org-fstree)
 (require-package 'org-plus-contrib)
 (add-to-list 'auto-mode-alist '("\\.\\(org\\|org_archive\\|txt\\)$" . org-mode))
-#+end_src
+\end{verbatim}
 
-#+RESULTS:
-
-** Load special packages
-*** Graphics
-#+header: :tangle yes
-#+begin_src emacs-lisp
+\subsection{Load special packages}
+\label{sec:orgheadline4}
+\subsubsection{Graphics}
+\label{sec:orgheadline3}
+\begin{verbatim}
 (require-package 'gnuplot-mode)
 (local-set-key "\M-\C-g" 'org-plot/gnuplot)
-#+end_src
+\end{verbatim}
 
 
-#+header: :tangle yes
-#+begin_src emacs-lisp
+\begin{verbatim}
 ;;; Adding ditaa
 (defun sanityinc/grab-ditaa (url jar-name)
   "Download URL and extract JAR-NAME as `org-ditaa-jar-path'."
@@ -65,28 +75,30 @@
       (setq org-ditaa-jar-path (expand-file-name jar-name (file-name-directory user-init-file)))
       (unless (file-exists-p org-ditaa-jar-path)
         (sanityinc/grab-ditaa url jar-name)))))
-#+end_src
+\end{verbatim}
 
-* Agenda
-** Agenda files
-#+header: :tangle yes
-#+begin_src emacs-lisp
+\section{Agenda}
+\label{sec:orgheadline15}
+\subsection{Agenda files}
+\label{sec:orgheadline6}
+\begin{verbatim}
 (setq org-agenda-files (quote ("~/ORG")))
-#+end_src
-** Agenda view
-*** Menu
-#+header: :tangle yes
-#+begin_src emacs-lisp
+\end{verbatim}
+\subsection{Agenda view}
+\label{sec:orgheadline13}
+\subsubsection{Menu}
+\label{sec:orgheadline7}
+\begin{verbatim}
 ;; Do not dim blocked tasks
 (setq org-agenda-dim-blocked-tasks nil)
 
 ;; Compact the block agenda view
 (setq org-agenda-compact-blocks t)
-#+end_src
-*** Command
+\end{verbatim}
+\subsubsection{Command}
+\label{sec:orgheadline8}
 
-#+header: :tangle yes
-#+begin_src emacs-lisp
+\begin{verbatim}
 ;; Custom agenda command definitions
 (setq org-agenda-custom-commands
       (quote (("N" "Notes" tags "NOTE"
@@ -160,35 +172,39 @@
                        (org-agenda-skip-function 'bh/skip-non-archivable-tasks)
                        (org-tags-match-list-sublevels nil))))
                nil))))
-#+end_src
-*** Display
+\end{verbatim}
+\subsubsection{Display}
+\label{sec:orgheadline9}
 
-    The following agenda customizations control
-- display of repeating tasks
-- display of empty dates on the agenda
-- task sort order
-- start the agenda weekly view with Sunday
-- display of the grid
-- habits at the bottom
+The following agenda customizations control
+\begin{itemize}
+\item display of repeating tasks
+\item display of empty dates on the agenda
+\item task sort order
+\item start the agenda weekly view with Sunday
+\item display of the grid
+\item habits at the bottom
+\end{itemize}
 
 I use a custom sorting function so that my daily agenda lists tasks in
 order of importance.  Tasks on the daily agenda are listed in the
 following order:
 
-1. tasks with times at the top so they are hard to miss
-2. entries for today (active timestamp headlines that are not scheduled or deadline tasks)
-3. deadlines due today
-4. late deadline tasks
-5. scheduled items for today
-6. pending deadlines (due soon)
-7. late scheduled items
-8. habits
+\begin{enumerate}
+\item tasks with times at the top so they are hard to miss
+\item entries for today (active timestamp headlines that are not scheduled or deadline tasks)
+\item deadlines due today
+\item late deadline tasks
+\item scheduled items for today
+\item pending deadlines (due soon)
+\item late scheduled items
+\item habits
+\end{enumerate}
 
 The lisp for this isn't particularly pretty but it works.
 
-Here are the =.emacs= settings:
-#+header: :tangle yes
-#+begin_src emacs-lisp
+Here are the \texttt{.emacs} settings:
+\begin{verbatim}
 ;; Show all future entries for repeating tasks
 (setq org-agenda-repeating-timestamp-show-all t)
 
@@ -305,16 +321,16 @@ Late deadlines first, then scheduled, then non-late deadlines"
 
 (defun bh/is-scheduled-late (date-str)
   (string-match "Sched\.\\(.*\\)x:" date-str))
-#+end_src
+\end{verbatim}
 
-*** Filtering
+\subsubsection{Filtering}
+\label{sec:orgheadline10}
 
-=/ RET= in the agenda is really useful.  This awesome feature was
+\texttt{/ RET} in the agenda is really useful.  This awesome feature was
 added to org-mode by John Wiegley.  It removes tasks automatically by
 filtering based on a user-provided function.
 
-#+header: :tangle yes
-#+begin_src emacs-lisp
+\begin{verbatim}
 (defun bh/org-auto-exclude-function (tag)
   "Automatic task exclusion in the agenda with / RET"
   (and (cond
@@ -324,24 +340,23 @@ filtering based on a user-provided function.
        (concat "-" tag)))
 
 (setq org-agenda-auto-exclude-function 'bh/org-auto-exclude-function)
+\end{verbatim}
+\subsubsection{Make tasks with timestamps searchable}
+\label{sec:orgheadline11}
 
-#+end_src
-*** Make tasks with timestamps searchable
-
-Tasks with dates (=SCHEDULED:=, =DEADLINE:=, or active dates) show up
-in the agenda when appropriate.  The block agenda view (=F12 a=) tries
+Tasks with dates (\texttt{SCHEDULED:}, \texttt{DEADLINE:}, or active dates) show up
+in the agenda when appropriate.  The block agenda view (\texttt{F12 a}) tries
 to keep tasks showing up only in one location (either in the calendar
 or other todo lists in later sections of the block agenda.)  I now
-rarely use the global todo list search in org-mode (=F12 t=, =F12 m=)
+rarely use the global todo list search in org-mode (\texttt{F12 t}, \texttt{F12 m})
 and when I do I'm trying to find a specific task quickly.  These lists
-now include _everything_ so I can just search for the item I want and
+now include \uline{everything} so I can just search for the item I want and
 move on.
 
 The block agenda prevents display of tasks with deadlines or scheduled
 dates in the future so you can safely ignore these until the
 appropriate time.
-#+header: :tangle yes
-#+begin_src emacs-lisp
+\begin{verbatim}
 ;; Keep tasks with dates on the global todo lists
 (setq org-agenda-todo-ignore-with-date nil)
 
@@ -362,28 +377,29 @@ appropriate time.
 
 ;; Remove completed items from search results
 (setq org-agenda-skip-timestamp-if-done t)
-#+end_src
+\end{verbatim}
 
-*** Highlight the current agenda line
+\subsubsection{Highlight the current agenda line}
+\label{sec:orgheadline12}
 
 The following code  keeps the current agenda line highlighted.
 This makes it obvious what task will be affected by commands issued in the agenda.
 No more acting on the wrong task by mistake!
 
-#+header: :tangle yes
-#+begin_src emacs-lisp
+\begin{verbatim}
 ;; Always hilight the current agenda line
 (add-hook 'org-agenda-mode-hook
           '(lambda () (hl-line-mode 1))
           'append)
-#+end_src
+\end{verbatim}
 
-** Sticky agendas
-#+header: :tangle yes
-#+begin_src emacs-lisp
+\subsection{Sticky agendas}
+\label{sec:orgheadline14}
+\begin{verbatim}
 (setq org-agenda-sticky t)
-#+end_src
-* Archiving
+\end{verbatim}
+\section{Archiving}
+\label{sec:orgheadline18}
 
 archivable tasks show up in the last section of my block agenda when a
 new month starts.  Any tasks that are done but have no timestamps this
@@ -392,15 +408,16 @@ archive.  Timestamps include closed dates, notes, clock data, etc - any
 active or inactive timestamp in the task.
 
 Archiving is trivial.  Just mark all of the entries in the block agenda
-using the =m= key and then archive them all to the appropriate place
-with =B $=.  This normally takes less than 5 minutes once a month.
+using the \texttt{m} key and then archive them all to the appropriate place
+with \texttt{B \$}.  This normally takes less than 5 minutes once a month.
 
-** Setup
+\subsection{Setup}
+\label{sec:orgheadline16}
 
 The following setting ensures that task states are untouched when they
 are archived.  This makes it possible to archive tasks that are not
-marked =DONE=.  By default tasks are archived under the heading =*
-Archived Tasks= in the archive file.
+marked \texttt{DONE}.  By default tasks are archived under the heading \texttt{*
+Archived Tasks} in the archive file.
 
 This archiving function does not keep your project trees intact.  It
 archives done state tasks after they are old enough to they are
@@ -411,14 +428,12 @@ times a year I actually need to look for some archived data but most
 of the time I just move it out of the way and keep it for historical
 purposes.
 
-#+header: :tangle yes
-#+begin_src emacs-lisp
+\begin{verbatim}
 (setq org-archive-mark-done nil)
 (setq org-archive-location "%s_archive::* Archived Tasks")
-#+end_src
+\end{verbatim}
 
-#+header: :tangle yes
-#+begin_src emacs-lisp
+\begin{verbatim}
 (defun bh/skip-non-archivable-tasks ()
   "Skip trees that are not available for archiving"
   (save-restriction
@@ -441,9 +456,10 @@ purposes.
                   nil))  ; available to archive
             (or subtree-end (point-max)))
         next-headline))))
-#+end_src
+\end{verbatim}
 
-** Keep archives available for search
+\subsection{Keep archives available for search}
+\label{sec:orgheadline17}
 
 I keep a single archive file for each of my org-mode project files.
 This allows me to search the current file and the archive when I need
@@ -452,23 +468,23 @@ to dig up old information from the archives.
 I don't need this often but it sure is handy on the occasions that
 I do need it.
 
-#+header: :tangle yes
-#+begin_src emacs-lisp
+\begin{verbatim}
 ;; Include agenda archive files when searching for things
 (setq org-agenda-text-search-extra-files (quote (agenda-archives)))
-#+end_src
-* Capture
+\end{verbatim}
+\section{Capture}
+\label{sec:orgheadline21}
 
-** Variables
-#+header: :tangle yes
-#+begin_src emacs-lisp
+\subsection{Variables}
+\label{sec:orgheadline19}
+\begin{verbatim}
 (setq org-directory "~/ORG/")
 (setq org-default-notes-file "~/ORG/refile.org")
-#+end_src
+\end{verbatim}
 
-** Templates
-#+header: :tangle yes
-#+begin_src emacs-lisp
+\subsection{Templates}
+\label{sec:orgheadline20}
+\begin{verbatim}
 (setq org-capture-templates
       (quote (("t" "todo" entry (file "~/ORG/refile.org")
                "* TODO %?\n%U\n%a\n" :clock-in t :clock-resume t)
@@ -486,29 +502,30 @@ I do need it.
                "* PHONE %? :PHONE:\n%U" :clock-in t :clock-resume t)
               ("h" "Habit" entry (file "~/ORG/refile.org")
                "* NEXT %?\n%U\n%a\nSCHEDULED: %(format-time-string \"%<<%Y-%m-%d %a .+1d/3d>>\")\n:PROPERTIES:\n:STYLE: habit\n:REPEAT_TO_STATE: NEXT\n:END:\n"))))
-#+end_src
-* Clocking
-** Setup
+\end{verbatim}
+\section{Clocking}
+\label{sec:orgheadline34}
+\subsection{Setup}
+\label{sec:orgheadline22}
 
 To get started we need to punch in which clocks in the default
 task and keeps the clock running.  This is now simply a matter of
-punching in the clock with =F9 I=.  You can do this anywhere.
+punching in the clock with \texttt{F9 I}.  You can do this anywhere.
 Clocking out will now clock in the parent task (if there is one
 with a todo keyword) or clock in the default task if not parent
 exists.
 
-Keeping the clock running when moving a subtask to a =DONE= state
+Keeping the clock running when moving a subtask to a \texttt{DONE} state
 means clocking continues to apply to the project task.  I can pick the
 next task from the parent and clock that in without losing a minute or
 two while I'm deciding what to work on next.
 
-I keep clock times, state changes, and other notes in the =:LOGBOOK:=
+I keep clock times, state changes, and other notes in the \texttt{:LOGBOOK:}
 drawer.
 
 I have the following org-mode settings for clocking:
 
-#+header: :tangle yes
-#+begin_src emacs-lisp
+\begin{verbatim}
 ;;
 ;; Resume clocking task when emacs is restarted
 (org-clock-persistence-insinuate)
@@ -629,13 +646,12 @@ as the default task."
     (bh/clock-in-parent-task)))
 
 (add-hook 'org-clock-out-hook 'bh/clock-out-maybe 'append)
-#+end_src
+\end{verbatim}
 
-=f9-SPC= calls =bh/clock-in-last-task= which switches the clock back
+\texttt{f9-SPC} calls \texttt{bh/clock-in-last-task} which switches the clock back
 to the previously clocked task.
 
-#+header: :tangle yes
-#+begin_src emacs-lisp
+\begin{verbatim}
 (require 'org-id)
 (defun bh/clock-in-task-by-id (id)
   "Clock in a task by id"
@@ -659,125 +675,121 @@ A prefix arg forces clock in of the default task."
     (widen)
     (org-with-point-at clock-in-to-task
       (org-clock-in nil))))
-#+end_src
+\end{verbatim}
 
-I have a default =** Organization= task in my todo.org file that
+I have a default \texttt{** Organization} task in my todo.org file that
 I tend to put miscellaneous clock time on.  This is the task I
 clock in on when I punch in at the start of my work day with
-=F9-I=.  While reorganizing my org-files, reading email,
+\texttt{F9-I}.  While reorganizing my org-files, reading email,
 clearing my inbox, and doing other planning work that isn't for
 a specific project I'll clock in this task.  Punching-in
 anywhere clocks in this Organization task as the default task.
 
 If I want to change the default clocking task I just visit the
-new task in any org buffer and clock it in with =C-u C-u C-c C-x
-C-i=.  Now this new task that collects miscellaneous clock
+new task in any org buffer and clock it in with \texttt{C-u C-u C-c C-x
+C-i}.  Now this new task that collects miscellaneous clock
 minutes when the clock would normally stop.
 
-You can quickly clock in the default clocking task with =C-u C-c
-C-x C-i d=.  Another option is to repeatedly clock out so the
+You can quickly clock in the default clocking task with \texttt{C-u C-c
+C-x C-i d}.  Another option is to repeatedly clock out so the
 clock moves up the project tree until you clock out the
 top-level task and the clock moves to the default task.
-** Clock editing
+\subsection{Clock editing}
+\label{sec:orgheadline23}
 
 The following setting makes time editing use discrete minute intervals (no rounding)
 increments:
 
-#+header: :tangle yes
-#+begin_src emacs-lisp
+\begin{verbatim}
 (setq org-time-stamp-rounding-minutes (quote (1 1)))
-#+end_src
+\end{verbatim}
 
 I always check that I haven't created task overlaps when fixing time
 clock entries by viewing them with log mode on in the agenda.  There
-is a new view in the agenda for this -- just hit =v c= in the daily
+is a new view in the agenda for this -- just hit \texttt{v c} in the daily
 agenda and clock gaps and overlaps are identified.
 
 The following setting shows 1 minute clocking gaps.
-#+header: :tangle yes
-#+begin_src emacs-lisp
+\begin{verbatim}
 (setq org-agenda-clock-consistency-checks
       (quote (:max-duration "4:00"
               :min-duration 0
               :max-gap 0
               :gap-ok-around ("4:00"))))
-#+end_src
-** Clock report
-*** Time estimates
+\end{verbatim}
+\subsection{Clock report}
+\label{sec:orgheadline29}
+\subsubsection{Time estimates}
+\label{sec:orgheadline27}
 Estimating how long tasks take to complete is a difficult skill to
 master.  Org-mode makes it easy to practice creating estimates for
 tasks and then clock the actual time it takes to complete.
 
 By repeatedly estimating tasks and reviewing how your estimate relates
 to the actual time clocked you can tune your estimating skills.
-**** Creating a task estimate with column mode
-:PROPERTIES:
-:CUSTOM_ID: CreatingTaskEstimates
-:END:
-
-I use =properties= and =column view= to do project estimates.
+\begin{enumerate}
+\item Creating a task estimate with column mode
+\label{sec:orgheadline24}
+I use \texttt{properties} and \texttt{column view} to do project estimates.
 
 I set up column view globally with the following headlines
-#+header: :tangle yes
-#+begin_src emacs-lisp
+\begin{verbatim}
 ; Set default column view headings: Task Effort Clock_Summary
 (setq org-columns-default-format "%80ITEM(Task) %10Effort(Effort){:} %10CLOCKSUM")
-#+end_src
+\end{verbatim}
 
 This makes column view show estimated task effort and clocked times
 side-by-side which is great for reviewing your project estimates.
 
-A property called =Effort= records the estimated amount of time a
+A property called \texttt{Effort} records the estimated amount of time a
 given task will take to complete.  The estimate times I use are one
 of:
 
-- 10 minutes
-- 30 minutes
-- 1 hour
-- 2 hours
-- 3 hours
-- 4 hours
-- 5 hours
-- 6 hours
-- 7 hours
-- 8 hours
+\begin{itemize}
+\item 10 minutes
+\item 30 minutes
+\item 1 hour
+\item 2 hours
+\item 3 hours
+\item 4 hours
+\item 5 hours
+\item 6 hours
+\item 7 hours
+\item 8 hours
+\end{itemize}
 
-These are stored for easy use in =column mode= in the global property
-=Effort_ALL=.
-#+header: :tangle yes
-#+begin_src emacs-lisp
+These are stored for easy use in \texttt{column mode} in the global property
+\texttt{Effort\_ALL}.
+\begin{verbatim}
 ; global Effort estimate values
 ; global STYLE property values for completion
 (setq org-global-properties (quote (("Effort_ALL" . "0:15 0:30 0:45 1:00 2:00 3:00 4:00 5:00 6:00 0:00")
                                     ("STYLE_ALL" . "habit"))))
-#+end_src
+\end{verbatim}
 
 To create an estimate for a task or subtree start column mode with
-=C-c C-x C-c= and collapse the tree with =c=.  This shows a table
+\texttt{C-c C-x C-c} and collapse the tree with \texttt{c}.  This shows a table
 overlayed on top of the headlines with the task name, effort estimate,
 and clocked time in columns.
 
-With the cursor in the =Effort= column for a task you can easily set
-the estimated effort value with the quick keys =1= through =9=.
+With the cursor in the \texttt{Effort} column for a task you can easily set
+the estimated effort value with the quick keys \texttt{1} through \texttt{9}.
 
-After setting the effort values exit =column mode= with =q=.
-**** Saving your estimate
-:PROPERTIES:
-:CUSTOM_ID: SavingEstimate
-:END:
-
+After setting the effort values exit \texttt{column mode} with \texttt{q}.
+\item Saving your estimate
+\label{sec:orgheadline25}
 For fixed price jobs where you provide your estimate to a client, then
 work to complete the project it is useful to save the original
 estimate that is provided to the client.
 
 Save your original estimate by creating a dynamic clock report table
-at the top of your estimated project subtree.  Entering =C-c C-x i
-RET= inserts a clock table report with your estimated values and any
+at the top of your estimated project subtree.  Entering \texttt{C-c C-x i
+RET} inserts a clock table report with your estimated values and any
 clocked time to date.
 
-#+begin_src org :exports src
+\begin{verbatim}
 Original Estimate
-,#+BEGIN: columnview :hlines 1 :id local
+#+BEGIN: columnview :hlines 1 :id local
 | Task                        | Estimated Effort | CLOCKSUM |
 |-----------------------------+------------------+----------|
 | ** TODO Project to estimate |             5:40 |          |
@@ -788,32 +800,31 @@ Original Estimate
 | **** TODO Step 3.2          |             3:00 |          |
 | **** TODO Step 3.3          |             0:10 |          |
 | *** TODO Step 4             |             0:10 |          |
-,#+END:
-#+end_src
-I normally delete the =#+BEGIN:= and =#+END:= lines from the original
+#+END:
+\end{verbatim}
+I normally delete the \texttt{\#+BEGIN:} and \texttt{\#+END:} lines from the original
 table after providing the estimate to the client to ensure I don't
-accidentally update the table by hitting =C-c C-c= on the =#+BEGIN:=
+accidentally update the table by hitting \texttt{C-c C-c} on the \texttt{\#+BEGIN:}
 line.
 
 Saving the original estimate data makes it possible to refine the
 project tasks into subtasks as you work on the project without losing
 the original estimate data.
-**** Reviewing your estimate
-:PROPERTIES:
-:CUSTOM_ID: ReviewingEstimates
-:END:
-
-=Column view= is great for reviewing your estimate.  This shows your
+\item Reviewing your estimate
+\label{sec:orgheadline26}
+\texttt{Column view} is great for reviewing your estimate.  This shows your
 estimated time value and the total clock time for the project
 side-by-side.
 
-Creating a dynamic clock table with =C-c C-x i RET= is a great way to
+Creating a dynamic clock table with \texttt{C-c C-x i RET} is a great way to
 save this project review if you need to make it available to other
 applications.
 
-=C-c C-x C-d= also provides a quick summary of clocked time for the
+\texttt{C-c C-x C-d} also provides a quick summary of clocked time for the
 current org file.
-*** Progress report
+\end{enumerate}
+\subsubsection{Progress report}
+\label{sec:orgheadline28}
 
 When someone wants details of what I've done recently I simple generate a
 log report in the agenda with tasks I've completed and state changes combined
@@ -823,31 +834,30 @@ The following setting shows closed tasks and state changes in the
 agenda.  Combined with the agenda clock report ('R') I can quickly
 generate all of the details required.
 
-#+header: :tangle yes
-#+begin_src emacs-lisp
+\begin{verbatim}
 ;; Agenda log mode items to display (closed and state changes by default)
 (setq org-agenda-log-mode-items (quote (closed state)))
-#+end_src
+\end{verbatim}
 
 To generate the report I pull up the agenda for the appropriate time frame
 (today, yesterday, this week, or last week) and hit the key sequence
-=l R= to add the log report (without clocking data lines) and the agenda clock
+\texttt{l R} to add the log report (without clocking data lines) and the agenda clock
 report at the end.
 
 Then it's simply a matter of exporting the resulting agenda in some useful format
-to provide to other people.  =C-x C-w /tmp/agenda.html RET= exports to HTML
-and =C-x C-w /tmp/agenda.txt RET= exports to plain text.  Other formats are
+to provide to other people.  \texttt{C-x C-w /tmp/agenda.html RET} exports to HTML
+and \texttt{C-x C-w /tmp/agenda.txt RET} exports to plain text.  Other formats are
 available but I use these two the most.
 
-Combining this export with tag filters and =C-u R= can limit the
+Combining this export with tag filters and \texttt{C-u R} can limit the
 report to exactly the tags that people are interested in.
 
-** Clock modeline view
+\subsection{Clock modeline view}
+\label{sec:orgheadline30}
 
 The clock modeline time is shown with a reverse background.
 
-#+header: :tangle no
-#+begin_src emacs-lisp
+\begin{verbatim}
 ;; The following custom-set-faces create the highlights
 (custom-set-faces
   ;; custom-set-faces was added by Custom.
@@ -855,10 +865,10 @@ The clock modeline time is shown with a reverse background.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
  '(org-mode-line-clock ((t (:background "grey75" :foreground "red" :box (:line-width -1 :style released-button)))) t))
-#+end_src
-** Cleaning up
-#+header: :tangle yes
-#+begin_src emacs-lisp
+\end{verbatim}
+\subsection{Cleaning up}
+\label{sec:orgheadline31}
+\#+begin\_src emacs-lisp
 ;; Remove empty LOGBOOK drawers on clock out
 (defun bh/remove-empty-drawer-on-clock-out ()
   (interactive)
@@ -867,10 +877,10 @@ The clock modeline time is shown with a reverse background.
     (org-remove-empty-drawer-at "LOGBOOK" (point))))
 
 (add-hook 'org-clock-out-hook 'bh/remove-empty-drawer-on-clock-out 'append)
-#+end_src* Deed states
-** Keywords
-#+header: :tangle yes
-#+begin_src emacs-lisp
+\#+end\_src* Deed states
+\subsection{Keywords}
+\label{sec:orgheadline32}
+\begin{verbatim}
 (setq org-todo-keywords
       (quote ((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
               (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)" "PHONE" "MEETING"))))
@@ -893,51 +903,41 @@ The clock modeline time is shown with a reverse background.
               ("TODO" ("WAITING") ("CANCELLED") ("HOLD"))
               ("NEXT" ("WAITING") ("CANCELLED") ("HOLD"))
               ("DONE" ("WAITING") ("CANCELLED") ("HOLD")))))
+\end{verbatim}
 
-#+end_src
-
-#+RESULTS:
-| CANCELLED | (CANCELLED . t) |             |        |
-| WAITING   | (WAITING . t)   |             |        |
-| HOLD      | (WAITING)       | (HOLD . t)  |        |
-| done      | (WAITING)       | (HOLD)      |        |
-| TODO      | (WAITING)       | (CANCELLED) | (HOLD) |
-| NEXT      | (WAITING)       | (CANCELLED) | (HOLD) |
-| DONE      | (WAITING)       | (CANCELLED) | (HOLD) |
-
-** Fast state selection
+\subsection{Fast state selection}
+\label{sec:orgheadline33}
 Fast todo selection allows changing from any task todo state to any
 other state directly by selecting the appropriate key from the fast
 todo selection key menu.  This is a great feature!
 
-#+header: :tangle yes
-#+begin_src emacs-lisp
+\begin{verbatim}
 (setq org-use-fast-todo-selection t)
-#+end_src
+\end{verbatim}
 
-Changing a task state is done with =C-c C-t KEY=
+Changing a task state is done with \texttt{C-c C-t KEY}
 
-where =KEY= is the appropriate fast todo state selection key as defined in =org-todo-keywords=.
+where \texttt{KEY} is the appropriate fast todo state selection key as defined in \texttt{org-todo-keywords}.
 
 The setting
-#+header: :tangle yes
-#+begin_src emacs-lisp
+\begin{verbatim}
 (setq org-treat-S-cursor-todo-selection-as-state-change nil)
-#+end_src
+\end{verbatim}
 allows changing todo states with S-left and S-right skipping all of
 the normal processing when entering or leaving a todo state.  This
 cycles through the todo states but skips setting timestamps and
 entering notes which is very convenient when all you want to do is fix
 up the status of an entry.
-* Exporting
+\section{Exporting}
+\label{sec:orgheadline38}
 
-** Exporter setup
+\subsection{Exporter setup}
+\label{sec:orgheadline36}
 
 Alphabetical listing options need to be set before the exporters are
 loaded for filling to work correctly.
 
-#+header: :tangle yes
-#+begin_src emacs-lisp
+\begin{verbatim}
 (setq org-alphabetical-lists t)
 
 ;; Explicitly load required exporters
@@ -945,14 +945,11 @@ loaded for filling to work correctly.
 (require 'ox-latex)
 (require 'ox-ascii)
 (require 'ox-bibtex)
-#+end_src
+\end{verbatim}
 
-*** Latex Exporter
-    :PROPERTIES:
-    :ORDERED:  t
-    :END:
-#+header: :tangle yes
-#+begin_src emacs-lisp
+\subsubsection{Latex Exporter}
+\label{sec:orgheadline35}
+\begin{verbatim}
 (setq org-export-time-stamp-file nil)
 (setq org-html-postamble nil)
 (unless (boundp 'org-latex-classes)
@@ -964,6 +961,7 @@ loaded for filling to work correctly.
 %%% TeX-master: t
 %%% End:
 \\documentclass[11pt]{scrartcl}
+\\usepackage[beaue, href]{sdll}
 [NO-DEFAULT-PACKAGES]
 [NO-PACKAGES]"
 ("\\section{%s}" . "\\section*{%s}")
@@ -971,17 +969,12 @@ loaded for filling to work correctly.
 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
 ("\\paragraph{%s}" . "\\paragraph*{%s}")
 ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+\end{verbatim}
 
-#+end_src
+\subsection{Org-babel setup}
+\label{sec:orgheadline37}
 
-#+RESULTS:
-| article | %%% Local Variables: |
-
-** Org-babel setup
-
-#+header: :tangle yes
-#+begin_src emacs-lisp
-
+\begin{verbatim}
 (org-babel-do-load-languages
  'org-babel-load-languages
  '((emacs-lisp . t)
@@ -999,38 +992,36 @@ loaded for filling to work correctly.
 ; This may be dangerous - make sure you understand the consequences
 ; of setting this -- see the docstring for details
 (setq org-confirm-babel-evaluate nil)
+\end{verbatim}
 
-#+end_src
-
-#+RESULTS:
-
-* Projects
-** Definition
+\section{Projects}
+\label{sec:orgheadline41}
+\subsection{Definition}
+\label{sec:orgheadline39}
 Any task with a subtask using a todo keyword is a project.
 
-Projects are 'stuck' if they have no subtask with a =NEXT= todo
+Projects are 'stuck' if they have no subtask with a \texttt{NEXT} todo
 keyword task defined.
 
 The org-mode stuck projects agenda view lists projects that have no
-=NEXT= task defined.  Stuck projects show up on my block agenda and I
-tend to assign a =NEXT= task so the list remains empty.  This helps to
+\texttt{NEXT} task defined.  Stuck projects show up on my block agenda and I
+tend to assign a \texttt{NEXT} task so the list remains empty.  This helps to
 keep projects moving forward.
 
 I disable the default org-mode stuck projects agenda view with the
 following setting.
-#+header: :tangle yes
-#+begin_src emacs-lisp
+\begin{verbatim}
 (setq org-stuck-projects (quote ("" nil nil "")))
-#+end_src
+\end{verbatim}
 
 Projects can have subprojects - and these subprojects can also be stuck.
 Any project that is stuck shows up on the stuck projects list so I can
-indicate or create a =NEXT= task to move that project forward.
-** Helper functions
+indicate or create a \texttt{NEXT} task to move that project forward.
+\subsection{Helper functions}
+\label{sec:orgheadline40}
 I have the following helper functions defined for projects which are
 used by agenda views.
-#+header: :tangle yes
-#+begin_src emacs-lisp
+\begin{verbatim}
 (defun bh/is-project-p ()
   "Any task with a todo keyword subtask"
   (save-restriction
@@ -1284,13 +1275,14 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
     (if (bh/is-subproject-p)
         nil
       next-headline)))
-#+end_src
-* Refiling
+\end{verbatim}
+\section{Refiling}
+\label{sec:orgheadline45}
 
-** Targets
+\subsection{Targets}
+\label{sec:orgheadline42}
 
-#+header: :tangle yes
-#+begin_src emacs-lisp
+\begin{verbatim}
 ; Targets include this file and any file contributing to the agenda - up to 9 levels deep
 (setq org-refile-targets (quote ((nil :maxlevel . 9)
                                  (org-agenda-files :maxlevel . 9))))
@@ -1299,11 +1291,11 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
 
 ;;Use the current window for indirect buffer display
 (setq org-indirect-buffer-display 'current-window)
-#+end_src
+\end{verbatim}
 
-** Ido completion
-#+header: :tangle yes
-#+begin_src emacs-lisp
+\subsection{Ido completion}
+\label{sec:orgheadline43}
+\begin{verbatim}
 ; Use full outline paths for refile targets - we file directly with IDO
 (setq org-refile-use-outline-path t)
 
@@ -1312,32 +1304,33 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
 
 ; Use IDO for both buffer and file completion and ido-everywhere to t
 (setq org-completion-use-ido t)
-#+end_src
+\end{verbatim}
 
-** Cleaning up
-#+header: :tangle yes
-#+begin_src emacs-lisp
+\subsection{Cleaning up}
+\label{sec:orgheadline44}
+\begin{verbatim}
 ; Exclude DONE state tasks from refile targets
 (defun bh/verify-refile-target ()
   "Exclude todo keywords with a done state from refile targets"
   (not (member (nth 2 (org-heading-components)) org-done-keywords)))
 
 (setq org-refile-target-verify-function 'bh/verify-refile-target)
-#+end_src
-* Shortcuts
+\end{verbatim}
+\section{Shortcuts}
+\label{sec:orgheadline50}
 
-** Main
+\subsection{Main}
+\label{sec:orgheadline46}
 
-#+header: :tangle yes
-#+begin_src emacs-lisp
+\begin{verbatim}
 (define-key global-map (kbd "C-c l") 'org-store-link)
 (define-key global-map (kbd "C-c a") 'org-agenda)
 (define-key global-map (kbd "C-c b") 'org-iswitchb)
-#+end_src
+\end{verbatim}
 
-** Special
-#+header: :tangle yes
-#+begin_src emacs-lisp
+\subsection{Special}
+\label{sec:orgheadline47}
+\begin{verbatim}
 (global-set-key (kbd "<f12>") 'org-agenda)
 (global-set-key (kbd "<f5>") 'bh/org-todo)
 (global-set-key (kbd "<S-f5>") 'bh/widen)
@@ -1399,15 +1392,11 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
 (defun bh/switch-to-scratch ()
   (interactive)
   (switch-to-buffer "*scratch*"))
+\end{verbatim}
 
-#+end_src
-
-#+RESULTS:
-: bh/switch-to-scratch
-
-** Disabled keys
-#+header: :tangle yes
-#+begin_src emacs-lisp
+\subsection{Disabled keys}
+\label{sec:orgheadline48}
+\begin{verbatim}
 ;; Disable keys in org-mode
 ;;    C-c [
 ;;    C-c ]
@@ -1423,11 +1412,11 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
              (org-defkey org-mode-map "\C-c;" 'undefined)
              (org-defkey org-mode-map "\C-c\C-x\C-q" 'undefined))
           'append)
-#+end_src
-** Templates
+\end{verbatim}
+\subsection{Templates}
+\label{sec:orgheadline49}
 
-#+header: :tangle yes
-#+begin_src emacs-lisp
+\begin{verbatim}
 (setq org-structure-template-alist
       '(("s" "#+begin_src ?\n\n#+end_src" "<src lang=\"?\">\n\n</src>")
         ("e" "#+begin_example\n?\n#+end_example" "<example>\n?\n</example>")
@@ -1449,15 +1438,13 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
 (defun org-dblock-write:dbtxt (params)
   (let ((f (plist-get params :file)))
     (insert-file-literally f)))
-#+end_src
+\end{verbatim}
 
-#+RESULTS:
-: org-dblock-write:dbtxt
-
-* Tags
-** Setup
-#+header: :tangle yes
-#+begin_src emacs-lisp
+\section{Tags}
+\label{sec:orgheadline53}
+\subsection{Setup}
+\label{sec:orgheadline51}
+\begin{verbatim}
 ; Tags with fast selection keys
 (setq org-tag-alist (quote ((:startgroup)
                             ("@errand" . ?e)
@@ -1478,27 +1465,32 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
 
 ; For tag searches ignore tasks with scheduled and deadline dates
 (setq org-agenda-tags-todo-honor-ignore-options t)
-#+end_src
-** Deed state tagging
-* Workflow
-** Focusing
-*** Narrow to a subtree
-    =f5= and =S-f5= are bound the functions for narrowing and widening the
+\end{verbatim}
+\subsection{Deed state tagging}
+\label{sec:orgheadline52}
+\section{Workflow}
+\label{sec:orgheadline57}
+\subsection{Focusing}
+\label{sec:orgheadline56}
+\subsubsection{Narrow to a subtree}
+\label{sec:orgheadline54}
+    \texttt{f5} and \texttt{S-f5} are bound the functions for narrowing and widening the
 emacs buffer as defined below.
 
 We now use:
 
-    - T (tasks) for C-c / t on the current buffer
-    - N (narrow) narrows to this task subtree
-    - U (up) narrows to the immediate parent task subtree without moving
-    - P (project) narrows to the parent project subtree without moving
-    - F (file) narrows to the current file or file of the existing restriction
+\begin{itemize}
+\item T (tasks) for C-c / t on the current buffer
+\item N (narrow) narrows to this task subtree
+\item U (up) narrows to the immediate parent task subtree without moving
+\item P (project) narrows to the parent project subtree without moving
+\item F (file) narrows to the current file or file of the existing restriction
+\end{itemize}
 
 The agenda keeps widening the org buffer so this gives a convenient
 way to focus on what we are doing.
 
-#+header: :tangle yes
-#+begin_src emacs-lisp
+\begin{verbatim}
 (global-set-key (kbd "<f5>") 'bh/org-todo)
 
 (defun bh/org-todo (arg)
@@ -1657,39 +1649,38 @@ so change the default 'F' binding in the agenda to allow both"
 (add-hook 'org-agenda-mode-hook
           '(lambda () (org-defkey org-agenda-mode-map "V" 'bh/view-next-project))
           'append)
-#+end_src
+\end{verbatim}
 
 This makes it easy to hide all of the other details in your org-file
 temporarily by limiting your view to this task subtree.  Tasks are
 folded and hilighted so that only tasks which are incomplete are
 shown.
 
-I hit =f5= (or the =T= speed key) a lot.  This basically does a
-=org-narrow-to-subtree= and =C-c / t= combination leaving the buffer
-in a narrowed state.  I use =S-f5= (or some other widening speed key
-like =U=, =W=, =F=) to widen back to the normal view.
+I hit \texttt{f5} (or the \texttt{T} speed key) a lot.  This basically does a
+\texttt{org-narrow-to-subtree} and \texttt{C-c / t} combination leaving the buffer
+in a narrowed state.  I use \texttt{S-f5} (or some other widening speed key
+like \texttt{U}, \texttt{W}, \texttt{F}) to widen back to the normal view.
 
 I also have the following setting to force showing the next headline.
-#+header: :tangle yes
-#+begin_src emacs-lisp
+\begin{verbatim}
 (setq org-show-entry-below (quote ((default))))
-#+end_src
+\end{verbatim}
 
 This prevents too many headlines from being folded together when I'm
 working with collapsed trees.
 
-*** Narrow the agenda to a subtree
-    =C-c C-x <= turns on the agenda restriction lock for the current
+\subsubsection{Narrow the agenda to a subtree}
+\label{sec:orgheadline55}
+    \texttt{C-c C-x <} turns on the agenda restriction lock for the current
 subtree.  This keeps your agenda focused on only this subtree.  Alarms
 and notifications are still active outside the agenda restriction.
-=C-c C-x >= turns off the agenda restriction lock returning your
+\texttt{C-c C-x >} turns off the agenda restriction lock returning your
 agenda view back to normal.
 
-I have added key bindings for the agenda to allow using =C-c C-x <= in
+I have added key bindings for the agenda to allow using \texttt{C-c C-x <} in
 the agenda to set the restriction lock to the current task directly.
 The following elisp accomplishes this.
-#+header: :tangle yes
-#+begin_src emacs-lisp
+\begin{verbatim}
 (add-hook 'org-agenda-mode-hook
           '(lambda () (org-defkey org-agenda-mode-map "\C-c\C-x<" 'bh/set-agenda-restriction-lock))
           'append)
@@ -1711,7 +1702,7 @@ The following elisp accomplishes this.
          (pom
           (org-with-point-at pom
             (org-agenda-set-restriction-lock restriction-type))))))))
-#+end_src
+\end{verbatim}
 
 This allows me to set the restriction lock from agenda to task directly.
 I work from the agenda a lot and I find this very convenient.
@@ -1724,42 +1715,45 @@ the org file and going up and resetting the lock - in case you want to
 see move of the project.
 
 Selecting the entire project sometimes has too many tasks in it and I
-want to limit the view to part of the subtree.  This is why I keep the =N= and
-=U= key bindings for adjusting the narrowed region.
+want to limit the view to part of the subtree.  This is why I keep the \texttt{N} and
+\texttt{U} key bindings for adjusting the narrowed region.
 
 I've added new convenience keys for restricting the agenda and org-buffer to
 subtree, parent task, and project task, as well as removing the restriction.
 These keys work both in the agenda and as speed commands on a headline in the
 org-file.
 
-- =N= narrows to the current task subtree
+\begin{itemize}
+\item \texttt{N} narrows to the current task subtree
 
-  This is the same as same as =C-c C-x <=
+This is the same as same as \texttt{C-c C-x <}
 
-- =U= narrows to the parent subtree of this task
+\item \texttt{U} narrows to the parent subtree of this task
 
-  This goes up one level and narrows to that subtree.
+This goes up one level and narrows to that subtree.
 
-- =P= narrows to the entire project containing this task
+\item \texttt{P} narrows to the entire project containing this task
 
-  This goes up the tree to the top-level =TODO= keyword and selects
-  that as the subtree to narrow to
+This goes up the tree to the top-level \texttt{TODO} keyword and selects
+that as the subtree to narrow to
 
-- =W= removes the restriction, widening the buffer
+\item \texttt{W} removes the restriction, widening the buffer
+\end{itemize}
 
 I like the highlighting for a restriction to only affect the headline
 and not the entire body of the agenda restriction.  I use the
 following setting to keep the highlight on the heading only (as was
 the case for pre-8.0 versions of org-mode)
 
-#+header: :tangle yes
-#+begin_src emacs-lisp
+\begin{verbatim}
 ;; Limit restriction lock highlighting to the headline only
 (setq org-agenda-restriction-lock-highlight-subtree nil)
-#+end_src
+\end{verbatim}
 
-* Launch
-#+header: :tangle yes
-#+begin_src emacs-lisp
+\section{Launch}
+\label{sec:orgheadline58}
+\begin{verbatim}
 (provide 'init-org)
-#+end_src
+\end{verbatim}
+Emacs 24.4.1 (Org mode 8.3.6)
+\end{document}
