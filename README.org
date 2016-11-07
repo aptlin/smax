@@ -1,0 +1,39 @@
+The most recent compatible version verified: 24.4.1
+
+This emacs configuration tree, based on the work of [[https://github.com/purcell/emacs.d][purcell]], comes with the following extensions:
+
++ Improved support for the programming languages
+
+  - CSS / LESS / SASS / SCSS
+  - Javascript / Coffeescript
+  - Python
+  - PHP
+  - Haskell
+  - Common Lisp (with Slime)
+
++ Autocompletion with [company](https://company-mode.github.io/)
+
++ Syntax checking with [flycheck](http://www.flycheck.org)
+
++ ido-mode completion in the minibuffer wherever possible
+
+* Installation
+
+  To install, clone this repository to `$HOME/.emacs.d`.
+
+  #+BEGIN_SRC
+  git clone https://github.com/purcell/emacs.d.git ~/.emacs.d
+  #+END_SRC
+
+  Upon starting up Emacs for the first time, further third-party
+  packages will be automatically downloaded and installed. If you
+  encounter any errors at that stage, try restarting Emacs, and possibly
+  running `M-x package-refresh-contents` before doing so.
+
+* Updates
+
+  Enter the ~/.emacs.d directory and execute #git pull#.
+
+  To update the third-party packages, proceed as follows with emacs open:
+
+  #M-x package-list-packages#, then #U# followed by #x#.

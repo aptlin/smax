@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: homework
+# key: hw
+# --
+\hw{$1}{$2}{$3}

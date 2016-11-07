@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: matrixreq 
+# key: mreq
+# --
+\begin{matreq}{ccc|c}
+$0
+\end{matreq}

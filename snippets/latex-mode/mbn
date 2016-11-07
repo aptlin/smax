@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: makenewbox
+# key: mb
+# --
+\mbh{$1} & \mbn{$2}\ & \mbh{=} & \mbv{$3} & \mbt{$4} \\\\

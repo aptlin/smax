@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: definition
+# key: enuma
+# --
+\begin{enumerate}[label=\alph*]
+\item
+\end{enumerate}

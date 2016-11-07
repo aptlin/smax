@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: solution
+# key: soln
+# --
+\begin{soln}
+$0
+\end{soln}

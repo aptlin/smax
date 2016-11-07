@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: latex_org
+# key: lat
+# --
+
+#+OPTIONS: toc:nil
+#+LATEX_HEADER: \usepackage[$1customauthor]{sdll}
+#+LATEX_HEADER: \pSet{Alexander Illarionov}
+#+LATEX_HEADER: \pagenumbering{gobble}

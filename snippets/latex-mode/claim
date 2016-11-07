@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: claim
+# key: cla
+# --
+\begin{claim*}
+$0
+\end{claim*}
