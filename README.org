@@ -5,7 +5,7 @@ This emacs configuration tree, based on the work of [[https://github.com/purcell
 + Customized AUCTeX environment
 
   - RefTeX for citations, structural navigation and editing
-  - LaTeX-Math-Mode for faster typing, cf. [[ftp://ftp.gnu.org/gnu/auctex/11.89-extra/tex-ref.pdf][this reference card]]
+  - LaTeX-Math-Mode for faster typing, cf. this [[http://tilda.univ-lille1.fr/wp-content/uploads/2012/08/tex-ref.pdf][reference]]
   - YASnippet for templating
 
 + Improved support for the programming languages
