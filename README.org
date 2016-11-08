@@ -1,6 +1,7 @@
 The most recent compatible version verified: 24.4.1
 
-This emacs configuration tree, based on the work of [[https://github.com/purcell/emacs.d][purcell]], comes with the following extensions:
+This emacs configuration tree, based on the work of [[https://github.com/purcell/emacs.d][purcell]], comes
+with the following extensions:
 
 + Customized AUCTeX environment
 
