@@ -2,6 +2,12 @@ The most recent compatible version verified: 24.4.1
 
 This emacs configuration tree, based on the work of [[https://github.com/purcell/emacs.d][purcell]], comes with the following extensions:
 
++ Customized AUCTeX environment
+
+  - RefTeX for citations, structural navigation and editing
+  - LaTeX-Math-Mode for faster typing, cf. [[ftp://ftp.gnu.org/gnu/auctex/11.89-extra/tex-ref.pdf][this reference card]]
+  - YASnippet for templating
+
 + Improved support for the programming languages
 
   - CSS / LESS / SASS / SCSS
