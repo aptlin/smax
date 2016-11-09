@@ -37,7 +37,7 @@
              (?f . "\\footcite[]{%l}")
              (?n . "\\nocite{%l}")
              (?b . "\\blockcquote[]{%l}{}")))))
-
+(setq reftex-bibliography-commands '("bibliography" "nobibliography" "addbibresource"))
 ;; Fontification (remove unnecessary entries as you notice them) http://lists.gnu.org/archive/html/emacs-orgmode/2009-05/msg00236.html http://www.gnu.org/software/auctex/manual/auctex/Fontification-of-macros.html
 (setq font-latex-match-reference-keywords
       '(
