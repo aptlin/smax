@@ -114,4 +114,8 @@
         ("renewlist" "{")
         ("setlistdepth" "{")
         ("restartlist" "{")))
+
+;; Further pdf support
+
+(pdf-tools-install)
 (provide 'init-latex)
