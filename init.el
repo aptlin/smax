@@ -52,6 +52,8 @@
 (require-package 'mwe-log-commands)
 
 (require 'init-gnus)
+(require 'init-browser)
+(require 'init-eshell)
 (require 'init-frame-hooks)
 ;;(require 'init-xterm)
 (require 'init-themes)
