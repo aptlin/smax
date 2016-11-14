@@ -29,4 +29,7 @@
    (list (read-string "Enter website address(default: w3m-home):" nil nil w3m-home-page nil )))
   (w3m-goto-url-new-session
    (concat "http://" site)))
+
+(global-set-key (kbd "C-`") 'w3m)
+(global-set-key (kbd "C-~") 'w3m-open-site)
 (provide 'init-browser)
