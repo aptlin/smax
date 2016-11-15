@@ -4,7 +4,9 @@
 ;;change default browser for 'browse-url' to w3m
 (require-package 'w3m)
 (setq browse-url-browser-function 'w3m-goto-url-new-session)
+;; show images
 (setq w3m-default-display-inline-images t)
+;; search wiki
 (defun wikipedia-search (search-term)
   "Search for SEARCH-TERM on wikipedia"
   (interactive
@@ -22,7 +24,7 @@
     ))
   )
 
-;;when I want to enter the web address all by hand
+;; open a website
 (defun w3m-open-site (site)
   "Opens site in new w3m session with 'http://' appended"
   (interactive
@@ -30,6 +32,32 @@
   (w3m-goto-url-new-session
    (concat "http://" site)))
 
+(setq w3m-default-save-directory "~/TMP/WWW/")
+
+(setq w3m-home-page "https://sdll.github.io/agenda")
+
+;; Change tabs easily
+(when (require 'w3m)
+  (define-key w3m-mode-map (kbd "M-<right>") 'w3m-next-buffer)
+  (define-key w3m-mode-map (kbd "M-<left>") 'w3m-previous-buffer)
+  )
+;; enable-cookies-in-w3m
+(setq w3m-use-cookies t)
+
+;; w3m-antenna
+(autoload 'w3m-antenna "w3m-antenna" "Report changes of WEB sites." t)
+
+;; Remove-trailing-white-space-in-w3m-buffers
+(add-hook 'w3m-display-hook
+          #'(lambda (url)
+              (let ((buffer-read-only nil))
+                (delete-trailing-whitespace))))
+
+;;;;
+
+;; keybindings
 (global-set-key (kbd "C-`") 'w3m)
 (global-set-key (kbd "C-~") 'w3m-open-site)
+
+
 (provide 'init-browser)
