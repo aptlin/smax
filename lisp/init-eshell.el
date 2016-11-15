@@ -56,5 +56,7 @@
     	)
   )
 
+;; keybindings
+(global-set-key (kbd "C-\"") 'eshell)
 
 (provide 'init-eshell)

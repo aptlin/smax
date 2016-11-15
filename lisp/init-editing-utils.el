@@ -376,6 +376,22 @@ With arg N, insert N newlines."
     (pdf-view-mode)))
 
 (add-hook 'doc-view-mode-hook 'tv/start-pdf-tools-if-pdf)
+
 (setq tv/prefer-pdf-tools t)
+
+;; autoindentation
+
+(dolist (command '(yank yank-pop))
+  (eval `(defadvice ,command (after indent-region activate)
+           (and (not current-prefix-arg)
+                (member major-mode '(emacs-lisp-mode lisp-mode
+                                                     clojure-mode    scheme-mode
+                                                     haskell-mode    ruby-mode
+                                                     rspec-mode      python-mode
+                                                     c-mode          c++-mode
+                                                     objc-mode       latex-mode
+                                                     plain-tex-mode))
+                (let ((mark-even-if-inactive transient-mark-mode))
+                  (indent-region (region-beginning) (region-end) nil))))))
 
 (provide 'init-editing-utils)
