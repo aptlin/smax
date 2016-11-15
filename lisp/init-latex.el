@@ -170,5 +170,5 @@
      (output-html "xdg-open")))))
 (setq TeX-electric-sub-and-superscript t)
 
-(setq LaTeX-electric-left-right-brace nil)
+(setq LaTeX-electric-left-right-brace t)
 (provide 'init-latex)

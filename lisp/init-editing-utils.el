@@ -4,7 +4,8 @@
   (electric-pair-mode))
 (when (eval-when-compile (version< "24.4" emacs-version))
   (electric-indent-mode 1))
-
+(add-hook 'LaTeX-mode-hook
+          (electric-pair-mode 0)) 
 ;;----------------------------------------------------------------------------
 ;; Some basic preferences
 ;;----------------------------------------------------------------------------
@@ -367,5 +368,14 @@ With arg N, insert N newlines."
     (setq count (1+ count))))
 
 (global-set-key (kbd "<S-return>") 'end-of-line-and-indented-new-line)
+;;from https://emacs.stackexchange.com/questions/4089/can-i-configure-eww-to-use-pdf-view-mode-from-pdf-tools-for-pdfs-instead-of-do
+(defvar tv/prefer-pdf-tools (fboundp 'pdf-view-mode))
+(defun tv/start-pdf-tools-if-pdf ()
+  (when (and tv/prefer-pdf-tools
+             (eq doc-view-doc-type 'pdf))
+    (pdf-view-mode)))
+
+(add-hook 'doc-view-mode-hook 'tv/start-pdf-tools-if-pdf)
+(setq tv/prefer-pdf-tools t)
 
 (provide 'init-editing-utils)

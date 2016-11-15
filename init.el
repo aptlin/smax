@@ -55,6 +55,7 @@
 (require 'init-browser)
 (require 'init-eshell)
 (require 'init-bookmarks)
+(require 'init-email)
 (require 'init-frame-hooks)
 ;;(require 'init-xterm)
 (require 'init-themes)

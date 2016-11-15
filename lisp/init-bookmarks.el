@@ -3,4 +3,4 @@
 (require 'bookmark)
 (bookmark-bmenu-list)
 (switch-to-buffer "*Bookmark List*")
-(provide 'init-browser)
+(provide 'init-bookmarks)

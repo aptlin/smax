@@ -28,17 +28,53 @@
 ;; allow for updating mail using 'U' in the main view:
 (setq mu4e-get-mail-command "offlineimap")
 
-;; something about ourselves
+;; accounts
 (setq
  user-mail-address "sasha.delly@gmail.com"
  user-full-name  "Alexander Illarionov"
  mu4e-compose-signature
  (concat
-  "Sasha Illarionov\n"))
+  "sasha\n"))
+
+(defvar my-mu4e-account-alist
+  '(("delly"
+     (setq mu4e-drafts-folder "/drafts")
+     (setq mu4e-sent-folder   "/sent")
+     (user-mail-address "sasha.delly@gmail.com"))
+    ("utoro"
+     (setq mu4e-drafts-folder "/drafts")
+     (setq mu4e-sent-folder   "/sent")
+     (user-mail-address "sasha.illarionov@mail.utoronto.ca"))))
+(add-hook 'mu4e-compose-pre-hook 'my-mu4e-set-account)
+
 ;; set up smtp manager
 (setq message-send-mail-function 'message-send-mail-with-sendmail)
 ;;;use msmtp instead of sendmail
 (setq sendmail-program "/usr/bin/msmtp")
+;; tell msmtp to choose the SMTP server according to the from field in
+;; the outgoing email
+(setq message-sendmail-extra-arguments '("--read-envelope-from"))
+(setq message-sendmail-f-is-evil 't)
+;;https://www.reddit.com/r/emacs/comments/3r8dr3/mu4e_send_mail_with_custom_smtp_and_archive_in/
+(defun my-mu4e-set-account ()
+  "Set the account for composing a message."
+  (let* ((accounts (mapcar #'car my-mu4e-account-alist))
+         (account
+          (or (and mu4e-compose-parent-message
+                   (let ((maildir (mu4e-message-field mu4e-compose-parent-message :maildir)))
+                     (string-match "/\\(.*?\\)/" maildir)
+                     (car (member (match-string 1 maildir) accounts))))
+              (completing-read (format "Compose with account: (%s) "
+                                       (mapconcat #'identity accounts "/"))
+                               accounts
+                               nil t nil nil (car accounts))))
+         (account-vars (cdr (assoc account my-mu4e-account-alist))))
+    (if account-vars
+        (mapc #'(lambda (var)
+                  (set (car var) (cadr var)))
+              account-vars)
+      (error "No email account found"))))
+
 ;; http://pragmaticemacs.com/emacs/master-your-inbox-with-mu4e-and-org-mode/
 
 ;;store org-mode links to messages
