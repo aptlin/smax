@@ -82,4 +82,8 @@
 ;;store link to message if in header view, not to header query
 (setq org-mu4e-link-query-in-headers-mode nil)
 (setq mu4e-html2text-command "w3m -T text/html")
+
+;; show counts
+(require-package 'mu4e-maildirs-extension)
+(mu4e-maildirs-extension)
 (provide 'init-email)
