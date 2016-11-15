@@ -55,6 +55,10 @@
 ;; the outgoing email
 (setq message-sendmail-extra-arguments '("--read-envelope-from"))
 (setq message-sendmail-f-is-evil 't)
+;; show addresses in the from field
+(setq mu4e-view-show-addresses t)
+;; Re-index every 15 minutes.
+(setq mu4e-update-interval (* 10 60))
 ;;https://www.reddit.com/r/emacs/comments/3r8dr3/mu4e_send_mail_with_custom_smtp_and_archive_in/
 (defun my-mu4e-set-account ()
   "Set the account for composing a message."
@@ -81,8 +85,9 @@
 (require 'org-mu4e)
 ;;store link to message if in header view, not to header query
 (setq org-mu4e-link-query-in-headers-mode nil)
-(setq mu4e-html2text-command "w3m -T text/html")
+;; render html
 
+(setq mu4e-html2text-command "w3m -I utf8 -O utf8 -T text/html")
 ;; show counts
 (require-package 'mu4e-maildirs-extension)
 (mu4e-maildirs-extension)
