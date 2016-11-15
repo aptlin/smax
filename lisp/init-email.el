@@ -111,4 +111,7 @@
 (setq gnus-dired-mail-mode 'mu4e-user-agent)
 (add-hook 'dired-mode-hook 'turn-on-gnus-dired-mode)
 
+;;  key bindings
+(global-unset-key (kbd "C-x m"))
+(global-set-key (kbd "C-x m") 'mu4e)
 (provide 'init-email)
