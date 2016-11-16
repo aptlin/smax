@@ -54,7 +54,12 @@
                 (delete-trailing-whitespace))))
 
 ;;;;
-
+(eval-after-load "w3m"
+                 '(setcdr (assoc "application/pdf" w3m-content-type-alist)
+                   `("\\.pdf\\'" (,(or
+                                    (executable-find "zathura")
+                                    (executable-find "evince")
+                                    ) file) nil)))
 ;; keybindings
 (global-set-key (kbd "C-`") 'w3m)
 (global-set-key (kbd "C-~") 'w3m-open-site)

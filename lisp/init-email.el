@@ -1,3 +1,4 @@
+(add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e")
 (require 'mu4e)
 (setq message-kill-buffer-on-exit t)
 ;; default
@@ -83,6 +84,7 @@
 
 ;;store org-mode links to messages
 (require 'org-mu4e)
+
 ;;store link to message if in header view, not to header query
 (setq org-mu4e-link-query-in-headers-mode nil)
 ;; render html

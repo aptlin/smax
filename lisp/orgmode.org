@@ -471,7 +471,7 @@ I do need it.
 #+begin_src emacs-lisp
 (setq org-capture-templates
       (quote (("t" "todo" entry (file "~/ORG/refile.org")
-               "* TODO %?\n%U\n%a\n" :clock-in t :clock-resume t)
+               "* TODO %?\n%U\nSCHEDULED: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))%a\n" :clock-in t :clock-resume t)
               ("r" "respond" entry (file "~/ORG/refile.org")
                "* NEXT Respond to %:from on %:subject\nSCHEDULED: %t\n%U\n%a\n" :clock-in t :clock-resume t :immediate-finish t)
               ("n" "note" entry (file "~/ORG/refile.org")
@@ -1373,6 +1373,11 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
 (global-set-key (kbd "C-<f11>") 'org-clock-in)
 (global-set-key (kbd "C-s-<f12>") 'bh/save-then-publish)
 (global-set-key (kbd "C-c c") 'org-capture)
+
+(add-hook 'org-load-hook
+(lambda ()
+(define-key org-mode-map "\C-n" 'org-next-link)
+(define-key org-mode-map "\C-p" 'org-previous-link)))
 
 (defun bh/show-org-agenda ()
   (interactive)
