@@ -1375,7 +1375,7 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
 (global-set-key (kbd "C-c c") 'org-capture)
 
 (add-hook 'org-load-hook
-(lambda ()
+(lambda ()
 (define-key org-mode-map "\C-n" 'org-next-link)
 (define-key org-mode-map "\C-p" 'org-previous-link)))
 

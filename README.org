@@ -1,4 +1,4 @@
-The most recent compatible version verified: 24.4.1
+The most recent verified compatible version: 24.5.1
 
 This emacs configuration tree, based on the work of [[https://github.com/purcell/emacs.d][purcell]], comes
 with the following extensions:
@@ -17,6 +17,10 @@ with the following extensions:
   - PHP
   - Haskell
   - Common Lisp (with Slime)
+
++ mu4e for managing emails
+
++ w3m for www
 
 + Autocompletion with [[company][https://company-mode.github.io/]]
 
