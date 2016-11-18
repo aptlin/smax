@@ -170,7 +170,7 @@ Otherwise, return nil."
     (equal (point) (w3m-get-next-link-start))))
 
 (defun w3m-no-prev-link-p ()
-  "Return t if no prevoius link after cursor.
+  "Return t if no previous link after cursor.
 Otherwise, return nil."
   (save-excursion
     (equal (point) (w3m-get-prev-link-start))))
