@@ -1,9 +1,8 @@
+;; Thank you, Nan.
+;; https://nine27.com/2016-10-03/better-email-with-mu4e/
+
 (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e")
 (require 'mu4e)
-
-;; email obfuscation
-(defun @utoro (address) (concat address "@mail.utoronto.ca"))
-(defun @gmail (address) (concat address "@gmail.com"))
 
 ;; setting up variables
 
@@ -46,7 +45,7 @@
 ;; disabled, regular ascii characters are used instead.
                                         ;(setq mu4e-use-fancy-chars t)
 ;; This enabled the thread like viewing of email similar to gmail's UI.
-(setq mu4e-headers-include-related t)
+(setq mu4e-headers-include-related nil)
 (setq mu4e-attachment-dir "~/TMP/MAIL")
 ;; This prevents saving the email to the Sent folder since gmail will do this for us on their end.
 (setq message-kill-buffer-on-exit t)
@@ -62,16 +61,8 @@
 
 ;; Spell checking ftw.
 (add-hook 'mu4e-compose-mode-hook 'flyspell-mode)
-;; This hook correctly modifies the \Inbox and \Starred flags on email when they are marked.
-;; Without it refiling (archiving) and flagging (starring) email won't properly result in
-;; the corresponding gmail action.
-(add-hook 'mu4e-mark-execute-pre-hook
-          (lambda (mark msg)
-            (cond ((member mark '(refile trash)) (mu4e-action-retag-message msg "-\\INBOX"))
-                  ((equal mark 'flag) (mu4e-action-retag-message msg "\\Starred"))
-                  ((equal mark 'unflag) (mu4e-action-retag-message msg "-\\Starred")))))
 
-;; This sets up my two different context for my personal and work emails.
+;; This sets up my two different context for my personal and university emails.
 (setq mu4e-contexts
       `( ,(make-mu4e-context
            :name "delly"

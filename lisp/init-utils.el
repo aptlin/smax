@@ -84,5 +84,8 @@
         (error "Cannot open tramp file")
       (browse-url (concat "file://" file-name)))))
 
+;; quitting emacs
+
+(global-set-key (kbd "C-<") 'save-buffers-kill-emacs)
 
 (provide 'init-utils)
