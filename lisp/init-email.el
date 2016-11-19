@@ -61,6 +61,8 @@
 
 ;; Spell checking ftw.
 (add-hook 'mu4e-compose-mode-hook 'flyspell-mode)
+(add-hook 'mu4e-compose-mode-hook (lambda ()
+                                    (set-fill-column 40)))
 
 ;; This sets up my two different context for my personal and university emails.
 (setq mu4e-contexts
