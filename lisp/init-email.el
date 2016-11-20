@@ -103,17 +103,17 @@
 (add-hook 'message-send-mail-hook 'choose-msmtp-account)
 
 ;; Bookmarks for common searches that I use.
-(setq mu4e-bookmarks '(("\\\\Inbox" "Inbox" ?i)
+(setq mu4e-bookmarks '(("\\\\delly/гINBOX" "Inbox" ?i)
                        ("flag:unread" "Unread messages" ?u)
                        ("date:today..now" "Today's messages" ?t)
                        ("date:7d..now" "Last 7 days" ?w)
                        ("mime:image/*" "Messages with images" ?p)))
 
 (setq mu4e-maildir-shortcuts
-      '( ("/INBOX"               . ?i)
-         ("/sent"   . ?s)
-         ("/trash"       . ?t)
-         ("/archive"    . ?a)))
+      '( ("/delly/INBOX"               . ?i)
+         ("/delly/sent"   . ?s)
+         ("/delly/trash"       . ?t)
+         ("/delly/archive"    . ?a)))
 
 ;;store org-mode links to messages
 (require 'org-mu4e)
