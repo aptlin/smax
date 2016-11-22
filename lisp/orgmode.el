@@ -878,7 +878,7 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
 (global-set-key (kbd "C-c c") 'org-capture)
 
 (add-hook 'org-load-hook
-(lambda ()
+(lambda ()
 (define-key org-mode-map "\C-n" 'org-next-link)
 (define-key org-mode-map "\C-p" 'org-previous-link)))
 
@@ -1152,5 +1152,14 @@ so change the default 'F' binding in the agenda to allow both"
 
 ;; Limit restriction lock highlighting to the headline only
 (setq org-agenda-restriction-lock-highlight-subtree nil)
+
+(setq org-ref-bibliography-notes "~/ORG/notes.org"
+      org-ref-default-bibliography '("~/ORG/references.bib")
+      org-ref-pdf-directory "~/ORG/PAPERS/")
+(setq bibtex-completion-bibliography "~/ORG/references.bib"
+      bibtex-completion-library-path "~/ORG/PAPERS"
+      bibtex-completion-notes-path "~/ORG/bibtex-notes")
+
+(require-package 'org-ref)
 
 (provide 'init-org)

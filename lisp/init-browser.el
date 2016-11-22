@@ -6,8 +6,8 @@
 
 (setq browse-url-browser-function 'w3m-goto-url-new-session)
 
-;; show images
-(setq w3m-default-display-inline-images t)
+;; images
+(setq w3m-default-display-inline-images nil)
 
 ;; set encoding
 ;;https://www.emacswiki.org/emacs/emacs-w3m#searchlang
@@ -19,6 +19,19 @@
       w3m-output-coding-system 'utf-8
       w3m-terminal-coding-system 'utf-8)
 
+;; search google
+;; thank you, Nauri
+;; https://www.reddit.com/r/emacs/comments/1sidf4/3_questions_about_w3m/
+
+(add-hook 'w3m-display-hook
+          (lambda (url)
+            (if (string-match ".google\.com/search." url)
+                (progn
+                  (search-forward "About")
+                  (forward-line 2)
+                  (right-char 4)
+                  (recenter-top-bottom 0))
+              nil)))
 ;; search wiki
 (defun wikipedia-search (search-term)
   "Search for SEARCH-TERM on wikipedia"
@@ -175,7 +188,7 @@ Otherwise, return nil."
   (save-excursion
     (equal (point) (w3m-get-prev-link-start))))
 (define-key w3m-minor-mode-map (kbd "C-x M-w") 'w3m-get-buffer-with-org-style)
-(provide 'init-browser)
+
 
 ;; make browse-url-url-at-point use w3m links if they exist
 (defadvice browse-url-url-at-point (after w3m-anchor-at-point activate)
@@ -184,3 +197,9 @@ Otherwise, return nil."
         (or
          (w3m-anchor)
          (ad-return-value))))
+
+;;
+
+(setq w3m-confirm-leaving-secure-page nil)
+
+(provide 'init-browser)

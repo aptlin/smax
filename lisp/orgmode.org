@@ -1762,6 +1762,21 @@ the case for pre-8.0 versions of org-mode)
 ;; Limit restriction lock highlighting to the headline only
 (setq org-agenda-restriction-lock-highlight-subtree nil)
 #+end_src
+** org-ref
+#+header: :tangle yes
+#+begin_src emacs-lisp
+(setq org-ref-bibliography-notes "~/ORG/notes.org"
+      org-ref-default-bibliography '("~/ORG/references.bib")
+      org-ref-pdf-directory "~/ORG/PAPERS/")
+(setq bibtex-completion-bibliography "~/ORG/references.bib"
+      bibtex-completion-library-path "~/ORG/PAPERS"
+      bibtex-completion-notes-path "~/ORG/bibtex-notes")
+
+(require-package 'org-ref)
+#+end_src
+
+#+RESULTS:
+| [cl-struct-package-desc key-chord (20160227 438) map pairs of simultaneously pressed keys to commands nil single melpa nil ((:keywords keyboard chord input)) nil] | [cl-struct-package-desc hydra (20161117 1028) Make bindings that stick around. ((cl-lib (0 5))) tar melpa nil ((:url . https://github.com/abo-abo/hydra) (:keywords bindings)) nil] | [cl-struct-package-desc ivy (20161118 1213) Incremental Vertical completYon ((emacs (24 1))) tar melpa nil ((:url . https://github.com/abo-abo/swiper) (:keywords matching)) nil] | [cl-struct-package-desc biblio-core (20160901 1115) A framework for looking up and displaying bibliographic entries ((emacs (24 3)) (let-alist (1 0 4)) (seq (1 11)) (dash (2 12 1))) single melpa nil ((:url . http://github.com/cpitclaudel/biblio.el) (:keywords bib tex convenience hypermedia)) nil] | [cl-struct-package-desc biblio (20161014 1604) Browse and import bibliographic references from CrossRef, arXiv, DBLP, HAL, Dissemin, and doi.org ((emacs (24 3)) (biblio-core (0 2))) tar melpa nil nil nil] | [cl-struct-package-desc parsebib (20151006 232) A library for parsing bib files ((emacs (24 3))) single melpa nil ((:keywords text bibtex)) nil] | [cl-struct-package-desc helm-core (20161113 908) Development files for Helm ((emacs (24 4)) (async (1 9))) tar melpa nil ((:url . https://emacs-helm.github.io/helm/)) nil] | [cl-struct-package-desc helm (20161116 1211) Helm is an Emacs incremental and narrowing framework ((emacs (24 4)) (async (1 9)) (popup (0 5 3)) (helm-core (2 3 2))) tar melpa nil ((:url . https://emacs-helm.github.io/helm/)) nil] | [cl-struct-package-desc helm-bibtex (20161119 412) A bibliography manager based on Helm ((helm (1 5 5)) (parsebib (1 0)) (s (1 9 0)) (dash (2 6 0)) (f (0 16 2)) (cl-lib (0 5)) (biblio (0 2))) tar melpa nil nil nil] | [cl-struct-package-desc org-ref (20161117 630) citations, cross-references and bibliographies in org-mode ((dash (2 11 0)) (helm (1 5 5)) (helm-bibtex (2 0 0)) (ivy (0 8 0)) (hydra (0 13 2)) (key-chord (0)) (s (1 10 0)) (f (0 18 0)) (emacs (24 4))) tar melpa nil ((:url . https://github.com/jkitchin/org-ref) (:keywords org-mode cite ref label)) nil] |
 
 * Launch
 #+header: :tangle yes

@@ -102,6 +102,7 @@
 (require 'init-html)
 (require 'init-css)
 (require 'init-python-mode)
+(require 'init-r)
 (unless (version<= emacs-version "24.3")
   (require 'init-haskell))
 (require 'init-sql)
