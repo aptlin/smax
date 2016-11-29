@@ -3,7 +3,7 @@
 
 ;;change default browser for 'browse-url' to w3m
 (require-package 'w3m)
-
+(require 'mime-w3m)
 (setq browse-url-browser-function 'w3m-goto-url-new-session)
 
 ;; images
@@ -20,18 +20,47 @@
       w3m-terminal-coding-system 'utf-8)
 
 ;; search google
-;; thank you, Nauri
-;; https://www.reddit.com/r/emacs/comments/1sidf4/3_questions_about_w3m/
+;; thank you, Howard
+;; https://raw.githubusercontent.com/howardabrams/dot-files/master/emacs-browser.org
 
-(add-hook 'w3m-display-hook
-          (lambda (url)
-            (if (string-match ".google\.com/search." url)
-                (progn
-                  (search-forward "About")
-                  (forward-line 2)
-                  (right-char 4)
-                  (recenter-top-bottom 0))
-              nil)))
+(require-package 'ace-link)
+(ace-link-setup-default)
+(define-key w3m-mode-map (kbd "o") 'ace-link-eww)
+;; clean up the w3m buffers:
+(add-hook 'w3m-display-functions 'w3m-hide-stuff)
+(add-hook 'w3m-mode 'ace-link-mode)
+
+(defun w3m-skip-in-google ()
+  "For a Google Search, skip to the first result."
+  (beginning-of-buffer)
+  (search-forward-regexp "[0-9, ]+ results")
+  (forward-line 2)
+  (recenter-top-bottom 0))
+
+(defun w3m-skip-in-stackoverflow ()
+  (beginning-of-buffer)
+  (search-forward-regexp "^   ")
+  (forward-line -2)
+  (recenter-top-bottom 0))
+
+(defun w3m-skip-in-clojuredocs()
+  "When viewing the Clojuredocs, we can skip to the meat of the
+     function description by looking for the label, ‘Available since’,
+     and finding the function name just before that."
+  (beginning-of-buffer)
+  (search-forward-regexp "Available since")
+  (forward-line -4)
+  (recenter-top-bottom 0))
+
+(defun w3m-hide-stuff (url)
+  "Call screen cleaning functions for the W3M based on the URL."
+  (interactive)
+  (cond ((string-match "google\.com/search" url) (w3m-skip-in-google))
+        ((string-match "clojuredocs.org" url) (w3m-skip-in-clojuredocs))
+        ((string-match "stackoverflow.com" url) (w3m-skip-in-stackoverflow))
+        ))
+
+
 ;; search wiki
 (defun wikipedia-search (search-term)
   "Search for SEARCH-TERM on wikipedia"

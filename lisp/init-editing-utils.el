@@ -1,3 +1,9 @@
+;; add extended utf-8 input support
+
+(require-package 'xah-math-input)
+
+;; extend parenthesis editing
+
 (require-package 'unfill)
 
 (when (fboundp 'electric-pair-mode)

@@ -10,7 +10,7 @@
 
 \documentclass[11pt]{scrartcl}
 \usepackage[beaue, pset, anon]{sdll}
-\pSet{\hw{MAT240}{VII}{1}}
+\pSet{\hw{MAT240}{$1}{$2}}
 \usepackage{lineno}
 % ----------------------------------------------------------------------
 % Page setup
