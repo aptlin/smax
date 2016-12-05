@@ -38,7 +38,7 @@
 (setq mu4e-mu-binary "/usr/local/bin/mu")
 (setq mu4e-maildir "~/.mail")
 (setq mu4e-get-mail-command "offlineimap -o")
-(setq mu4e-update-interval 300)
+(setq mu4e-update-interval 3600)
 (setq mu4e-view-show-images t)
 (setq mu4e-html2text-command "w3m -dump -T text/html")
 ;; This enables unicode chars to be used for things like flags in the message index screens.
