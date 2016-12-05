@@ -3,6 +3,8 @@ The most recent verified compatible version: 24.5.1
 This emacs configuration tree, based on the work of [[https://github.com/purcell/emacs.d][purcell]], comes
 with the following extensions:
 
++ Integration with [[http://www.sagemath.org/][Sage]] using [[https://github.com/stakemori/sage-shell-mode][sage-shell-mode]] and [[https://github.com/stakemori/ob-sagemath][ob-sagemath]]
+
 + Customized AUCTeX environment
 
   - RefTeX for citations, structural navigation and editing
