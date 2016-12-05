@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: sage source block
+# key: sa
+# --
+#+begin_src sage :exports both
+$0
+#+end_src

@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: sage plot
+# key: pl
+# --
+#+begin_src sage :file images/$1 :exports both
+$0
+#+end_src
