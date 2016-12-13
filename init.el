@@ -33,9 +33,6 @@
 
 ;; Calls (package-initialize)
 (require 'init-elpa)      ;; Machinery for installing required packages
-
-;; (require 'init-exec-path) ;; Set up $PATH
-
 ;;----------------------------------------------------------------------------
 ;; Allow users to provide an optional "init-preload-local.el"
 ;;----------------------------------------------------------------------------
@@ -52,7 +49,7 @@
 (require-package 'mwe-log-commands)
 
 (require 'init-gnus)
-(require 'init-browser)
+;;(require 'init-browser)
 (require 'init-eshell)
 (require 'init-bookmarks)
 (require 'init-email)
@@ -110,7 +107,7 @@
 
 (require 'init-paredit)
 (require 'init-lisp)
-(require 'init-slime)
+;;(require 'init-slime)
 (require 'init-common-lisp)
 
 (when *spell-check-support-enabled*

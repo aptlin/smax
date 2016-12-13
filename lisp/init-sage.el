@@ -1,5 +1,6 @@
 (require-package 'sage-shell-mode)
 (require-package 'ob-sagemath)
+(require-package 'auto-complete-sage)
 (setq sage-shell:use-prompt-toolkit t)
 (setq sage-shell:sage-root "/home/aleph/PROG/SageMath")
 ;; Run SageMath by M-x run-sage instead of M-x sage-shell:run-sage
@@ -31,5 +32,7 @@
 
 ;; Show images after evaluating code blocks.
 (add-hook 'org-babel-after-execute-hook 'org-display-inline-images)
+(add-hook 'sage-shell:sage-mode-hook 'ac-sage-setup)
+(add-hook 'sage-shell-mode-hook 'ac-sage-setup)
 
 (provide 'init-sage)

@@ -10,22 +10,22 @@
 #+EXPORT_EXCLUDE_TAGS: noexport
 
 * Initialization
-** Variables
-#+header: :tangle yes
-#+begin_src emacs-lisp
-(setq org-startup-truncated nil)
-#+end_src
-
-#+RESULTS:
 
 ** Auto-load main packages
 
 #+header: :tangle yes
 #+begin_src emacs-lisp
-;(require-package 'org)
+(require-package 'org)
+;;(require-package 'org-plus-contrib)
 (require-package 'org-fstree)
-(require-package 'org-plus-contrib)
 (add-to-list 'auto-mode-alist '("\\.\\(org\\|org_archive\\|txt\\)$" . org-mode))
+#+end_src
+
+#+RESULTS:
+** Variables
+#+header: :tangle yes
+#+begin_src emacs-lisp
+(setq org-startup-truncated nil)
 #+end_src
 
 #+RESULTS:
@@ -944,7 +944,7 @@ loaded for filling to work correctly.
 (require 'ox-html)
 (require 'ox-latex)
 (require 'ox-ascii)
-(require 'ox-bibtex)
+;;(require 'ox-bibtex)
 #+end_src
 
 *** Latex Exporter

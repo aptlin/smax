@@ -116,7 +116,7 @@
         ("restartlist" "{")))
 
 ;; Further pdf support
-
+(require-package 'pdf-tools)
 (pdf-tools-install)
 
 ;; Enable outline-minor-mode for folding

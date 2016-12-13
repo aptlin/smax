@@ -1,9 +1,9 @@
-(setq org-startup-truncated nil)
-
-;(require-package 'org)
+(require-package 'org)
+;;(require-package 'org-plus-contrib)
 (require-package 'org-fstree)
-(require-package 'org-plus-contrib)
 (add-to-list 'auto-mode-alist '("\\.\\(org\\|org_archive\\|txt\\)$" . org-mode))
+
+(setq org-startup-truncated nil)
 
 (require-package 'gnuplot-mode)
 (local-set-key "\M-\C-g" 'org-plot/gnuplot)
@@ -517,7 +517,7 @@ A prefix arg forces clock in of the default task."
 (require 'ox-html)
 (require 'ox-latex)
 (require 'ox-ascii)
-(require 'ox-bibtex)
+;;(require 'ox-bibtex)
 
 (setq org-export-time-stamp-file nil)
 (setq org-html-postamble nil)
