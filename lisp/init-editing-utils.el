@@ -7,7 +7,7 @@
 ;; add extended utf-8 input support
 
 (global-set-key (kbd "<C-f2>") 'bm-toggle)
-(global-set-key (kbd "<f2> n")   'bm-next)
+(global-set-key (kbd "<f2> n") 'bm-next)
 (global-set-key (kbd "<S-f2>") 'bm-previous)
 
 ;; LIFO order
@@ -112,7 +112,6 @@
 (require-package 'undo-tree)
 (global-undo-tree-mode)
 (diminish 'undo-tree-mode)
-
 
 (require-package 'highlight-symbol)
 (dolist (hook '(prog-mode-hook html-mode-hook css-mode-hook))
@@ -120,12 +119,12 @@
   (add-hook hook 'highlight-symbol-nav-mode))
 (add-hook 'org-mode-hook 'highlight-symbol-nav-mode)
 (after-load 'highlight-symbol
-  (diminish 'highlight-symbol-mode)
-  (defadvice highlight-symbol-temp-highlight (around sanityinc/maybe-suppress activate)
-    "Suppress symbol highlighting while isearching."
-    (unless (or isearch-mode
-                (and (boundp 'multiple-cursors-mode) multiple-cursors-mode))
-      ad-do-it)))
+            (diminish 'highlight-symbol-mode)
+            (defadvice highlight-symbol-temp-highlight (around sanityinc/maybe-suppress activate)
+              "Suppress symbol highlighting while isearching."
+              (unless (or isearch-mode
+                          (and (boundp 'multiple-cursors-mode) multiple-cursors-mode))
+                ad-do-it)))
 
 ;;----------------------------------------------------------------------------
 ;; Zap *up* to char is a handy pair for zap-to-char
@@ -157,7 +156,6 @@
 ;; Show matching parens
 ;;----------------------------------------------------------------------------
 (show-paren-mode 1)
-
 ;;----------------------------------------------------------------------------
 ;; Expand region
 ;;----------------------------------------------------------------------------
@@ -179,9 +177,28 @@
 
 
 ;;----------------------------------------------------------------------------
+;; Faster shortcuts
+;;----------------------------------------------------------------------------
+
+(require-package 'key-chord)
+(key-chord-mode 1)
+(key-chord-define-global "fg" 'iy-go-to-char)
+(key-chord-define-global "df" 'iy-go-to-char-backward)
+
+;;----------------------------------------------------------------------------
 ;; Handy key bindings
 ;;----------------------------------------------------------------------------
-;; quitting emacs
+
+(global-set-key (kbd "M-j")
+                (lambda ()
+                  (interactive)
+                  (join-line -1)))
+
+(require-package 'ace-jump-mode)
+(define-key global-map (kbd "C-#") 'ace-jump-mode)
+
+(require-package 'expand-region)
+(global-set-key (kbd "C-@") 'er/expand-region)
 (global-set-key (kbd "C-<") 'grep-find)
 (global-set-key (kbd "C->") 'helm-locate)
 (global-set-key (kbd "C-!") 'save-buffers-kill-emacs)
@@ -203,6 +220,14 @@
 (global-set-key (kbd "C-c m e") 'mc/edit-ends-of-lines)
 (global-set-key (kbd "C-c m a") 'mc/edit-beginnings-of-lines)
 
+;; quicken navigation
+
+(require-package 'iy-go-to-char)
+
+(global-set-key (kbd "C-c g") 'iy-go-to-char)
+(global-set-key (kbd "C-c G") 'iy-go-to-char-backward)
+(global-set-key (kbd "C-c ;") 'iy-go-to-or-up-to-continue)
+(global-set-key (kbd "C-c ,") 'iy-go-to-or-up-to-continue-backward)
 
 ;; Train myself to use M-f and M-b instead
 (global-unset-key [M-left])
