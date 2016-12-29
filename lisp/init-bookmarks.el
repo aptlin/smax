@@ -1,6 +1,5 @@
 ;; from http://ergoemacs.org/emacs/bookmark.html
-(setq inhibit-splash-screen t)
-(require 'bookmark)
-(bookmark-bmenu-list)
-(switch-to-buffer "*Bookmark List*")
+(setq bookmark-default-file  "~/ORG/bookmarks")
+(require-package 'bookmark+)
+(setq bookmark-version-control t)
 (provide 'init-bookmarks)
