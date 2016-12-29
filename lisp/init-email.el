@@ -113,6 +113,7 @@
 (setq mu4e-maildir-shortcuts
       '( ("/delly/INBOX"               . ?i)
          ("/delly/sent"   . ?s)
+         ("/delly/drafts"   . ?d)
          ("/delly/trash"       . ?t)
          ("/delly/archive"    . ?a)))
 

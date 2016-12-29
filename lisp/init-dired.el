@@ -24,4 +24,8 @@
 
 (global-set-key (kbd "<f9> d") 'dired)
 
+(require-package 'openwith)
+(setq openwith-associations '(("\\.pdf\\'" "zathura" (file))))
+(openwith-mode t)
+
 (provide 'init-dired)

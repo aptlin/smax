@@ -181,6 +181,11 @@
 ;;----------------------------------------------------------------------------
 ;; Handy key bindings
 ;;----------------------------------------------------------------------------
+;; quitting emacs
+(global-set-key (kbd "C-<") 'grep-find)
+(global-set-key (kbd "C->") 'helm-locate)
+(global-set-key (kbd "C-!") 'save-buffers-kill-emacs)
+
 (global-set-key (kbd "C-.") 'set-mark-command)
 (global-set-key (kbd "C-x C-.") 'pop-global-mark)
 
@@ -403,15 +408,15 @@ With arg N, insert N newlines."
 
 (global-set-key (kbd "<S-return>") 'end-of-line-and-indented-new-line)
 ;;from https://emacs.stackexchange.com/questions/4089/can-i-configure-eww-to-use-pdf-view-mode-from-pdf-tools-for-pdfs-instead-of-do
-(defvar tv/prefer-pdf-tools (fboundp 'pdf-view-mode))
-(defun tv/start-pdf-tools-if-pdf ()
-  (when (and tv/prefer-pdf-tools
-             (eq doc-view-doc-type 'pdf))
-    (pdf-view-mode)))
+;; (defvar tv/prefer-pdf-tools (fboundp 'pdf-view-mode))
+;; (defun tv/start-pdf-tools-if-pdf ()
+;;   (when (and tv/prefer-pdf-tools
+;;              (eq doc-view-doc-type 'pdf))
+;;     (pdf-view-mode)))
 
-(add-hook 'doc-view-mode-hook 'tv/start-pdf-tools-if-pdf)
+;; (add-hook 'doc-view-mode-hook 'tv/start-pdf-tools-if-pdf)
 
-(setq tv/prefer-pdf-tools t)
+;; (setq tv/prefer-pdf-tools t)
 
 ;; autoindentation
 

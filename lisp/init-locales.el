@@ -17,4 +17,6 @@
   (set-selection-coding-system (if (eq system-type 'windows-nt) 'utf-16-le 'utf-8))
   (prefer-coding-system 'utf-8))
 
+(load-file "~/.emacs.d/site-lisp/cyrillic-dvorak/cyrillic-dvorak.el")
+(setq default-input-method "cyrillic-dvorak")
 (provide 'init-locales)

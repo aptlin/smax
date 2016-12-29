@@ -47,9 +47,10 @@
 (require-package 'diminish)
 (require-package 'scratch)
 (require-package 'mwe-log-commands)
-
+(require-package 'auto-package-update)
+(auto-package-update-maybe)
 (require 'init-gnus)
-;;(require 'init-browser)
+(require 'init-browser)
 (require 'init-eshell)
 (require 'init-bookmarks)
 (require 'init-email)
