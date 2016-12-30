@@ -50,7 +50,7 @@
 (require-package 'auto-package-update)
 (auto-package-update-maybe)
 (require 'init-gnus)
-(require 'init-browser)
+(require 'init-web-browser)
 (require 'init-eshell)
 (require 'init-bookmarks)
 (require 'init-email)

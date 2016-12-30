@@ -231,4 +231,4 @@ Otherwise, return nil."
 
 (setq w3m-confirm-leaving-secure-page nil)
 
-(provide 'init-browser)
+(provide 'init-web-browser)

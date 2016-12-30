@@ -1,6 +1,6 @@
 ;; add extended utf-8 support
 (require-package 'xah-math-input)
-
+(global-xah-math-input-mode 1)
 ;; add visual bookmarks
 (require-package 'bm)
 
