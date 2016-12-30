@@ -46,3 +46,5 @@ site-lisp/package/
 /anaconda-mode/
 savehist
 .\#*
+/bookmarks
+/.last-package-update-day
