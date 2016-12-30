@@ -1,3 +1,4 @@
+(require-package 'ag)
 (when (maybe-require-package 'projectile)
   (add-hook 'after-init-hook 'projectile-global-mode)
 

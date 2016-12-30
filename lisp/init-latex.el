@@ -18,6 +18,16 @@
 ;; Turn on RefTeX for AUCTeX http://www.gnu.org/s/auctex/manual/reftex/reftex_5.html
 (add-hook 'TeX-mode-hook 'turn-on-reftex)
 
+;; add helm-bibtex
+;; http://iflysib14.iflysib.unlp.edu.ar/tomas/en/blog/reference-management.html
+(add-hook 'TeX-mode-hook
+          (lambda() (define-key TeX-mode-map "\C-ch" 'helm-bibtex)) )
+(setq  helm-bibtex-pdf-field "file")
+(setq helm-bibtex-pdf-open-function
+      (lambda (fpath)
+        (start-process "zathura" "*helm-bibtex-evince*" "/usr/bin/zathura" fpath)))
+(setq helm-bibtex-notes-path "~/ORG/bibnotes.org")
+
 (eval-after-load 'reftex-vars; Is this construct really needed?
   '(progn
      (setq reftex-cite-prompt-optional-args t); Prompt for empty optional arguments in cite macros.
@@ -28,6 +38,7 @@
      ;; works.
      (setq reftex-bibliography-commands '("bibliography" "nobibliography" "addbibresource"))
      (setq reftex-default-bibliography '("~/ORG/references.bib")); So that RefTeX in Org-mode knows bibliography
+     (setq helm-bibtex-bibliography '("~/ORG/references.bib"));
      (setcdr (assoc 'caption reftex-default-context-regexps) "\\\\\\(rot\\|sub\\)?caption\\*?[[{]"); Recognize \subcaptions, e.g. reftex-citation
      (setq reftex-cite-format; Get ReTeX with biblatex, see http://tex.stackexchange.com/questions/31966/setting-up-reftex-with-biblatex-citation-commands/31992#31992
            '((?t . "\\textcite[]{%l}")
@@ -148,8 +159,6 @@
 
 ;; make math mode easier to enter
 
-
-
 (add-hook 'plain-TeX-mode-hook
           (lambda () (set (make-variable-buffer-local 'TeX-electric-math)
                      (cons "$" "$"))))
@@ -171,4 +180,6 @@
 (setq TeX-electric-sub-and-superscript t)
 
 (setq LaTeX-electric-left-right-brace t)
+
+
 (provide 'init-latex)
