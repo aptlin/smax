@@ -26,6 +26,7 @@
 (setq helm-bibtex-pdf-open-function
       (lambda (fpath)
         (start-process "zathura" "*helm-bibtex-evince*" "/usr/bin/zathura" fpath)))
+
 (setq helm-bibtex-notes-path "~/ORG/bibnotes.org")
 
 (eval-after-load 'reftex-vars; Is this construct really needed?
