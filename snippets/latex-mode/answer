@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: answer
+# key: an
+# --
+\begin{answer*}
+
+$0
+
+\end{answer*}

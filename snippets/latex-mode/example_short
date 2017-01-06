@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: example_short
+# key: exi
+# --
+\begin{description}
+
+\item[e.g.] $0
+
+\end{description}

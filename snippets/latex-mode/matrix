@@ -2,6 +2,6 @@
 # name: matrix
 # key: mat
 # --
-\begin{bmatrix}
+\begin{pmatrix}
 $0
-\end{bmatrix}
+\end{pmatrix}

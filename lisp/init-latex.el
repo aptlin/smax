@@ -1,3 +1,4 @@
+(setq-default TeX-engine 'xetex)
 (load "auctex.el" nil t t)
 (load "preview-latex.el" nil t t)
 (setq TeX-parse-self t); Enable parse on load.
@@ -9,10 +10,30 @@
 (add-hook 'TeX-mode-hook 'LaTeX-math-mode)
 
 ;; Auto-completion
-(require-package 'company-auctex)
-(require 'company-auctex)
+;; (require-package 'company-auctex)
+;; (require 'company-auctex)
+;; (company-auctex-init)
 
-(company-auctex-init)
+(require-package 'auto-complete)
+(require 'auto-complete-config)
+(ac-config-default)
+
+(require-package 'ac-math)
+(add-to-list 'ac-modes 'LaTeX-mode)   ; make auto-complete aware of `latex-mode`
+
+(defun ac-LaTeX-mode-setup () ; add ac-sources to default ac-sources
+  (setq ac-sources
+        (append '(ac-source-math-unicode ac-source-math-latex ac-source-latex-commands)
+                ac-sources))
+  )
+(add-hook 'TeX-mode-hook 'ac-LaTeX-mode-setup)
+(global-auto-complete-mode t)
+
+(setq ac-math-unicode-in-math-p t)
+;;  display unicode characters instead of latex commands
+
+(require-package 'magic-latex-buffer)
+(add-hook 'TeX-mode-hook 'magic-latex-buffer)
 
 ;;; RefTeX
 ;; Turn on RefTeX for AUCTeX http://www.gnu.org/s/auctex/manual/reftex/reftex_5.html

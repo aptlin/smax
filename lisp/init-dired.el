@@ -26,6 +26,7 @@
 
 (require-package 'openwith)
 (setq openwith-associations '(("\\.pdf\\'" "zathura" (file))))
+(setq openwith-associations '(("\\.djvu\\'" "zathura" (file))))
 (openwith-mode t)
 
 (provide 'init-dired)
