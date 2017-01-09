@@ -1,7 +1,7 @@
 ;; Thank you, Nan.
 ;; https://nine27.com/2016-10-03/better-email-with-mu4e/
 
-(add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e")
+;;(add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e")
 (require 'mu4e)
 
 
@@ -35,7 +35,7 @@
           (setq message-sendmail-extra-arguments (list '"-a" account))))))
 
 (setq mail-user-agent 'mu4e-user-agent)
-(setq mu4e-mu-binary "/usr/local/bin/mu")
+(setq mu4e-mu-binary "/usr/bin/mu")
 (setq mu4e-maildir "~/.mail")
 (setq mu4e-get-mail-command "offlineimap -o")
 (setq mu4e-update-interval 3600)

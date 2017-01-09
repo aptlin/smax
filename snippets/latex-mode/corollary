@@ -1,6 +1,6 @@
 # -*- mode: snippet -*-
 # name: corollary
-# key: cr
+# key: cor
 # --
 \begin{corollary}
 $0
