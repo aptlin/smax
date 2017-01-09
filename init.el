@@ -50,7 +50,7 @@
 (require-package 'mwe-log-commands)
 (require-package 'auto-package-update)
 (setq auto-package-update-delete-old-versions t)
-(auto-package-update-now)
+(auto-package-update-at-time "03:00")
 (require 'init-gnus)
 (require 'init-web-browser)
 (require 'init-eshell)
