@@ -33,11 +33,13 @@
 ;; extend parenthesis editing
 
 (require-package 'unfill)
-
+(require-package 'aggressive-indent)
 (when (fboundp 'electric-pair-mode)
   (electric-pair-mode))
 (when (eval-when-compile (version< "24.4" emacs-version))
-  (electric-indent-mode 1))
+  (global-aggressive-indent-mode 1)
+  ;;  (electric-indent-mode 1)
+  )
 (add-hook 'LaTeX-mode-hook
           (electric-pair-mode 0)) 
 ;;----------------------------------------------------------------------------
@@ -413,9 +415,10 @@ With arg N, insert N newlines."
 ;; ----------------------------------------------------------------------------
 
 
-(add-to-list 'load-path
-             "~/.emacs.d/plugins/yasnippet"
-             "~/.emacs.d/snippets/")
+;; (add-to-list 'load-path
+;;              "~/.emacs.d/plugins/yasnippet"
+;;              "~/.emacs.d/snippets/")
+(setq-default yas-snippet-dirs '("~/.emacs.d/snippets"))
 (require-package 'yasnippet)
 (yas-global-mode 1)
 (yas-load-directory "~/.emacs.d/snippets/")

@@ -49,7 +49,7 @@
          '("\\.lyx" "lyx" (file))
          '("\\.chm" "kchmviewer" (file))
          (list (openwith-make-extension-regexp
-                '("pdf" "ps" "ps.gz" "dvi"))
+                '("pdf" "ps" "ps.gz" "dvi" "djvu"))
                "zathura"
                '(file))
          )))

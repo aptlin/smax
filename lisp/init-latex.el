@@ -6,6 +6,10 @@
 (setq TeX-auto-save t); Enable parse on save.
 ;;(setq-default TeX-master nil)
 (setq TeX-PDF-mode t); PDF mode (rather than DVI-mode)
+;; improve abbrev-expansion
+
+(require-package 'cdlatex)
+(add-hook 'LaTeX-mode-hook 'turn-on-cdlatex)   ; with AUCTeX LaTeX mode
 
 ;; LaTeX-math-mode http://www.gnu.org/s/auctex/manual/auctex/Mathematics.html
 (add-hook 'TeX-mode-hook 'LaTeX-math-mode)
@@ -181,12 +185,19 @@
 
 ;; make math mode easier to enter
 
+
 (add-hook 'plain-TeX-mode-hook
           (lambda () (set (make-variable-buffer-local 'TeX-electric-math)
                      (cons "$" "$"))))
 (add-hook 'LaTeX-mode-hook
           (lambda () (set (make-variable-buffer-local 'TeX-electric-math)
                      (cons "\\(" "\\)"))))
+
+
+(setq TeX-electric-sub-and-superscript t)
+
+(setq LaTeX-electric-left-right-brace t)
+
 ;; use zathura for pdfs
 
 (custom-set-variables
@@ -199,9 +210,8 @@
      (output-dvi "xdvi")
      (output-pdf "Zathura")                                    ; [2]
      (output-html "xdg-open")))))
-(setq TeX-electric-sub-and-superscript t)
 
-(setq LaTeX-electric-left-right-brace t)
+
 
 
 (provide 'init-latex)

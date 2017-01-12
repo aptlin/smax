@@ -13,6 +13,18 @@
 
 (require-package 'idomenu)
 
+;; improve filename completion
+
+(setq read-file-name-completion-ignore-case t)
+(setq read-buffer-completion-ignore-case t)
+(mapc (lambda (x)
+        (add-to-list 'completion-ignored-extensions x))
+      '(".aux" ".bbl" ".blg"
+        ".log" ".out" ".synctex.gz"
+        ".tdo" ".toc"
+        "-pkg.el" "-autoloads.el"
+        "Notes.bib" "auto/"))
+
 ;; Allow the same buffer to be open in different frames
 (setq ido-default-buffer-method 'selected-window)
 
