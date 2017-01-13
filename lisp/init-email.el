@@ -150,7 +150,7 @@
 ;;  key bindings
 (global-unset-key (kbd "C-x m"))
 (global-set-key (kbd "C-x m") 'mu4e)
-;; BBDB
+;; ;; BBDB
 
 (setq bbdb-file "~/.emacs.d/bbdb")           ;; keep ~/ clean; set before loading
 (require-package 'bbdb)
@@ -194,7 +194,7 @@
 (bbdb-initialize 'message 'mu4e)
 (setq bbdb-mail-user-agent (quote message-user-agent))
 (setq mu4e-view-mode-hook (quote (bbdb-mua-auto-update visual-line-mode)))
-(setq mu4e-compose-complete-addresses nil)
+(setq mu4e-compose-complete-addresses t)
 (setq bbdb-mua-pop-up t)
 (setq bbdb-mua-pop-up-window-size 5)
 (provide 'init-email)

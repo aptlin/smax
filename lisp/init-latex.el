@@ -19,9 +19,7 @@
 (require 'company-auctex)
 (company-auctex-init)
 
-(require-package 'auto-complete)
-(require 'auto-complete-config)
-(ac-config-default)
+
 
 (require-package 'ac-math)
 (add-to-list 'ac-modes 'LaTeX-mode)   ; make auto-complete aware of `latex-mode`
