@@ -38,7 +38,7 @@
   (electric-pair-mode))
 (when (eval-when-compile (version< "24.4" emacs-version))
   (global-aggressive-indent-mode 1)
-  ;;  (electric-indent-mode 1)
+;;  (electric-indent-mode 1)
   )
 (add-hook 'LaTeX-mode-hook
           (electric-pair-mode 0)) 
@@ -378,35 +378,35 @@ With arg N, insert N newlines."
             (diminish 'guide-key-mode)))
 
 ;; autocompletion
-(require-package 'pabbrev)
+;;(require-package 'pabbrev)
 (require-package 'auto-complete)
 (require 'auto-complete-config)
 (ac-config-default)
-(setq pabbrev-idle-timer-verbose nil)
-(require 'popup)
+;;(setq pabbrev-idle-timer-verbose nil)
+;; (require 'popup)
 
-(defun pabbrevx-suggestions-goto-buffer (suggestions)
-  (let* ((candidates (mapcar 'car suggestions))
-         (bounds (pabbrev-bounds-of-thing-at-point))
-         (selection (popup-menu* candidates
-                                 :point (car bounds)
-                                 :scroll-bar t)))
-    (when selection
-      ;; modified version of pabbrev-suggestions-insert
-      (let ((point))
-        (save-excursion
-          (progn
-            (delete-region (car bounds) (cdr bounds))
-            (insert selection)
-            (setq point (point))))
-        (if point
-            (goto-char point))
-        ;; need to nil this so pabbrev-expand-maybe-full won't try
-        ;; pabbrev expansion if user hits another TAB after ac aborts
-        (setq pabbrev-last-expansion-suggestions nil)
-        ))))
+;; (defun pabbrevx-suggestions-goto-buffer (suggestions)
+;;   (let* ((candidates (mapcar 'car suggestions))
+;;          (bounds (pabbrev-bounds-of-thing-at-point))
+;;          (selection (popup-menu* candidates
+;;                                  :point (car bounds)
+;;                                  :scroll-bar t)))
+;;     (when selection
+;;       ;; modified version of pabbrev-suggestions-insert
+;;       (let ((point))
+;;         (save-excursion
+;;           (progn
+;;             (delete-region (car bounds) (cdr bounds))
+;;             (insert selection)
+;;             (setq point (point))))
+;;         (if point
+;;             (goto-char point))
+;;         ;; need to nil this so pabbrev-expand-maybe-full won't try
+;;         ;; pabbrev expansion if user hits another TAB after ac aborts
+;;         (setq pabbrev-last-expansion-suggestions nil)
+;;         ))))
 
-(fset 'pabbrev-suggestions-goto-buffer 'pabbrevx-suggestions-goto-buffer)
+;; (fset 'pabbrev-suggestions-goto-buffer 'pabbrevx-suggestions-goto-buffer)
 
 
 ;; AUCTeX
@@ -454,7 +454,8 @@ With arg N, insert N newlines."
 (require-package 'yasnippet)
 (yas-global-mode 1)
 (yas-load-directory "~/.emacs.d/snippets/")
-
+(setq yas-indent-line 'auto)
+(setq yas-also-auto-indent-first-line t)
 ;; ----------------------------------------------------------------------------
 ;; More comfortable new line
 ;; ----------------------------------------------------------------------------
@@ -465,8 +466,21 @@ With arg N, insert N newlines."
   (while (< count 3)
     (newline-and-indent)
     (setq count (1+ count))))
-
-(global-set-key (kbd "<S-return>") 'end-of-line-and-indented-new-line)
+(defun align-table ()
+  (interactive)
+  (backward-paragraph)
+  (mark-paragraph)
+  (align-regexp (region-beginning) (region-end) "\\(\\s-*\\)&" 1 1 nil)
+  (mark-paragraph)
+  (align-regexp (region-beginning) (region-end) "\\(\\s-*\\)[+=]" 1 1 nil)
+  )
+(defun prettify-paragraph ()
+  (interactive)
+  (align-current)
+  (fill-paragraph)
+  )
+(global-set-key (kbd "<S-return>") 'prettify-paragraph)
+(global-set-key (kbd "<M-return>") 'align-current)
 ;;from https://emacs.stackexchange.com/questions/4089/can-i-configure-eww-to-use-pdf-view-mode-from-pdf-tools-for-pdfs-instead-of-do
 ;; (defvar tv/prefer-pdf-tools (fboundp 'pdf-view-mode))
 ;; (defun tv/start-pdf-tools-if-pdf ()

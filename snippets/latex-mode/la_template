@@ -1,3 +1,4 @@
+
 # -*- mode: snippet -*-
 # name: latex_template
 # key: la
@@ -10,7 +11,7 @@
 
 \documentclass[11pt]{scrartcl}
 \usepackage[beaue, pset, anon]{sdll}
-\pSet{\hw{MAT240}{$1}{$2}}
+\pSet{\hw{MAT247}{$1}{$2}}
 \usepackage{lineno}
 % ----------------------------------------------------------------------
 % Page setup

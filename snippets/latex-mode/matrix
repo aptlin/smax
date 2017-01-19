@@ -2,6 +2,7 @@
 # name: matrix
 # key: mat
 # --
+
 \begin{pmatrix}
 $0
 \end{pmatrix}

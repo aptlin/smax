@@ -19,8 +19,6 @@
 (require 'company-auctex)
 (company-auctex-init)
 
-
-
 (require-package 'ac-math)
 (add-to-list 'ac-modes 'LaTeX-mode)   ; make auto-complete aware of `latex-mode`
 
@@ -34,8 +32,8 @@
 
 (setq ac-math-unicode-in-math-p t) ;;  display unicode characters instead of latex commands
 
-(require-package 'magic-latex-buffer)
-(add-hook 'LaTeX-mode-hook 'magic-latex-buffer)
+;;(require-package 'magic-latex-buffer)
+;;(add-hook 'LaTeX-mode-hook 'magic-latex-buffer)
 
 ;;; RefTeX
 ;; Turn on RefTeX for AUCTeX http://www.gnu.org/s/auctex/manual/reftex/reftex_5.html
@@ -48,7 +46,7 @@
 (setq  helm-bibtex-pdf-field "file")
 (setq helm-bibtex-pdf-open-function
       (lambda (fpath)
-        (start-process "zathura" "*helm-bibtex-evince*" "/usr/bin/zathura" fpath)))
+        (start-process "evince" "*helm-bibtex-evince*" "/usr/bin/evince" fpath)))
 
 (setq helm-bibtex-notes-path "~/ORG/bibnotes.org")
 
@@ -196,17 +194,17 @@
 
 (setq LaTeX-electric-left-right-brace t)
 
-;; use zathura for pdfs
+;; use evince for pdfs
 
 (custom-set-variables
  ;; Your other configuration here
  ;; ...
- '(TeX-view-program-list (quote (("Zathura" "zathura %o")))) ; [1]
+ '(TeX-view-program-list (quote (("Evince" "evince %o")))) ; [1]
  '(TeX-view-program-selection
    (quote
     (((output-dvi style-pstricks) "dvips and gv")
      (output-dvi "xdvi")
-     (output-pdf "Zathura")                                    ; [2]
+     (output-pdf "evince")                                    ; [2]
      (output-html "xdg-open")))))
 
 

@@ -50,7 +50,7 @@
          '("\\.chm" "kchmviewer" (file))
          (list (openwith-make-extension-regexp
                 '("pdf" "ps" "ps.gz" "dvi" "djvu"))
-               "zathura"
+               "evince"
                '(file))
          )))
 

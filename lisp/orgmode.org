@@ -26,6 +26,15 @@
 #+header: :tangle yes
 #+begin_src emacs-lisp
 (setq org-startup-truncated nil)
+(eval-after-load "org"
+  '(progn
+     ;; .txt files aren't in the list initially, but in case that changes
+     ;; in a future version of org, use if to avoid errors
+     (if (assoc "\\.txt\\'" org-file-apps)
+         (setcdr (assoc "\\.txt\\'" org-file-apps) "notepad.exe %s")
+       (add-to-list 'org-file-apps '("\\.txt\\'" . "notepad.exe %s") t))
+     ;; Change .pdf association directly within the alist
+     (setcdr (assoc "\\.pdf\\'" org-file-apps) "evince %s")))
 #+end_src
 
 #+RESULTS:
@@ -66,7 +75,6 @@
       (unless (file-exists-p org-ditaa-jar-path)
         (sanityinc/grab-ditaa url jar-name)))))
 #+end_src
-
 * Agenda
 ** Agenda files
 #+header: :tangle yes

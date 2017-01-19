@@ -2,4 +2,4 @@
 # name: matrix_field
 # key: mf
 # --
-M_{n\times n}(F)
+M_{n\times n}(\FF)

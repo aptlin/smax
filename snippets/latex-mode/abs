@@ -1,5 +1,5 @@
 # -*- mode: snippet -*-
 # name: absolute_value
-# key: a
+# key: abs
 # --
 \abs{$0}
