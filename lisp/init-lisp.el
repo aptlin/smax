@@ -5,9 +5,7 @@
 
 (require-package 'lively)
 
-(setq-default initial-scratch-message
-              (concat ";; Happy hacking, " user-login-name " - Emacs ♥ you!\n\n"))
-
+(setq initial-buffer-choice "~/ORG/todo.org")
 
 
 ;; Make C-x C-e run 'eval-region if the region is active

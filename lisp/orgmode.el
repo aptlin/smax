@@ -1,5 +1,4 @@
-
-(require-package 'org)
+(require 'org)
 ;;(require-package 'org-plus-contrib)
 (require-package 'org-fstree)
 (add-to-list 'auto-mode-alist '("\\.\\(org\\|org_archive\\|txt\\)$" . org-mode))
@@ -564,7 +563,7 @@ A prefix arg forces clock in of the default task."
 ; Do not prompt to confirm evaluation
 ; This may be dangerous - make sure you understand the consequences
 ; of setting this -- see the docstring for details
-(setq org-confirm-babel-evaluate nil)
+;;(setq org-confirm-babel-evaluate nil)
 
 (setq org-stuck-projects (quote ("" nil nil "")))
 
@@ -855,7 +854,7 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
 (global-set-key (kbd "<f5>") 'bh/org-todo)
 (global-set-key (kbd "<S-f5>") 'bh/widen)
 (global-set-key (kbd "<f8>") 'org-cycle-agenda-files)
-(global-set-key (kbd "<f9> <f9>") 'bh/show-org-agenda)
+(global-set-key (kbd "<f9> <f9>") 'org-agenda-list)
 (global-set-key (kbd "<f9> c") 'calendar)
 (global-set-key (kbd "<f9> f") 'boxquote-insert-file)
 ;;(global-set-key (kbd "<f9> g") 'gnus)
@@ -891,13 +890,6 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
 (lambda ()
 (define-key org-mode-map "\C-n" 'org-next-link)
 (define-key org-mode-map "\C-p" 'org-previous-link)))
-
-(defun bh/show-org-agenda ()
-  (interactive)
-  (if org-agenda-sticky
-      (switch-to-buffer "*Org Agenda( )*")
-    (switch-to-buffer "*Org Agenda*"))
-  (delete-other-windows))
 
 (defun bh/hide-other ()
   (interactive)

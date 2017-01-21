@@ -15,13 +15,23 @@
 
 #+header: :tangle yes
 #+begin_src emacs-lisp
-(require-package 'org)
+(require 'org)
 ;;(require-package 'org-plus-contrib)
 (require-package 'org-fstree)
 (add-to-list 'auto-mode-alist '("\\.\\(org\\|org_archive\\|txt\\)$" . org-mode))
+
 #+end_src
 
 #+RESULTS:
+
+** Set up org2nikola
+#+header: :tangle no
+#+begin_src emacs-lisp
+(load-file "~/.emacs.d/site-lisp/org2nikola.el")
+(require 'org2nikola)
+
+#+end_src
+
 ** Variables
 #+header: :tangle yes
 #+begin_src emacs-lisp
@@ -1006,7 +1016,7 @@ loaded for filling to work correctly.
 ; Do not prompt to confirm evaluation
 ; This may be dangerous - make sure you understand the consequences
 ; of setting this -- see the docstring for details
-(setq org-confirm-babel-evaluate nil)
+;;(setq org-confirm-babel-evaluate nil)
 
 #+end_src
 
@@ -1350,7 +1360,7 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
 (global-set-key (kbd "<f5>") 'bh/org-todo)
 (global-set-key (kbd "<S-f5>") 'bh/widen)
 (global-set-key (kbd "<f8>") 'org-cycle-agenda-files)
-(global-set-key (kbd "<f9> <f9>") 'bh/show-org-agenda)
+(global-set-key (kbd "<f9> <f9>") 'org-agenda-list)
 (global-set-key (kbd "<f9> c") 'calendar)
 (global-set-key (kbd "<f9> f") 'boxquote-insert-file)
 ;;(global-set-key (kbd "<f9> g") 'gnus)
@@ -1386,13 +1396,6 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
 (lambda ()
 (define-key org-mode-map "\C-n" 'org-next-link)
 (define-key org-mode-map "\C-p" 'org-previous-link)))
-
-(defun bh/show-org-agenda ()
-  (interactive)
-  (if org-agenda-sticky
-      (switch-to-buffer "*Org Agenda( )*")
-    (switch-to-buffer "*Org Agenda*"))
-  (delete-other-windows))
 
 (defun bh/hide-other ()
   (interactive)

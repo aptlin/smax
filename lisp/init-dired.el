@@ -56,6 +56,7 @@
 
 (openwith-mode 1)
 (add-to-list  'mm-inhibit-file-name-handlers 'openwith-file-handler)
-
+;; open org dirlinks in emacs
+(add-to-list 'org-file-apps '(directory . emacs))
 
 (provide 'init-dired)

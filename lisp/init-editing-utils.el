@@ -102,6 +102,11 @@
 (require-package 'nlinum)
 
 
+
+(require-package 'sentence-navigation)
+(global-set-key (kbd "M-e") 'sentence-nav-forward)
+(global-set-key (kbd "M-a") 'sentence-nav-backward)
+
 (when (require-package 'rainbow-delimiters)
   (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
 
@@ -370,12 +375,15 @@ With arg N, insert N newlines."
 (hes-mode)
 
 
-(require-package 'guide-key)
-(setq guide-key/guide-key-sequence '("C-x" "C-c" "C-x 4" "C-x 5" "C-c ;" "C-c ; f" "C-c ' f" "C-x n" "C-x C-r" "C-x r" "M-s" "C-h"))
+;;(require-package 'guide-key)
+;;(setq guide-key/guide-key-sequence '("C-x" "C-c" "C-x 4" "C-x 5" "C-c ;" "C-c ; f" "C-c ' f" "C-x n" "C-x C-r" "C-x r" "M-s" "C-h"))
+(require-package 'which-key)
 (add-hook 'after-init-hook
           (lambda ()
-            (guide-key-mode 1)
-            (diminish 'guide-key-mode)))
+            (which-key-mode)
+            (which-key-setup-side-window-right-bottom)
+            ;;            (diminish 'guide-key-mode)
+            ))
 
 ;; autocompletion
 ;;(require-package 'pabbrev)
@@ -480,7 +488,7 @@ With arg N, insert N newlines."
   (fill-paragraph)
   )
 (global-set-key (kbd "<S-return>") 'prettify-paragraph)
-(global-set-key (kbd "<M-return>") 'align-current)
+
 ;;from https://emacs.stackexchange.com/questions/4089/can-i-configure-eww-to-use-pdf-view-mode-from-pdf-tools-for-pdfs-instead-of-do
 ;; (defvar tv/prefer-pdf-tools (fboundp 'pdf-view-mode))
 ;; (defun tv/start-pdf-tools-if-pdf ()
