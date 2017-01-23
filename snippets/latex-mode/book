@@ -1,0 +1,43 @@
+# -*- mode: snippet -*-
+# name: book
+# key: book
+# --
+% -*- coding: utf-8; -*-
+\documentclass[11pt,a4paper]{book}
+
+\title{$0}
+
+%\author{}
+
+\begin{document}
+
+  \frontmatter
+    \maketitle
+    \tableofcontents
+    \listoffigures
+    \listoftables
+    \include{acknowledgements}
+
+  \mainmatter
+    \include{introduction}
+    \include{background}
+    \include{methodology}
+    \include{implementation}
+    \include{analysis}
+    \include{discussion}
+    \include{conclusion}
+
+  \appendix
+    \include{questionnaire}
+    \include{source.code}
+
+  \backmatter
+    \bibliography{bib.items}
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-engine: xetex
+%%% TeX-master: t
+%%% End:

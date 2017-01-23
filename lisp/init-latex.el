@@ -5,6 +5,8 @@
 (setq TeX-parse-self t); Enable parse on load.
 (setq TeX-auto-save t); Enable parse on save.
 ;;(setq-default TeX-master nil)
+;;(setq-default TeX-master "master") ;
+
 (setq TeX-PDF-mode t); PDF mode (rather than DVI-mode)
 ;; improve abbrev-expansion
 
