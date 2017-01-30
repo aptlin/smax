@@ -305,7 +305,7 @@
   (setq recentf-exclude
         '("COMMIT_MSG" "COMMIT_EDITMSG" "github.*txt$"
           ".*png$" "\\*message\\*" "auto-save-list\\*"))
-  (setq recentf-max-saved-items 60))
+  (setq recentf-max-saved-items 600))
 
 
 ;; Functions for working with strings

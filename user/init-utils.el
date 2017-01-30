@@ -6,4 +6,16 @@
   :init
   :bind (
 	 ("C-@" . er/expand-region)))
+(use-package which-key
+  :ensure t
+  :init
+  :config
+  (add-hook 'after-init-hook
+	    (lambda ()
+	      (which-key-mode)
+	      (which-key-setup-side-window-right-bottom)
+	      (diminish 'guide-key-mode)
+	      ))
+  )
+
 (provide 'init-utils)

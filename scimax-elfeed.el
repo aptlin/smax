@@ -1,12 +1,26 @@
 ;; * elfeed
 (require 'elfeed)
+;; Initialize elfeed-org
+;; This hooks up elfeed-org to read the configuration when elfeed
+;; is started with =M-x elfeed=
+;; (elfeed-org)
+
+;; Optionally specify a number of files containing elfeed
+;; configuration. If not set then the location below is used.
+;; Note: The customize interface is also supported.
 
 (setq elfeed-feeds
-      '((("http://planetpython.org/rss20.xml" python)
-	 ("http://planet.scipy.org/rss20.xml" python)
-	 ("http://planet.emacsen.org/atom.xml" emacs) 
-	 ;; Stackoverflow questions on emacs
-	 ("http://emacs.stackexchange.com/feeds" emacs)))
+      '(
+	("http://export.arxiv.org/rss/math.AG" math.AG)
+	("http://export.arxiv.org/rss/math.AT" math.AT)
+	("http://export.arxiv.org/rss/math.AC" math.AC)
+	("http://export.arxiv.org/rss/math.GT" math.GT)
+	;; ("http://planetpython.org/rss20.xml" python)
+	;; ("http://planet.scipy.org/rss20.xml" python)
+	;; ("http://planet.emacsen.org/atom.xml" emacs) 
+	;; Stackoverflow questions on emacs
+	;; ("http://emacs.stackexchange.com/feeds" emacs)
+	))
 
 (defface python-elfeed-entry
   '((t :background "Darkseagreen1"))
