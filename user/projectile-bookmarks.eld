@@ -1,1 +1,1 @@
-("~/WERKE/sdll.github.io/" "~/.emacs.d/" "~/emacs.d/" "~/TMP/NOTES/" "~/DOTS/" "~/_emacs.d/" "~/WERKE/NOTES/RA/" "~/scimax/scimax/" "~/scimax/scimax/ob-ipython/" "~/TMP/PROG/scimax/")
+("~/.emacs.d/" "~/WERKE/sdll.github.io/" "~/emacs.d/" "~/TMP/NOTES/" "~/DOTS/" "~/_emacs.d/" "~/WERKE/NOTES/RA/" "~/scimax/scimax/" "~/scimax/scimax/ob-ipython/" "~/TMP/PROG/scimax/")

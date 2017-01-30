@@ -388,7 +388,7 @@
 (use-package words
   :ensure nil
   :load-path scimax-dir
-  :bind ("H-w" . words-hydra/body))
+  :bind ("C-'" . words-hydra/body))
 
 (use-package ov-highlighter
   :ensure nil
