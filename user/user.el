@@ -1,3 +1,4 @@
+(setq initial-buffer-choice "~/ORG/todo.org")
 (require 'init-latex)
 (require 'init-notes)
 (require 'init-email)

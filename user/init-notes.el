@@ -1,17 +1,12 @@
 (setq temp-notes-dir "~/TMP/NOTES/")
-(defun ff (arg)
-  "Prompt user to enter a string, with input history support."
-  (interactive
-   (list
-    (read-string "Enter your name:")))
-  (message "String is %s." arg))
-(defun add-note ()
+(defun add-note (arg)
   "Add a new note to temp-notes-dir."
-  (interactive)
+  (interactive
+   (list (read-string "Enter the title of the note:")))
   (find-file (read-file-name "Add a new note: " temp-notes-dir
                              nil
                              nil
-                             () (format-time-string "%Y%m%d" (current-time))
+			     (concat (format-time-string "%Y%m%d" (current-time))
+				     arg)
                              nil)))
-
 (provide 'init-notes)
