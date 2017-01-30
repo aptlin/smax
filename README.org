@@ -1,52 +1,67 @@
-The most recent verified compatible version: 24.5.1
+#+TITLE: scimax - Awesome editing for scientists and engineers
+#+AUTHOR: John Kitchin
 
-This emacs configuration tree, based on the work of [[https://github.com/purcell/emacs.d][purcell]], comes
-with the following extensions:
+Scimax is a rewrite of jmax, with lessons learned, and improvements.
 
-+ Integration with [[http://www.sagemath.org/][Sage]] using [[https://github.com/stakemori/sage-shell-mode][sage-shell-mode]] and [[https://github.com/stakemori/ob-sagemath][ob-sagemath]]
+See the [[./scimax.org][manual]] for more details.
 
-+ Customized AUCTeX environment
-
-  - RefTeX for citations, structural navigation and editing
-  - LaTeX-Math-Mode for faster typing, cf. this [[http://tilda.univ-lille1.fr/wp-content/uploads/2012/08/tex-ref.pdf][reference]]
-  - YASnippet for templating
-
-+ Improved support for the programming languages
-
-  - CSS / LESS / SASS / SCSS
-  - Javascript / Coffeescript
-  - Python
-  - PHP
-  - Haskell
-  - Common Lisp (with Slime)
-
-+ mu4e for managing emails
-
-+ w3m for www
-
-+ Autocompletion with [[company][https://company-mode.github.io/]]
-
-+ Syntax checking with [[flycheck][http://www.flycheck.org]]
-
-+ ido-mode completion in the minibuffer wherever possible
+#+BEGIN_HTML
+<a href="https://travis-ci.org/jkitchin/scimax"><img src="https://travis-ci.org/jkitchin/scimax.svg?branch=master"></a>
+<a href='https://coveralls.io/github/jkitchin/scimax?branch=master'><img src='https://coveralls.io/repos/github/jkitchin/scimax/badge.svg?branch=master' alt='Coverage Status' /></a>
+#+END_HTML
 
 * Installation
 
-  To install, clone this repository to `$HOME/.emacs.d`.
+** Windows users
+Install git (http://git-scm.com/download/win). Open a git bash terminal. Run this command.
 
-  #+BEGIN_SRC
-  git clone https://github.com/sdll/EMACS.git ~/.emacs.d
-  #+END_SRC
+#+BEGIN_SRC sh
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/jkitchin/scimax/master/install-scimax-win.sh)"
+#+END_SRC
 
-  Upon starting up Emacs for the first time, further third-party
-  packages will be automatically downloaded and installed. If you
-  encounter any errors at that stage, try restarting Emacs, and possibly
-  running ~M-x package-refresh-contents~ before doing so.
+There is an emacs binary in this repository for Windows. You should be able to run the scimax.sh command to launch scimax now.
 
-* Updates
+** Mac users
 
-  Enter the ~/.emacs.d~ directory and execute ~git pull~.
+Run the next command in your terminal in the location you want to install scimax. The command will make sure you have [[http://brew.sh][homebrew]], git, and emacs installed, and then will clone scimax and tell you how to use it. It will take some time to install. You need to install your own LaTeX and Python probably.
 
-  To update the third-party packages, proceed as follows with emacs open:
+#+BEGIN_SRC sh
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/jkitchin/scimax/master/install-scimax-mac.sh)"
+#+END_SRC
 
-  ~M-x package-list-packages~, then ~U~ followed by ~x~.
+*** Alternative manual installation of scimax for Mac users
+Alternatively, you can install [[http://brew.sh][homebrew]] yourself, install git from http://git-scm.com/download/mac, build your emacs like this:
+
+#+BEGIN_SRC sh
+brew install emacs --with-gnutls --with-imagemagick --with-librsvg --with-x11 --use-git-head --HEAD --with-cocoa
+#+END_SRC
+
+This got me:
+#+BEGIN_SRC emacs-lisp :result org drawer
+(emacs-version)
+#+END_SRC
+
+#+RESULTS:
+: GNU Emacs 25.0.95.1 (x86_64-apple-darwin13.4.0, NS appkit-1265.21 Version 10.9.5 (Build 13F1603))
+:  of 2016-06-10
+
+These days I am using [[https://www.continuum.io/downloads][Python3 from Continuum IO]] and MacTeX from http://www.tug.org/mactex.
+
+After that, I clone scimax like this:
+
+#+BEGIN_SRC sh
+git clone https://github.com/jkitchin/scimax.git
+#+END_SRC
+
+and launch emacs with:
+
+#+BEGIN_SRC sh
+emacs -q -l scimax/init.el
+#+END_SRC
+
+** Linux users
+Run this command. It checks for a git and emacs, but does not install them. You will have to use your package manager for that. You also need to install your own LaTeX and Python (and other languages you might want).
+
+#+BEGIN_SRC sh
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/jkitchin/scimax/master/install-scimax-linux.sh)"
+#+END_SRC

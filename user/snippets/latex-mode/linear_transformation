@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: endomorphism
+# key: en
+# --
+\in \Hom(V,V)

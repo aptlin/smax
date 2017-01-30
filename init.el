@@ -1,161 +1,63 @@
+;;; init.el --- Where all the magic begins
+;;
 
-;;; This file bootstraps the configuration, which is divided into
-;;; a number of other files.
+;;; Commentary:
+;;
+;; This is a starter kit for scimax. This package provides a
+;; customized setup for emacs that we use daily for scientific
+;; programming and publication.
+;;
 
-(let ((minver "23.3"))
-  (when (version<= emacs-version "23.1")
-    (error "Your Emacs is too old -- this config requires v%s or higher" minver)))
-(when (version<= emacs-version "24")
-  (message "Your Emacs is old, and some functionality in this config will be disabled. Please upgrade if possible."))
+;;; Code:
+;; this makes garbage collection less frequent, which speeds up init by about 2 seconds.
+(setq gc-cons-threshold 80000000)
 
-(add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
-(require 'init-benchmarking) ;; Measure startup time
+(when (version< emacs-version "24.4")
+  (warn "You probably need at least Emacs 24.4. You should upgrade. You may need to install leuven-theme manually."))
 
-(defconst *spell-check-support-enabled* t) ;; Enable with t if you prefer
-(defconst *is-a-mac* (eq system-type 'darwin))
+;; remember this directory
+(defconst scimax-dir (file-name-directory (or load-file-name (buffer-file-name)))
+  "Directory where the scimax is installed.")
 
-;;----------------------------------------------------------------------------
-;; Temporarily reduce garbage collection during startup
-;;----------------------------------------------------------------------------
-(defconst sanityinc/initial-gc-cons-threshold gc-cons-threshold
-  "Initial value of `gc-cons-threshold' at start-up time.")
-(setq gc-cons-threshold (* 128 1024 1024))
-(add-hook 'after-init-hook
-          (lambda () (setq gc-cons-threshold sanityinc/initial-gc-cons-threshold)))
+(defvar user-dir (expand-file-name "user" scimax-dir)
+  "User directory for personal code.")
 
-;;----------------------------------------------------------------------------
-;; Bootstrap config
-;;----------------------------------------------------------------------------
-(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
-(require 'init-notes)
-(require 'init-compat)
-(require 'init-utils)
-(require 'init-site-lisp) ;; Must come before elpa, as it may provide package.el
+(setq user-emacs-directory user-dir)
 
-;; Calls (package-initialize)
-(require 'init-elpa)      ;; Machinery for installing required packages
-;;----------------------------------------------------------------------------
-;; Allow users to provide an optional "init-preload-local.el"
-;;----------------------------------------------------------------------------
-(require 'init-preload-local nil t)
+(setq package-user-dir (expand-file-name "elpa"  scimax-dir))
 
-;;----------------------------------------------------------------------------
-;; Load configs for specific features and modes
-;;----------------------------------------------------------------------------
+;; we load the user/preload.el file if it exists. This lets users define
+;; variables that might affect packages when they are loaded, e.g. key-bindings,
+;; etc... setup autoupdate, .
 
-(require-package 'wgrep)
-(require-package 'project-local-variables)
-(require-package 'diminish)
-(require-package 'scratch)
-(require-package 'mwe-log-commands)
-(require-package 'auto-package-update)
-(setq auto-package-update-delete-old-versions t)
-(auto-package-update-at-time "03:00")
-(require 'init-gnus)
-(require 'init-web-browser)
-(require 'init-eshell)
-(require 'init-bookmarks)
-(require 'init-email)
-(require 'init-blog)
-(require 'init-papers)
-(require 'init-frame-hooks)
-;;(require 'init-xterm)
-(require 'init-themes)
-(require 'init-gui-frames)
-(require 'init-dired)
-(require 'init-isearch)
-(require 'init-grep)
-(require 'init-uniquify)
-(require 'init-ibuffer)
-(require 'init-flycheck)
+(let ((preload (expand-file-name "user/preload.el" scimax-dir)))
+  (when (file-exists-p preload)
+    (load preload)))
 
-(require 'init-recentf)
-(require 'init-smex)
-(require 'init-ido)
+(defvar scimax-load-user-dir t
+  "Controls if the user directory is loaded.")
 
-;; (require 'init-ivy)
+(require 'package)
 
-(require 'init-hippie-expand)
-(require 'init-company)
-(require 'init-windows)
-(require 'init-sessions)
-(require 'init-fonts)
-(require 'init-mmm)
+(add-to-list
+ 'package-archives
+ '("melpa" . "http://melpa.org/packages/")
+ t)
 
-(require 'init-editing-utils)
-(require 'init-whitespace)
-(require 'init-fci)
-(require 'init-latex)
-(require 'init-vc)
-(require 'init-git)
-(require 'init-github)
+(add-to-list
+ 'package-archives
+ '("org"         . "http://orgmode.org/elpa/")
+ t)
 
-(require 'init-projectile)
+(add-to-list 'load-path scimax-dir)
+(add-to-list 'load-path user-dir)
 
-(require 'init-compile)
-(require 'init-crontab)
-(require 'init-textile)
-(require 'init-markdown)
-(require 'init-csv)
-(require 'init-javascript)
-(require 'init-php)
-(require 'init-org)
-(require 'init-nxml)
-(require 'init-html)
-(require 'init-css)
-(require 'init-python-mode)
-(require 'init-r)
-(require 'init-sage)
-(unless (version<= emacs-version "24.3")
-  (require 'init-haskell))
-(require 'init-sql)
+(let ((default-directory scimax-dir))
+  (shell-command "git submodule update --init"))
 
-(require 'init-paredit)
-(require 'init-lisp)
-;;(require 'init-slime)
-(require 'init-common-lisp)
-
-(when *spell-check-support-enabled*
-  (require 'init-spelling))
-
-(require 'init-misc)
-
-(require 'init-ledger)
-;; Extra packages which don't require any configuration
-
-(require-package 'gnuplot)
-(require-package 'htmlize)
-(require-package 'regex-tool)
-
-;;----------------------------------------------------------------------------
-;; Variables configured via the interactive 'customize' interface
-;;----------------------------------------------------------------------------
-(when (file-exists-p custom-file)
-  (load custom-file))
-
-
-;;----------------------------------------------------------------------------
-;; Allow users to provide an optional "init-local" containing personal settings
-;;----------------------------------------------------------------------------
-(when (file-exists-p (expand-file-name "init-local.el" user-emacs-directory))
-  (error "Please move init-local.el to ~/.emacs.d/lisp"))
-(require 'init-local nil t)
-
-
-;;----------------------------------------------------------------------------
-;; Locales (setting them earlier in this file doesn't work in X)
-;;----------------------------------------------------------------------------
-(require 'init-locales)
-
-(add-hook 'after-init-hook
-          (lambda ()
-            (message "init completed in %.2fms"
-                     (sanityinc/time-subtract-millis after-init-time before-init-time))))
-
+(require 'bootstrap)
+(require 'packages)
 
 (provide 'init)
 
-;; Local Variables:
-;; coding: utf-8
-;; no-byte-compile: t
-;; End:
+;;; init.el ends here

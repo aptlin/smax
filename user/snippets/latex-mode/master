@@ -1,0 +1,43 @@
+# -*- mode: snippet -*-
+# name: master
+# key: master
+# --
+\documentclass[11pt,a4paper]{scrbook}
+\title{$0}
+\usepackage{masty}
+\begin{document}
+
+\frontmatter
+\maketitle
+% \tableofcontents
+% \listoffigures
+% \listoftables
+% \include{acknowledgements}
+
+\mainmatter
+%\include{ch1}
+%\include{ch2}
+%\include{ch3}
+%\include{ch4}
+%\include{ch5}
+% \include{introduction}
+% \include{background}
+% \include{methodology}
+% \include{implementation}
+% \include{analysis}
+% \include{discussion}
+% \include{conclusion}
+
+% \appendix
+% \include{questionnaire}
+% \include{source.code}
+
+\backmatter
+% \bibliography{bib.items}
+
+\end{document}
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-engine: xetex
+%%% TeX-master: t
+%%% End:

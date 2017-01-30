@@ -1,7 +1,0 @@
-# -*- mode: snippet -*-
-# name: enumerate-alpha
-# key: ena
-# --
-\begin{enumerate}[label=\alph*)]
-\item
-\end{enumerate}
