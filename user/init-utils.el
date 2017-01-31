@@ -49,5 +49,6 @@
 	      (diminish 'guide-key-mode)
 	      ))
   )
-
+;; Fixes
+(add-to-list 'auto-mode-alist '("\\.zsh\\'" . sh-mode))
 (provide 'init-utils)
