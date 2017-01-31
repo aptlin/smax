@@ -100,11 +100,11 @@
    ("C-h f" . counsel-describe-function)
    ("C-h v" . counsel-describe-variable)
    ("C-h i" . counsel-info-lookup-symbol)
-   ("H-c r" . ivy-resume)
-   ("H-c l" . counsel-load-library)
-   ("H-c g" . counsel-git-grep)
-   ("H-c a" . counsel-ag)
-   ("H-c p" . counsel-pt))
+   ("<f8> r" . ivy-resume)
+   ("<f8> l" . counsel-load-library)
+   ("<f8> g" . counsel-git-grep)
+   ("<f8> a" . counsel-ag)
+   ("<f8> p" . counsel-pt))
   :diminish ""
   :config
   (progn
@@ -393,7 +393,7 @@
 (use-package ov-highlighter
   :ensure nil
   :load-path scimax-dir
-  :bind ("H-h" . ov-highlighter/body)
+  :bind ("<f8> h" . ov-highlighter/body)
   :init (require 'ov-highlighter))
 
 (use-package ore
@@ -427,3 +427,9 @@
 (provide 'packages)
 
 ;;; packages.el ends here
+
+#  ov-highlight-data: nil
+
+;; Local Variables:
+;; eval: (ov-highlight-load)
+;; End:
