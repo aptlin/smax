@@ -73,7 +73,18 @@ if you should continue to the next step."
 	       ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
 	       ("\\paragraph{%s}" . "\\paragraph*{%s}")
 	       ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
-
+;; ** <<Arbeit>>
+(add-to-list 'org-latex-classes
+	     '("arbeit"
+	       "\\documentclass{scrartcl}
+ [NO-DEFAULT-PACKAGES]
+ [PACKAGES]
+ [EXTRA]"
+	       ("\\section{%s}" . "\\section*{%s}")
+	       ("\\subsection{%s}" . "\\subsection*a{%s}")
+	       ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+	       ("\\paragraph{%s}" . "\\paragraph*{%s}")
+	       ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
 ;; ** <<ACS journals>>
 (add-to-list 'org-latex-classes
 	     '("achemso"

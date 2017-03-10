@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: definition_noindex
+# key: defi
+# --
+\begin{definition*}
+$0
+\end{definition*}

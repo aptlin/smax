@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: matrix_field
+# key: mf
+# --
+M_{n\times n}(\FF)

@@ -13,6 +13,7 @@
 ;; but not add line-returns
 
 (set-scroll-bar-mode nil)
+(setq scroll-error-top-bottom 'true)
 
 (global-font-lock-mode t) ;; turn on font-lock mode everywhere
 
@@ -363,6 +364,41 @@ Version 2016-12-22"
 (define-key dired-mode-map (kbd "_") 'xah-dired-rename-space-to-underscore)
 (define-key dired-mode-map (kbd "-") 'xah-dired-rename-space-to-hyphen)
 
+;;** MIME
+
+(use-package openwith
+  :ensure t
+  :init
+  :config
+  (when (require 'openwith nil 'noerror)
+    (setq openwith-associations
+	  (list
+	   (list (openwith-make-extension-regexp
+		  '("mpg" "mpeg" "mp3" "mp4"
+		    "avi" "wmv" "wav" "mov" "flv"
+		    "ogm" "ogg" "mkv"))
+		 "vlc"
+		 '(file))
+	   (list (openwith-make-extension-regexp
+		  '("xbm" "pbm" "pgm" "ppm" "pnm"
+		    "png" "gif" "bmp" "tif" "jpeg" "jpg"))
+		 "eog"
+		 '(file))
+	   (list (openwith-make-extension-regexp
+		  '("doc" "xls" "ppt" "odt" "ods" "odg" "odp"))
+		 "libreoffice"
+		 '(file))
+	   '("\\.lyx" "lyx" (file))
+	   '("\\.chm" "kchmviewer" (file))
+	   (list (openwith-make-extension-regexp
+		  '("pdf" "ps" "ps.gz" "dvi" "djvu"))
+		 "evince"
+		 '(file))
+	   )))
+
+  (openwith-mode 1)
+  (add-to-list  'mm-inhibit-file-name-handlers 'openwith-file-handler)
+  )
 ;; * The end
 (provide 'scimax)
 

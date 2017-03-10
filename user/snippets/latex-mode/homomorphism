@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: homorphism
+# key: ho
+# --
+\in \Hom(${1:V}, ${2:W})

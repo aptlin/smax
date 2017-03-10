@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: question
+# key: qu
+# --
+\begin{ques*}
+
+$0
+
+\end{ques*}

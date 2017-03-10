@@ -840,7 +840,7 @@ F5 inserts the entity code."
 ;; * Font-lock
 ;; ** Latex fragments
 (setq org-highlight-latex-and-related '(latex script entities))
-(set-face-foreground 'org-latex-and-related "blue")
+(set-face-foreground 'org-latex-and-related "indigo")
 
 ;; * New org links
 
@@ -922,12 +922,6 @@ F5 inserts the entity code."
      :follow (lambda (path)
 	       (man path))
      :store 'org-man-store-link))
-
-
-
-
-
-
 
 ;; * ivy navigation
 (defun ivy-org-jump-to-visible-headline ()

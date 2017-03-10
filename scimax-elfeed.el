@@ -36,18 +36,18 @@
   '((t :background "Lightblue1"))
   "Marks a python Elfeed entry.")
 
-(push '(python python-elfeed-entry)
-      elfeed-search-face-alist)
+;; (push '(python python-elfeed-entry)
+;;       elfeed-search-face-alist)
 
-(push '(emacs emacs-elfeed-entry)
-      elfeed-search-face-alist)
+;; (push '(emacs emacs-elfeed-entry)
+;;       elfeed-search-face-alist)
 
 
 (setq elfeed-search-title-max-width 150)
 (setq elfeed-search-trailing-width 30)
 ;; A snippet for periodic update for feeds (3 mins since Emacs start, then every
 ;; half hour)
-(run-at-time 180 1800 (lambda () (unless elfeed-waiting (elfeed-update))))
+(run-at-time 180 1800 (lambda () (elfeed-update)))
 
 (defun email-elfeed-entry ()
   "Capture the elfeed entry and put it in an email."
@@ -160,14 +160,14 @@
 				      (delete-char -2)))))))))))))
 
 
-(define-key elfeed-show-mode-map (kbd "e") 'email-elfeed-entry)
-(define-key elfeed-show-mode-map (kbd "c") (lambda () (interactive) (org-capture nil "e")))
-(define-key elfeed-show-mode-map (kbd "d") 'doi-utils-add-entry-from-elfeed-entry)
+;; (define-key elfeed-show-mode-map (kbd "e") 'email-elfeed-entry)
+;; (define-key elfeed-show-mode-map (kbd "c") (lambda () (interactive) (org-capture nil "e")))
+;; (define-key elfeed-show-mode-map (kbd "d") 'doi-utils-add-entry-from-elfeed-entry)
 
-;; help me alternate fingers in marking entries as read
-(define-key elfeed-search-mode-map (kbd "f") 'elfeed-search-untag-all-unread)
-(define-key elfeed-search-mode-map (kbd "j") 'elfeed-search-untag-all-unread)
-(define-key elfeed-search-mode-map (kbd "o") 'elfeed-search-show-entry)
+;; ;; help me alternate fingers in marking entries as read
+;; (define-key elfeed-search-mode-map (kbd "f") 'elfeed-search-untag-all-unread)
+;; (define-key elfeed-search-mode-map (kbd "j") 'elfeed-search-untag-all-unread)
+;; (define-key elfeed-search-mode-map (kbd "o") 'elfeed-search-show-entry)
 
 ;; * store links to elfeed entries
 ;; These are copied from org-elfeed
@@ -210,3 +210,5 @@
  "elfeed"
  :follow 'org-elfeed-open
  :store 'org-elfeed-store-link)
+
+(provide 'scimax-elfeed)

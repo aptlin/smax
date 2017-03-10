@@ -2,6 +2,6 @@
 # name: case
 # key: ca
 # --
-\begin{case*}[$1]
+\begin{cases}
 $0
-\end{case*}
+\end{cases}

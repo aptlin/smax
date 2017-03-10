@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: stheorem
+# key: sth
+# --
+\begin{subtheorem}
+$0
+\end{subtheorem}

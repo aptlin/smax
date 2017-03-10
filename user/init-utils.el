@@ -1,4 +1,27 @@
-;; Editing
+;;* Editing
+;; ** Helpers
+(defun prettify-paragraph ()
+  (interactive)
+  (align-current)
+  (fill-paragraph)
+  )
+(global-set-key (kbd "<S-return>") 'prettify-paragraph)
+
+(defun rename-this-file-and-buffer (new-name)
+  "Renames both current buffer and file it's visiting to NEW-NAME."
+  (interactive "sNew name: ")
+  (let ((name (buffer-name))
+        (filename (buffer-file-name)))
+    (unless filename
+      (error "Buffer '%s' is not visiting a file!" name))
+    (progn
+      (when (file-exists-p filename)
+        (rename-file filename new-name 1))
+      (set-visited-file-name new-name)
+      (rename-buffer new-name))))
+
+;; ** Packages
+(subword-mode +1) 
 (use-package expand-region
   :ensure t
   :init
@@ -32,12 +55,12 @@
 (global-set-key (kbd "C-c m e") 'mc/edit-ends-of-lines)
 (global-set-key (kbd "C-c m a") 'mc/edit-beginnings-of-lines)
 
-;; Search
+;;* Search
 (global-set-key (kbd "C-<") 'grep-find)
 (global-set-key (kbd "C->") 'helm-locate)
 (global-set-key (kbd "C-!") 'save-buffers-kill-emacs)
 
-;; Helpers
+;;* UI
 (use-package which-key
   :ensure t
   :init
@@ -49,6 +72,6 @@
 	      (diminish 'guide-key-mode)
 	      ))
   )
-;; Fixes
+;;* Fixes
 (add-to-list 'auto-mode-alist '("\\.zsh\\'" . sh-mode))
 (provide 'init-utils)

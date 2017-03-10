@@ -30,14 +30,16 @@
    ("C-c o" . org-open-at-point-global)
    ("C-c a" . org-agenda)
    ("C-c c" . org-capture)
-   ("s-<SPC>" . org-mark-ring-goto)
+   ("s-y" . org-mark-ring-goto)
    ("H-." . org-time-stamp-inactive)))
 
 
 ;; * Other packages
 
 (use-package aggressive-indent
-  :config (aggressive-indent-global-mode 1))
+  :config
+  (aggressive-indent-global-mode 1)
+  (add-to-list 'aggressive-indent-excluded-modes 'haskell-mode))
 
 (use-package auto-complete
   :diminish auto-complete-mode
@@ -104,7 +106,11 @@
    ("<f8> l" . counsel-load-library)
    ("<f8> g" . counsel-git-grep)
    ("<f8> a" . counsel-ag)
-   ("<f8> p" . counsel-pt))
+   ("<f8> p" . counsel-pt)
+   ("<f8> b" . ox-manuscript-export-and-build-and-open)
+   ("<f8> c" . ox-manuscript-new-helm)
+   )
+  
   :diminish ""
   :config
   (progn
@@ -368,6 +374,10 @@
   :ensure nil
   :load-path scimax-dir)
 
+(use-package scimax-elfeed
+  :ensure nil
+  :load-path scimax-dir)
+
 (use-package scimax-utils
   :ensure nil
   :load-path scimax-dir
@@ -428,7 +438,7 @@
 
 ;;; packages.el ends here
 
-#  ov-highlight-data: nil
+;; #  ov-highlight-data: nil
 
 ;; Local Variables:
 ;; eval: (ov-highlight-load)

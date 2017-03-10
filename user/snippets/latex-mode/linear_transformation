@@ -2,4 +2,4 @@
 # name: endomorphism
 # key: en
 # --
-\in \Hom(V,V)
+\in \End(V)

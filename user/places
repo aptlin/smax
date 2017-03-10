@@ -1,0 +1,102 @@
+;;; -*- coding: utf-8 -*-
+(("/home/aleph/.emacs.d/user/user.el" . 90)
+ ("/home/aleph/.emacs.d/user/init-utils.el" . 659)
+ ("/home/aleph/.emacs.d/user/init-haskell.el" . 733)
+ ("/home/aleph/DOTS/xmonad/.xmonad/xmonad.hs" . 3997)
+ ("/home/aleph/.emacs.d/user/recentf" . 12773)
+ ("/home/aleph/.emacs.d/elpa/hindent-20160905.243/hindent-autoloads.el" . 1385)
+ ("/home/aleph/.emacs.d/elpa/rainbow-delimiters-20160430.2358/rainbow-delimiters-autoloads.el" . 750)
+ ("/home/aleph/.elfeed/index" . 976423)
+ ("/home/aleph/DOTS/i3/.config/i3/config" . 1602)
+ ("/home/aleph/DOTS/.gitignore" . 351)
+ ("/home/aleph/DOTS/zsh/.scripts/notes" . 1112)
+ ("/home/aleph/WERKE/sdll.github.io/stories/notes.org" . 25940)
+ ("/home/aleph/.emacs.d/"
+  (dired-filename . "/home/aleph/.emacs.d/user"))
+ ("/home/aleph/.emacs.d/user/"
+  (dired-filename . "/home/aleph/.emacs.d/user/init-locales.el"))
+ ("/home/aleph/.emacs.d/user/init-blog.el" . 477)
+ ("/home/aleph/.emacs.d/scimax.el" . 9087)
+ ("/home/aleph/.emacs.d/packages.el" . 4197)
+ ("/home/aleph/.emacs-bmk-bmenu-state.el" . 13444)
+ ("/home/aleph/.emacs.d/user/snippets/latex-mode/set" . 46)
+ ("/home/aleph/ORG/MATEX/matex.sty" . 276)
+ ("/home/aleph/WERKE/sdll.github.io/stories/mikveh.org" . 3996)
+ ("/home/aleph/WERKE/sdll.github.io/stories/arbeit.org" . 7144)
+ ("/home/aleph/ORG/NOTES/ARBEIT/ARBEIT20170131CSC240_Pset+III.tex" . 7277)
+ ("/home/aleph/TMP/NOTES/"
+  (dired-filename . "/home/aleph/TMP/NOTES/ARBEIT20170301CSC240_Pset+VI.tex"))
+ ("/home/aleph/.emacs.d/elpa/ace-window-20170219.256/ace-window-autoloads.el" . 1621)
+ ("/home/aleph/.emacs.d/elpa/async-20170219.942/async-autoloads.el" . 4170)
+ ("/home/aleph/.emacs.d/elpa/company-20170218.1913/company-autoloads.el" . 8793)
+ ("/home/aleph/.emacs.d/elpa/ivy-20170217.605/ivy-autoloads.el" . 3791)
+ ("/home/aleph/.emacs.d/elpa/multiple-cursors-20170215.552/multiple-cursors-autoloads.el" . 10447)
+ ("/home/aleph/.emacs.d/elpa/swiper-20170217.57/swiper-autoloads.el" . 543)
+ ("/home/aleph/.emacs.d/elpa/use-package-20170218.132/use-package-autoloads.el" . 3557)
+ ("/home/aleph/.emacs.d/elpa/xah-math-input-20170210.2128/xah-math-input-autoloads.el" . 2731)
+ ("/home/aleph/ORG/NOTES/"
+  (dired-filename . "/home/aleph/ORG/NOTES/MAT"))
+ ("/home/aleph/ORG/NOTES/MAT/"
+  (dired-filename . "/home/aleph/ORG/NOTES/MAT/20170213MAT157_Rational+Functions.tex"))
+ ("/home/aleph/.emacs.d/user/snippets/latex-mode/reals" . 48)
+ ("/home/aleph/ORG/NOTES/MAT/20170213MAT157_Rational+Functions.tex" . 143)
+ ("/home/aleph/.emacs.d/user/init-email.el" . 276)
+ ("/home/aleph/emacs.d/site-lisp/cyrillic-dvorak/"
+  (dired-filename . "/home/aleph/emacs.d/site-lisp/cyrillic-dvorak/.."))
+ ("/home/aleph/emacs.d/site-lisp/"
+  (dired-filename . "/home/aleph/emacs.d/site-lisp/.."))
+ ("/home/aleph/emacs.d/"
+  (dired-filename . "/home/aleph/emacs.d/lisp"))
+ ("/home/aleph/emacs.d/lisp/init-locales.el" . 858)
+ ("/home/aleph/emacs.d/lisp/"
+  (dired-filename . "/home/aleph/emacs.d/lisp/init-locales.el"))
+ ("/home/aleph/.emacs.d/user/init-locales.el" . 106)
+ ("/home/aleph/.emacs.d/scimax-org.el" . 30198)
+ ("/etc/fonts/fonts.conf" . 224)
+ ("/home/aleph/WERKE/umus.github.io/posts/ut-mat157mat247-rsg-reading-week-and-talks.org" . 496)
+ ("/home/aleph/ORG/NOTES/CSC/"
+  (dired-filename . "/home/aleph/ORG/NOTES/CSC/20170213CSC240_Well-Ordering.pdf"))
+ ("/home/aleph/emacs.d/lisp/init-bookmarks.el" . 250)
+ ("/home/aleph/emacs.d/lisp/init-dired.el" . 723)
+ ("/home/aleph/ORG/AGENDA/ST/"
+  (dired-filename . "/home/aleph/ORG/AGENDA/ST/.."))
+ ("/home/aleph/ORG/AGENDA/"
+  (dired-filename . "/home/aleph/ORG/AGENDA/RA"))
+ ("/home/aleph/ORG/AGENDA/RA/"
+  (dired-filename . "/home/aleph/ORG/AGENDA/RA/[Lvovsky_S.]_Lekcii_po_matematicheskomu_analizu.djvu"))
+ ("/home/aleph/emacs.d/lisp/orgmode.org" . 66784)
+ ("/home/aleph/ORG/"
+  (dired-filename . "/home/aleph/ORG/refile.org"))
+ ("/home/aleph/ORG/refile.org" . 416)
+ ("/home/aleph/ORG/diary.org" . 821)
+ ("/home/aleph/.emacs.d/.git/config" . 397)
+ ("/home/aleph/WERKE/umus.github.io/stories/utumu.org" . 8049)
+ ("/home/aleph/emacs.d/lisp/init-blog.el" . 460)
+ ("/home/aleph/WERKE/umus.github.io/posts/ut-mat157mat247-rsg-reading-week-and-talks.meta" . 141)
+ ("/home/aleph/.mailrc" . 2132)
+ ("/home/aleph/WERKE/sdll.github.io/stories/trove.org" . 663)
+ ("/home/aleph/.emacs.d/elpa/blog-admin-20170126.458/blog-admin-autoloads.el" . 417)
+ ("/home/aleph/.emacs.d/elpa/names-20151201.404/names-autoloads.el" . 3559)
+ ("/home/aleph/.emacs.d/elpa/flyspell-correct-20170213.700/flyspell-correct-autoloads.el" . 1650)
+ ("/home/aleph/.emacs.d/elpa/git-commit-20170214.347/git-commit-autoloads.el" . 1024)
+ ("/home/aleph/.emacs.d/elpa/magit-popup-20170214.347/magit-popup-autoloads.el" . 287)
+ ("/home/aleph/ORG/bookmarks" . 11737)
+ ("/home/aleph/.emacs.d/elpa/org-20170210/org-loaddefs.el" . 101958)
+ ("/home/aleph/.emacs.d/elpa/org-plus-contrib-20170210/org-loaddefs.el" . 121573)
+ ("/home/aleph/WERKE/HW/BIO/bio130_lab3.log" . 81413)
+ ("/home/aleph/ORG/NOTES/BIO/"
+  (dired-filename . "/home/aleph/ORG/NOTES/BIO/20160914BIO120_1.pdf"))
+ ("/home/aleph/WERKE/HW/"
+  (dired-filename . "/home/aleph/WERKE/HW/BIO"))
+ ("/home/aleph/WERKE/HW/BIO/"
+  (dired-filename . "/home/aleph/WERKE/HW/BIO/bio130_lab2.bcf"))
+ ("/home/aleph/WERKE/HW/BIO/assignment.org" . 452)
+ ("/home/aleph/WERKE/HW/BIO/bio130_lab3.tex" . 1415)
+ ("/home/aleph/.emacs.d/elpa/org-20170210/org-autoloads.el" . 27317)
+ ("/home/aleph/.emacs.d/elpa/org-plus-contrib-20170210/org-plus-contrib-autoloads.el" . 45500)
+ ("/home/aleph/.emacs.d/elpa/pyvenv-20170211.456/pyvenv-autoloads.el" . 1910)
+ ("/home/aleph/.emacs.d/elpa/which-key-20170209.729/which-key-autoloads.el" . 3970)
+ ("/home/aleph/.emacs.d/user/snippets/latex-mode/"
+  (dired-filename . "/home/aleph/.emacs.d/user/snippets/latex-mode/book"))
+ ("/home/aleph/aliases" . 1756)
+ ("/home/aleph/WERKE/umus.github.io/posts/ut-mat157mat247-rsg-session-v.org" . 188))

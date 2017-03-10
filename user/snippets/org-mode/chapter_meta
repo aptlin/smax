@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: chapter
+# key: chm
+# --
+
+%%% Local Variables:
+%%% TeX-master: "master"
+%%% End:

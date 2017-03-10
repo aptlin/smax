@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# name: induction
+# key: ind
+# --
+\begin{description}
+  \item[Base Case] \hfill
+
+  $0
+  \item[Inductive Step] \hfill
+
+
+  \item[Conclusion]
+    \hfill
+
+
+\end{description}

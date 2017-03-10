@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: differential
+# key: di
+# --
+\dif $0

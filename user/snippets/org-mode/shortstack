@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: shortstack
+# key: sho
+# --
+\shortstack[l]{ $0 }

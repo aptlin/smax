@@ -9,6 +9,7 @@
   (progn
     ;; setting up variables
     (setq mu4e-view-show-addresses t)
+    (setq mu4e-headers-full-search t)
     (defun mu4e-message-maildir-matches (msg rx)
       (when rx
 	(if (listp rx)
@@ -140,8 +141,7 @@
 
     ;;  key bindings
     (global-unset-key (kbd "C-x m"))
-    (global-set-key (kbd "C-x m") 'mu4e)
-    ))
+    (global-set-key (kbd "C-x m") 'mu4e)))
 
 
 

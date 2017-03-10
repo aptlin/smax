@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: inner_product
+# key: ip
+# --
+\ipr{$1}{$2}

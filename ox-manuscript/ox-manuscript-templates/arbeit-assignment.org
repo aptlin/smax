@@ -1,0 +1,16 @@
+#+TEMPLATE: Assignment Template
+#+key: arbeit-assignment
+#+group: arbeit
+#+contributor: Alexander Illarionov <sasha.delly@gmail.com>
+#+default-filename: assignment.org
+
+#+LATEX_CLASS: arbeit
+#+Latex_class_options: [11pt]
+#+OPTIONS: toc:nil ^:{}
+#+LATEX_HEADER: \usepackage[beaue, pset, anon]{masty}
+#+LATEX_HEADER: \pSet{\hw{MAT247}{}{}}
+#+LATEX_HEADER: \pagenumbering{gobble}
+
+* Build					:noexport:
+
+   elisp:ox-manuscript-export-and-build-and-open

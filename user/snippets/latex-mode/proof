@@ -3,5 +3,7 @@
 # key: pr
 # --
 \begin{proof}
+\hfill
+
 $0
 \end{proof}

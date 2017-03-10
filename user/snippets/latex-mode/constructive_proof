@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: constructive_proof
+# key: cons
+# --
+\begin{description}
+  \item[Base Case] \hfill
+
+  $0
+  \item[Constructor Case] \hfill
+
+
+\end{description}
