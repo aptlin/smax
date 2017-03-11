@@ -1,1 +1,1 @@
-("~/.emacs.d/" "~/DOTS/" "~/emacs.d/" "~/TMP/NOTES/" "~/ORG/NOTES/" "~/ORG/MATEX/" "~/WERKE/umus.github.io/" "~/WERKE/sdll.github.io/" "~/.xmonad/" "~/.emacs.d/org-ref/" "~/_emacs.d/" "~/WERKE/NOTES/RA/" "~/scimax/scimax/" "~/scimax/scimax/ob-ipython/" "~/TMP/PROG/scimax/")
+("~/DOTS/" "~/.emacs.d/" "~/ORG/MATEX/" "~/emacs.d/" "~/TMP/NOTES/" "~/ORG/NOTES/" "~/WERKE/umus.github.io/" "~/WERKE/sdll.github.io/" "~/.xmonad/" "~/.emacs.d/org-ref/" "~/_emacs.d/" "~/WERKE/NOTES/RA/" "~/scimax/scimax/" "~/scimax/scimax/ob-ipython/" "~/TMP/PROG/scimax/")

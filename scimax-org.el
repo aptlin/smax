@@ -539,16 +539,9 @@ fontification, as long as `org-src-fontify-natively' is non-nil."
 	("" "wasysym" t)
 	("" "amssymb" t)
 	("" "amsmath" t)
-	("version=3" "mhchem" t)
 	("numbers,super,sort&compress" "natbib" nil)
 	("" "natmove" nil)
 	("" "url" nil)
-	("" "minted" nil)
-	("" "underscore" nil)
-	("linktocpage,pdfstartview=FitH,colorlinks,
-linkcolor=blue,anchorcolor=blue,
-citecolor=blue,filecolor=blue,menucolor=blue,urlcolor=blue"
-	 "hyperref" nil)
 	("" "attachfile" nil)))
 
 ;; do not put in \hypersetup. Use your own if you want it e.g.
@@ -597,6 +590,12 @@ citecolor=blue,filecolor=blue,menucolor=blue,urlcolor=blue"
 	       ("\\paragraph{%s}" . "\\paragraph*{%s}")
 	       ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
 
+(add-to-list 'org-latex-classes
+             '("beamer"
+               "\\documentclass\[presentation\]\{beamer\}"
+               ("\\section\{%s\}" . "\\section*\{%s\}")
+               ("\\subsection\{%s\}" . "\\subsection*\{%s\}")
+               ("\\subsubsection\{%s\}" . "\\subsubsection*\{%s\}")))
 
 ;; * Fragment overlays
 
