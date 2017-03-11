@@ -55,6 +55,10 @@
 (global-set-key (kbd "C-c m e") 'mc/edit-ends-of-lines)
 (global-set-key (kbd "C-c m a") 'mc/edit-beginnings-of-lines)
 
+;;* Git
+(use-package git-timemachine
+  :ensure t
+  :init)
 ;;* Search
 (global-set-key (kbd "C-<") 'grep-find)
 (global-set-key (kbd "C->") 'helm-locate)
