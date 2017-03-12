@@ -12,7 +12,24 @@
     (add-to-list 'exec-path my-cabal-path))
   (custom-set-variables '(haskell-tags-on-save t))
   ;; stylish-haskell formatting on save
-  (custom-set-variables '(haskell-stylish-on-save t))
+  (setq-default haskell-stylish-on-save t)
+  (eval-after-load 'haskell-mode
+    '(define-key haskell-mode-map (kbd "C-c C-o") 'haskell-compile))
+  (eval-after-load 'haskell-cabal
+    '(define-key haskell-cabal-mode-map (kbd "C-c C-o") 'haskell-compile))
+  (add-auto-mode 'haskell-mode "\\.ghci\\'")
+  (add-hook 'haskell-mode-hook 'haskell-auto-insert-module-template))
+
+(use-package intero
+  :init
+  :config
+  (add-hook 'haskell-mode-hook 'intero-mode)
+
+  (eval-after-load 'intero
+    '(eval-after-load 'flycheck
+       '(flycheck-add-next-checker 'intero
+				   '(warning . haskell-hlint)))
+    )
   )
 (use-package hindent
   :init

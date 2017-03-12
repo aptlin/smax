@@ -21,7 +21,7 @@
       (rename-buffer new-name))))
 
 ;; ** Packages
-(subword-mode +1) 
+(subword-mode 1) 
 (use-package expand-region
   :ensure t
   :init
@@ -78,4 +78,9 @@
   )
 ;;* Fixes
 (add-to-list 'auto-mode-alist '("\\.zsh\\'" . sh-mode))
+;;** Helpers
+(defun add-auto-mode (mode &rest patterns)
+  "Add entries to `auto-mode-alist' to use `MODE' for all given file `PATTERNS'."
+  (dolist (pattern patterns)
+    (add-to-list 'auto-mode-alist (cons pattern mode))))
 (provide 'init-utils)
