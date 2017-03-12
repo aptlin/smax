@@ -1,3 +1,4 @@
+
 (use-package haskell-mode
   :ensure t
   :init
@@ -17,7 +18,6 @@
     '(define-key haskell-mode-map (kbd "C-c C-o") 'haskell-compile))
   (eval-after-load 'haskell-cabal
     '(define-key haskell-cabal-mode-map (kbd "C-c C-o") 'haskell-compile))
-  (add-auto-mode 'haskell-mode "\\.ghci\\'")
   (add-hook 'haskell-mode-hook 'haskell-auto-insert-module-template))
 
 (use-package intero

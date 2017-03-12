@@ -10,6 +10,12 @@
     ;; setting up variables
     (setq mu4e-view-show-addresses t)
     (setq mu4e-headers-full-search t)
+    ;; each paragraph is a single long line; at sending, emacs will add the
+    ;; special line continuation characters.
+    (setq mu4e-compose-format-flowed t)
+    ;;  ISO(ish) format date-time stamps in the header list
+    (setq mu4e-headers-date-format "%Y-%m-%d %H:%M")
+
     (defun mu4e-message-maildir-matches (msg rx)
       (when rx
 	(if (listp rx)
@@ -73,9 +79,13 @@
 	  `( ,(make-mu4e-context
 	       :name "delly"
 	       :enter-func (lambda () (mu4e-message "Switch to the delly context"))
-	       :match-func (lambda (msg)
-			     (when msg
-			       (mu4e-message-maildir-matches msg "^/delly")))
+	       :match-func  (lambda (msg)
+			      (when msg 
+				(mu4e-message-contact-field-matches msg 
+								    :to "sasha.delly@gmail.com")))
+	       ;; (lambda (msg)
+	       ;; 	 (when msg
+	       ;; 	   (mu4e-message-maildir-matches msg "^/delly")))
 	       :leave-func (lambda () (mu4e-clear-caches))
 	       :vars '((user-mail-address     . "sasha.delly@gmail.com")
 		       (user-full-name        . "Alexander Illarionov")
@@ -85,10 +95,11 @@
 		       (mu4e-refile-folder    . "/delly/archive")))
 	     ,(make-mu4e-context
 	       :name "ut"
-	       :enter-func (lambda () (mu4e-message "Switch to the do context"))
+	       :enter-func (lambda () (mu4e-message "Switch to the ut context"))
 	       :match-func (lambda (msg)
-			     (when msg
-			       (mu4e-message-maildir-matches msg "^/utoro")))
+			     (when msg 
+			       (mu4e-message-contact-field-matches msg 
+								   :to "sasha.illarionov@mail.utoronto.ca")))
 	       :leave-func (lambda () (mu4e-clear-caches))
 	       :vars '((user-mail-address     . "sasha.illarionov@mail.utoronto.ca")
 		       (user-full-name        . "Alexander Illarionov")
@@ -97,6 +108,12 @@
 		       (mu4e-trash-folder     . "/delly/trash")
 		       (mu4e-refile-folder    . "/delly/archive")))))
 
+    ;; start with the first (default) context; 
+    (setq mu4e-context-policy 'pick-first)
+
+    ;; compose with the current context if no context matches;
+    (setq mu4e-compose-context-policy nil)
+    
     ;; Configure sending mail.
     (setq message-send-mail-function 'message-send-mail-with-sendmail
 	  sendmail-program "/usr/bin/msmtp"

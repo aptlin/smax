@@ -3,7 +3,9 @@
 
 (setq mc/cmds-to-run-for-all
       '(
+	LaTeX-math-lambda
 	dired-show-file-type
+	end-of-visual-line
 	kill-region
 	lispy-braces
 	lispy-brackets

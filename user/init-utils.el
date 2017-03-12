@@ -21,6 +21,15 @@
       (rename-buffer new-name))))
 
 ;; ** Packages
+(use-package clean-aindent-mode
+  :ensure t
+  :init
+  :config
+  (electric-indent-mode -1) ; no electric indent, auto-indent is sufficient
+  (clean-aindent-mode t)
+  (define-key global-map (kbd "RET") 'newline-and-indent)
+  )
+
 (subword-mode 1) 
 (use-package expand-region
   :ensure t
