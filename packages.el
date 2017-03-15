@@ -37,9 +37,12 @@
 ;; * Other packages
 
 (use-package aggressive-indent
+  :ensure t
+  :init
   :config
   (aggressive-indent-global-mode 1)
-  (add-to-list 'aggressive-indent-excluded-modes 'haskell-mode))
+  (add-to-list 'aggressive-indent-excluded-modes 'haskell-mode)
+  )
 
 (use-package auto-complete
   :diminish auto-complete-mode

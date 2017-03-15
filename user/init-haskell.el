@@ -23,7 +23,7 @@
 (use-package intero
   :init
   :config
-  (add-hook 'haskell-mode-hook 'intero-mode)
+  ;; (add-hook 'haskell-mode-hook 'intero-mode)
 
   (eval-after-load 'intero
     '(eval-after-load 'flycheck

@@ -1,4 +1,4 @@
-(setq initial-buffer-choice "~/ORG/todo.org")
+(setq initial-buffer-choice "~/ORG/map.org")
 (save-place-mode 1)
 (require 'init-haskell)
 (require 'init-latex)
