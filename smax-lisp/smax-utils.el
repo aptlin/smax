@@ -87,11 +87,6 @@ sentence in the region."
       (forward-sentence)
       (capitalize-word 1))))
 
-;; * Version Control
-;; Some new bindings to add to vc-prefix-map
-(define-key 'vc-prefix-map "t" 'magit-status)
-(define-key 'vc-prefix-map "p" (lambda () (interactive) (vc-git-push nil)))
-(define-key 'vc-prefix-map "P" (lambda () (interactive) (vc-git-pull nil)))
 ;; * The end
 (provide 'smax-utils)
 

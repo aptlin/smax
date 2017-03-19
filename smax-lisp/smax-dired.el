@@ -73,7 +73,7 @@ Version 2016-12-22"
 	   '("\\.chm" "kchmviewer" (file))
 	   (list (openwith-make-extension-regexp
 		  '("pdf" "ps" "ps.gz" "dvi" "djvu"))
-		 "zathura"
+		 smax-reader
 		 '(file))
 	   )))
 

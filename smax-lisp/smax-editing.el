@@ -72,6 +72,7 @@
 ;; *** Aggressive Indent
 (use-package aggressive-indent
   :init
+  :diminish aggressive-indent
   :config
   (aggressive-indent-global-mode 1)
   (add-to-list 'aggressive-indent-excluded-modes 'haskell-mode))
@@ -80,6 +81,33 @@
   :init
   :config
   (whole-line-or-region-mode 1))
+;; *** Completion
+;; **** Hippie-Expand
+
+(use-package hippie-expand
+  :ensure nil
+  :init
+  (setq hippie-expand-try-functions-list
+	'(yas-hippie-try-expand
+	  try-complete-file-name-partially
+	  try-complete-file-name
+	  try-expand-dabbrev
+	  try-expand-dabbrev-all-buffers
+	  try-expand-dabbrev-from-kill))
+  :bind
+  ("M-SPC" . hippie-expand))
+
+;; **** Ivy-Historian
+;; Persistent storage of completions
+(use-package ivy-historian
+  :init
+  :config
+  (add-hook 'after-init-hook
+	    (lambda ()
+	      (ivy-historian-mode)
+	      (diminish 'historian-mode)
+	      (diminish 'ivy-historian-mode)))
+  )
 ;; ** Modes
 ;; *** Parentheses
 (show-paren-mode 1)         ;; highlight parentheses
@@ -102,6 +130,18 @@
     (if (match-string 1)
 	(replace-match str2 t t)
       (replace-match str1 t t))))
+(defun rename-this-file-and-buffer (new-name)
+  "Renames both current buffer and file it's visiting to NEW-NAME."
+  (interactive "sNew name: ")
+  (let ((name (buffer-name))
+        (filename (buffer-file-name)))
+    (unless filename
+      (error "Buffer '%s' is not visiting a file!" name))
+    (progn
+      (when (file-exists-p filename)
+        (rename-file filename new-name 1))
+      (set-visited-file-name new-name)
+      (rename-buffer new-name))))
 (defun prettify-paragraph ()
   (interactive)
   (align-current)

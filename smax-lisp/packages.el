@@ -45,6 +45,7 @@
 
 ;; Make cursor more visible when you move a long distance
 (use-package beacon
+  :diminish beacon-mode
   :config
   (beacon-mode 1))
 
@@ -159,9 +160,6 @@
 
 (use-package flx)
 
-(use-package git-messenger
-  :bind ("C-x v o" . git-messenger:popup-message))
-
 (use-package helm
   :init (setq helm-command-prefix-key "C-c h")
   :bind
@@ -227,6 +225,7 @@
 
 ;; Superior lisp editing
 (use-package lispy
+  :diminish lispy-mode
   :config
   (dolist (hook '(emacs-lisp-mode-hook
 		  hy-mode-hook))
@@ -235,11 +234,7 @@
 		(lispy-mode)
 		(eldoc-mode)))))
 
-(use-package magit
-  :init (setq magit-completing-read-function 'ivy-completing-read)
-  :bind
-  ("<f5>" . magit-status)
-  ("C-c v t" . magit-status))
+
 
 ;; Templating system
 ;; https://github.com/Wilfred/mustache.el
@@ -323,6 +318,11 @@
   :load-path conf-dir
   :init (require 'smax))
 
+;; ** Version Control
+(use-package smax-vc
+  :ensure nil
+  :load-path conf-dir
+  :init (require 'smax-vc))
 ;; ** Programming
 
 (use-package smax-lisp
@@ -334,6 +334,17 @@
   :ensure nil
   :load-path conf-dir
   :init (require 'smax-python))
+
+(use-package smax-haskell
+  :ensure nil
+  :load-path conf-dir
+  :init (require 'smax-haskell))
+
+(use-package smax-c
+  :ensure nil
+  :load-path conf-dir
+  :init (require 'smax-c))
+
 ;; ** Navigation
 (use-package smax-navy
   :ensure nil
@@ -344,6 +355,11 @@
   :ensure nil
   :load-path conf-dir
   :init (require 'smax-editing))
+;; ** LaTeX
+(use-package smax-latex
+  :ensure nil
+  :load-path conf-dir
+  :init (require 'smax-latex))
 ;; ** Etc
 (use-package smax-mode
   :ensure nil

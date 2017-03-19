@@ -39,37 +39,32 @@
 (setq-default abbrev-mode t)
 (setq save-abbrevs 'silently)
 
-;; * Version control
-;; Disable all version control. makes startup and opening files much faster
-;; except git and svn which I actually use
-(setq vc-handled-backends '(Git))
+;; ** Bindings
+(global-set-key (kbd "C-!") 'save-buffers-kill-emacs)
 
-(defun smax-update ()
-  "Update smax from github."
-  (interactive)
-  (let ((default-directory smax-dir))
-    (when (not (string= "" (shell-command-to-string "git status --porcelain")))
-      (shell-command "git add *")
-      (shell-command "git commit -am \"commiting smax.\""))
-    (shell-command "git pull origin master")
-    (shell-command "git submodule update")
-    (load-file "init.el")))
+;; * Helpers
+(use-package which-key
+  :ensure t
+  :init
+  :config
+  (add-hook 'after-init-hook
+	    (lambda ()
+	      (which-key-mode)
+	      (which-key-setup-side-window-right-bottom)
+	      (diminish 'guide-key-mode)
+	      )))
+
 
 ;; * Diminish modes
 (diminish 'orgstruct-mode)
 (diminish 'ivy-mode)
-(diminish 'lispy-mode)
 (diminish 'abbrev-mode)
 (diminish 'visual-line-mode)
-(diminish 'beacon-mode)
-(diminish 'aggressive-indent-mode)
 (diminish 'emacs-keybinding-command-tooltip-mode)
 
 ;; * Programming
-;; ** Debugging
-(add-hook 'edebug-mode-hook
-	  (lambda ()
-	    (define-key edebug-mode-map (kbd "h") 'edebug-goto-here)))
+
+
 
 ;; * Misc
 

@@ -3,6 +3,12 @@
 ;;; Commentary:
 ;;
 ;; * Emacs lisp
+;; ** Debugging
+(add-hook 'edebug-mode-hook
+	  (lambda ()
+	    (define-key edebug-mode-map (kbd "h") 'edebug-goto-here)))
+;; ** Looks
+;; *** Outlines
 ;; Setup pretty outlines in Emacs-lisp code
 "^;; \\(\\*+.*\\)$"
 (defconst lel-font-lock-keywords
@@ -27,5 +33,10 @@ This enables you to use tab to open and close outlines."
 
 (add-hook 'emacs-lisp-mode-hook
 	  #'lisp-outline-setup)
+;; *** Parentheses
+(use-package rainbow-delimiters
+  :init
+  :config
+  (add-hook 'emacs-lisp-mode-hook       #'rainbow-delimiters-mode))
 
 (provide 'smax-lisp)

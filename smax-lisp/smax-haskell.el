@@ -1,4 +1,3 @@
-
 (use-package haskell-mode
   :ensure t
   :init
@@ -31,4 +30,4 @@
   (add-hook 'haskell-mode-hook #'rainbow-delimiters-mode)
   )
 
-(provide 'init-haskell)
+(provide 'smax-haskell)

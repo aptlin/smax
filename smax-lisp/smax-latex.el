@@ -5,14 +5,184 @@
 ;; 
 
 ;;; Code:
+;; * LaTeX
+;; ** Variables
+(setq smax-bibnotes "~/ORG/bibnotes.org")
+(setq smax-references "~/ORG/references.bib")
+;; ** Default Behaviour
+;;(load "auctex.el" nil t t)
+;;(load "preview-latex.el" nil t t)
+(setq TeX-parse-self t); Enable parse on load.
+(setq TeX-auto-save t); Enable parse on save.
+;;(setq-default TeX-master nil)
+;;(setq-default TeX-master "master") ;
+(setq TeX-PDF-mode t); PDF mode (rather than DVI-mode)
+;; ** Packages
+;; *** cdLaTeX
+(use-package cdlatex
+  :ensure t
+  :diminish org-cdlatex-mode
+  :config
+  (progn (add-hook 'LaTeX-mode-hook 'turn-on-cdlatex) ; with AUCTeX LaTeX mode
+	 (add-hook 'org-mode-hook 'turn-on-org-cdlatex)
 
+	 ;; LaTeX-math-mode http://www.gnu.org/s/auctex/manual/auctex/Mathematics.html
+	 (add-hook 'TeX-mode-hook 'LaTeX-math-mode)
+
+	 ;; Auto-completion
+
+
+	 ;; make math mode easier to enter
+
+
+	 ;; (add-hook 'plain-TeX-mode-hook
+	 ;; 	   (lambda () (set (make-variable-buffer-local 'TeX-electric-math)
+	 ;; 			   (cons "$" "$"))))
+	 ;; (add-hook 'LaTeX-mode-hook
+	 ;; 	   (lambda () (set (make-variable-buffer-local 'TeX-electric-math)
+	 ;; 			   (cons "\\(" ""))))
+
+
+	 (setq TeX-electric-sub-and-superscript t)
+
+	 ;; (setq LaTeX-electric-left-right-brace nil)
+	 ))
+;; *** RefTeX
+(add-hook 'TeX-mode-hook 'turn-on-reftex)
+(add-hook 'org-mode-hook 'turn-on-reftex)
+(eval-after-load 'reftex-vars; Is this construct really needed?
+  '(progn
+     (setq reftex-cite-prompt-optional-args t); Prompt for empty optional arguments in cite macros.
+     ;; Make RefTeX interact with AUCTeX, http://www.gnu.org/s/auctex/manual/reftex/AUCTeX_002dRefTeX-Interface.html
+     (setq reftex-plug-into-AUCTeX t)
+     ;; So that RefTeX also recognizes \addbibresource. Note that you
+     ;; can't use $HOME in path for \addbibresource but that "~"
+     ;; works.
+     (setq reftex-bibliography-commands '("bibliography" "nobibliography" "addbibresource"))
+     (setq reftex-default-bibliography '(smax-references)); So that RefTeX in Org-mode knows bibliography
+     (setq helm-bibtex-bibliography '(smax-references));
+     (setcdr (assoc 'caption reftex-default-context-regexps) "\\\\\\(rot\\|sub\\)?caption\\*?[[{]"); Recognize \subcaptions, e.g. reftex-citation
+     (setq reftex-cite-format; Get ReTeX with biblatex, see http://tex.stackexchange.com/questions/31966/setting-up-reftex-with-biblatex-citation-commands/31992#31992
+           '((?t . "\\textcite[]{%l}")
+             (?a . "\\autocite[]{%l}")
+             (?c . "\\cite[]{%l}")
+             (?s . "\\smartcite[]{%l}")
+             (?f . "\\footcite[]{%l}")
+             (?n . "\\nocite{%l}")
+             (?b . "\\blockcquote[]{%l}{}")))))
+(setq reftex-bibliography-commands '("bibliography" "nobibliography" "addbibresource"))
+;; Fontification (remove unnecessary entries as you notice them) http://lists.gnu.org/archive/html/emacs-orgmode/2009-05/msg00236.html http://www.gnu.org/software/auctex/manual/auctex/Fontification-of-macros.html
+(setq font-latex-match-reference-keywords
+      '(
+        ;; biblatex
+        ("printbibliography" "[{")
+        ("addbibresource" "[{")
+        ;; Standard commands
+        ;; ("cite" "[{")
+        ("Cite" "[{")
+        ("parencite" "[{")
+        ("Parencite" "[{")
+        ("footcite" "[{")
+        ("footcitetext" "[{")
+        ;; ;; Style-specific commands
+        ("textcite" "[{")
+        ("Textcite" "[{")
+        ("smartcite" "[{")
+        ("Smartcite" "[{")
+        ("cite*" "[{")
+        ("parencite*" "[{")
+        ("supercite" "[{")
+                                        ; Qualified citation lists
+        ("cites" "[{")
+        ("Cites" "[{")
+        ("parencites" "[{")
+        ("Parencites" "[{")
+        ("footcites" "[{")
+        ("footcitetexts" "[{")
+        ("smartcites" "[{")
+        ("Smartcites" "[{")
+        ("textcites" "[{")
+        ("Textcites" "[{")
+        ("supercites" "[{")
+        ;; Style-independent commands
+        ("autocite" "[{")
+        ("Autocite" "[{")
+        ("autocite*" "[{")
+        ("Autocite*" "[{")
+        ("autocites" "[{")
+        ("Autocites" "[{")
+        ;; Text commands
+        ("citeauthor" "[{")
+        ("Citeauthor" "[{")
+        ("citetitle" "[{")
+        ("citetitle*" "[{")
+        ("citeyear" "[{")
+        ("citedate" "[{")
+        ("citeurl" "[{")
+        ;; Special commands
+        ("fullcite" "[{")))
+
+(setq font-latex-match-textual-keywords
+      '(
+        ;; biblatex brackets
+        ("parentext" "{")
+        ("brackettext" "{")
+        ("hybridblockquote" "[{")
+        ;; Auxiliary Commands
+        ("textelp" "{")
+        ("textelp*" "{")
+        ("textins" "{")
+        ("textins*" "{")
+        ;; supcaption
+        ("subcaption" "[{")))
+
+(setq font-latex-match-variable-keywords
+      '(
+        ;; amsmath
+        ("numberwithin" "{")
+        ;; enumitem
+        ("setlist" "[{")
+        ("setlist*" "[{")
+        ("newlist" "{")
+        ("renewlist" "{")
+        ("setlistdepth" "{")
+        ("restartlist" "{")))
+;; *** Helm-BibTeX
+(use-package helm-bibtex
+  :ensure auctex
+  :init
+  :config
+  (add-hook 'TeX-mode-hook
+	    (lambda() (define-key TeX-mode-map "\C-ch" 'helm-bibtex)) )
+  (setq helm-bibtex-pdf-field "file")
+  (setq helm-bibtex-pdf-open-function
+	(lambda (fpath)
+	  (start-process smax-reader "*helm-bibtex-reader*" smax-reader-path fpath)))
+  (setq helm-bibtex-notes-path smax-bibnotes))
+;; *** Completion
+;; **** Company
+(use-package company-auctex
+  :ensure company
+  :defer t
+  :init
+  (add-hook 'LaTeX-mode-hook 'company-auctex-init))
+(use-package company-math
+  :ensure auctex
+  :defer t
+  :init
+  (defun latex-mode-setup ()
+    (setq-local company-backends
+		(append '((company-math-symbols-latex company-latex-commands))
+			company-backends)))
+  
+  (add-hook 'TeX-mode-hook 'latex-mode-setup))
+;; ** Functions and Bindings
 (defvar tlmgr-installed-packages nil
   "Cached list of installed LaTeX packages.")
 
 
 (defun tlmgr-installed (&optional refresh)
-  "Get a list of installed LaTeX packages. Uses a cached value if
-possible unless REFRESH is non-nil."
+  "Get a list of installed LaTeX packages.  Uses a cached value if possible unless REFRESH is non-nil."
   (unless (or tlmgr-installed-packages refresh)
     (setq tlmgr-installed-packages
 	  (mapcar (lambda (s)
@@ -32,91 +202,6 @@ possible unless REFRESH is non-nil."
   "Run kpsewhich on SYMBOL."
   (interactive "sSymbol: ")
   (message (shell-command-to-string (format "kpsewhich %s" symbol))))
-
-
-(defun smax-latex-setup ()
-  "Display buffer with LaTeX setup information."
-  (interactive)
-  (message "Please wait while I gather some information. This can take a while.")
-  (with-current-buffer (get-buffer-create "*smax-latex-setup*")
-    (erase-buffer)
-    (org-mode)
-    (insert (s-format "#+TITLE: LaTeX setup
-
-This file describes how LaTeX is setup on your computer.
-
-* Executables
-
-latex: ${(executable-find \"latex\")}
-pdflatex: ${(executable-find \"pdflatex\")}
-bibtex: ${(executable-find \"bibtex\")}
-biber: ${(executable-find \"biber\")}
-
-tlmgr: ${(executable-find \"tlmgr\")}
-kpsewhich: ${(executable-find \"kpsewhich\")}
-texdoc: ${(executable-find \"texdoc\")}
-
-Configuration:
-${(shell-command-to-string \"tlmgr conf texmf\")}
-
-* Latex classes org-mode knows about
-
-Here are some relevant variables
-help:org-format-latex-header
-help:org-latex-default-packages-alist
-help:org-latex-packages-alist
-help:org-latex-pdf-process
-
-Note: Not every class has a corresponding style file. Click on the texdoc link to learn more about the class.
-
-Missing files should be installed in the TEXMFHOME directory listed above. See https://en.wikibooks.org/wiki/LaTeX/Installing_Extra_Packages for help.
-
-"
-		      (lambda (arg &optional extra)
-			(eval (read arg)))))
-    (loop for (org-name header-string cls) in
-	  (-uniq (loop for latex-class in org-latex-classes
-		       collect
-		       (list (car latex-class)
-			     (nth 1 latex-class)
-			     (shell-command-to-string (format "kpsewhich %s.sty" cls)))))
-	  (insert (s-format "
-** ${org-name} creates documents with this LaTeX documentclass: ${cls}
-This is the header that is expanded.
-
-${header-string}
-
-LaTeX path for class: [[${cls-path}]]
-
- [[elisp:(shell-command \"texdoc ${cls}\"][texdoc ${cls}]]
-
-Latex style path: [[${sty-path}]]
- 
-" 
-			    (lambda (arg &optional extra)
-			      (eval (read arg)))))))
-
-  (insert "* org-mode default latex packages\n\n")
-  (loop for (options package snippet compilers) in org-latex-default-packages-alist
-	do
-	(insert (s-format "- ${package} (options=${options}) [[elisp:(shell-command \"texdoc ${package}\"][texdoc ${package}]]\n"
-			  (lambda (arg &optional extra)
-			    (eval (read arg))))))
-
-  (insert "\n* org-mode defined latex packages\n\n")
-  (loop for (options package snippet compilers) in org-latex-packages-alist
-	do
-	(insert (s-format "- ${package} [${options}] [[elisp:(shell-command \"texdoc ${package}\"][texdoc ${package}]]\n"
-			  (lambda (arg &optional extra)
-			    (eval (read arg))))))
-
-  (insert "\n\n* org-mode LaTeX compiling setup\n\n")
-  (insert (format "org-latex-pdf-process = \"%s\"\n" org-latex-pdf-process))
-  (if (functionp org-latex-pdf-process)
-      (insert "%s" (describe-function org-latex-pdf-process))))
-
-  (switch-to-buffer "*smax-latex-setup*")
-  (goto-char (point-min)))
 
 (provide 'smax-latex)
 
