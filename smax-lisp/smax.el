@@ -8,23 +8,21 @@
 (setq inhibit-startup-screen t) ;; stop showing startup screen
 (tool-bar-mode -1)           ; remove the icons
 (menu-bar-mode -1)           ; keep the menus
-(global-visual-line-mode 1) ;; how long lines are handled.  This
-;; appears to wrap long lines visually,
-;; but not add line-returns
+(global-visual-line-mode 1) ;; how long lines are handled. 
 (if (display-graphic-p)
     (progn
       (scroll-bar-mode -1)))
-(global-font-lock-mode t) ;; turn on font-lock mode everywhere
-(auto-fill-mode -1)
-(fset 'yes-or-no-p 'y-or-n-p) ; answer with y/n instead of yes/no
+
 ;; ** Locations
 
 (setq custom-file (expand-file-name "user/custom.el" smax-dir))
 (setq auto-save-list-file-prefix (expand-file-name "auto-save-list/saves-" smax-dir))
 
-;; ** Editing and Backups
-
-
+;; ** Behaviour
+(global-auto-revert-mode 1)
+(global-font-lock-mode t) ;; turn on font-lock mode everywhere
+(auto-fill-mode -1)
+(fset 'yes-or-no-p 'y-or-n-p) ; answer with y/n instead of yes/no
 (setq x-select-enable-clipboard t
       x-select-enable-primary t
       save-interprogram-paste-before-kill t
@@ -40,9 +38,6 @@
 (setq save-abbrevs t)
 (setq-default abbrev-mode t)
 (setq save-abbrevs 'silently)
-
-;; ** Keybindings
-
 
 ;; * Version control
 ;; Disable all version control. makes startup and opening files much faster

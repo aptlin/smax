@@ -79,7 +79,9 @@
 ;; *** Parentheses
 (show-paren-mode 1)         ;; highlight parentheses
 (setq show-paren-style 'mixed)
+;; *** Paragraph
 (electric-indent-mode 0)
+(whole-line-or-region-mode 1)
 ;; ** Functions and Bindings
 ;; *** Functions
 
@@ -109,3 +111,4 @@
 (autoload 'zap-up-to-char "misc"
   "Kill up to, but not including ARGth occurrence of CHAR." t)
 (global-set-key (kbd "M-z") 'zap-up-to-char)
+(provide 'smax-editing)
