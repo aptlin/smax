@@ -1,3 +1,4 @@
+(setq org-html-link-org-files-as-html nil)
 (setq org-directory "~/ORG/")
 (setq org-default-notes-file "~/ORG/refile.org")
 (setq org-capture-templates

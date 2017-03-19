@@ -25,7 +25,111 @@
 (electric-indent-mode 1)
 (define-key global-map (kbd "RET")	'newline-and-indent)
 (define-key global-map (kbd "C-\.")	'align-regexp)
-(subword-mode) 
+(subword-mode)
+(use-package hungry-delete
+  :ensure t
+  :init
+  :config
+  (global-hungry-delete-mode))
+(use-package paredit
+  :ensure t
+  :init
+  :config
+
+  (define-key paredit-mode-map (kbd "C-w") 'paredit-kill-region-or-backward-word)
+  (define-key paredit-mode-map (kbd "M-C-<backspace>") 'backward-kill-sexp)
+
+  ;; don't hijack \ please
+  (define-key paredit-mode-map (kbd "\\") nil)
+
+  ;; Enable `paredit-mode' in the minibuffer, during `eval-expression'.
+  (defun conditionally-enable-paredit-mode ()
+    (if (eq this-command 'eval-expression)
+	(paredit-mode 1)))
+
+  (add-hook 'minibuffer-setup-hook 'conditionally-enable-paredit-mode)
+
+  ;; making paredit work with delete-selection-mode
+  (put 'paredit-forward-delete 'delete-selection 'supersede)
+  (put 'paredit-backward-delete 'delete-selection 'supersede)
+  (put 'paredit-newline 'delete-selection t)
+
+  ;; functions in smartparens that do not have an equivalent in paredit - take a look at them
+  (when nil
+    '(sp-beginning-of-sexp
+      sp-end-of-sexp
+      sp-next-sexp
+      sp-previous-sexp
+      sp-kill-sexp
+      sp-unwrap-sexp
+      sp-backward-unwrap-sexp
+      sp-select-next-thing-exchange
+      sp-select-next-thing
+      sp-forward-symbol
+      sp-backward-symbol))
+  )
+
+(use-package smartparens-config
+  :ensure smartparens
+  :config
+  (progn
+    (show-smartparens-global-mode t))
+  (smartparens-global-mode)
+  (require 'smartparens-latex)
+  (add-hook 'prog-mode-hook 'turn-on-smartparens-strict-mode)
+  
+  (bind-keys
+   :map smartparens-mode-map
+   ("C-M-a" . sp-beginning-of-sexp)
+   ("C-M-e" . sp-end-of-sexp)
+
+   ("C-<down>" . sp-down-sexp)
+   ("C-<up>"   . sp-up-sexp)
+   ("M-<down>" . sp-backward-down-sexp)
+   ("M-<up>"   . sp-backward-up-sexp)
+   
+   ("C-M-f" . sp-forward-sexp)
+   ("C-M-b" . sp-backward-sexp)
+
+   ("C-M-n" . sp-next-sexp)
+   ("C-M-p" . sp-previous-sexp)
+
+   ("C-S-f" . sp-forward-symbol)
+   ("C-S-b" . sp-backward-symbol)
+
+   ("C-<right>" . sp-forward-slurp-sexp)
+   ("M-<right>" . sp-forward-barf-sexp)
+   ("C-<left>"  . sp-backward-slurp-sexp)
+   ("M-<left>"  . sp-backward-barf-sexp)
+
+   ("C-M-t" . sp-transpose-sexp)
+   ("C-M-k" . sp-kill-sexp)
+   ("C-k"   . sp-kill-hybrid-sexp)
+   ("M-k"   . sp-backward-kill-sexp)
+   ("C-M-w" . sp-copy-sexp)
+   
+   ("M-<backspace>" . backward-kill-word)
+   ("C-<backspace>" . sp-backward-kill-word)
+   ([remap sp-backward-kill-word] . backward-kill-word)
+
+   ("M-[" . sp-backward-unwrap-sexp)
+   ("M-]" . sp-unwrap-sexp)
+   ("C-x C-t" . sp-transpose-hybrid-sexp)
+   )
+  )
+
+(add-hook 'prog-mode-hook 'turn-on-smartparens-strict-mode)
+(use-package ivy-historian
+  :ensure t
+  :init
+  :config
+  (add-hook 'after-init-hook
+	    (lambda ()
+	      (ivy-historian-mode)
+	      (diminish 'historian-mode)
+	      (diminish 'ivy-historian-mode)))
+  )
+  
 (use-package expand-region
   :ensure t
   :init
@@ -34,11 +138,14 @@
 
 (use-package multiple-cursors
   :ensure t
-  :init)
+  :init
+  :config
+  (global-set-key (kbd "C-c m p") 'mc/mark-previous-like-this)
+  (global-set-key (kbd "C-c m n") 'mc/mark-next-like-this)
+  (global-set-key (kbd "C-c m t") 'mc/mark-all-like-this)
+  )
 ;; multiple-cursors
-(global-set-key (kbd "C-c m p") 'mc/mark-previous-like-this)
-(global-set-key (kbd "C-c m n") 'mc/mark-next-like-this)
-(global-set-key (kbd "C-c m t") 'mc/mark-all-like-this)
+
 ;; extend string editing
 (defun swap-text (str1 str2 beg end)
   "Changes all STR1 to STR2 and all STR2 to STR1 in beg/end region."
@@ -64,7 +171,7 @@
   :ensure t
   :init)
 ;;* Search
-(global-set-key (kbd "C-<") 'grep-find)
+(global-set-key (kbd "C-<") 'counsel-ag)
 (global-set-key (kbd "C->") 'helm-locate)
 (global-set-key (kbd "C-!") 'save-buffers-kill-emacs)
 
@@ -80,6 +187,12 @@
 	      (diminish 'guide-key-mode)
 	      ))
   )
+;;* Code
+(use-package flycheck
+  :ensure t
+  :init
+  (global-flycheck-mode t)
+  (diminish 'flycheck))
 ;;* Fixes
 (add-to-list 'auto-mode-alist '("\\.zsh\\'" . sh-mode))
 ;;** Helpers
@@ -88,3 +201,7 @@
   (dolist (pattern patterns)
     (add-to-list 'auto-mode-alist (cons pattern mode))))
 (provide 'init-utils)
+
+
+
+

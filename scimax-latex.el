@@ -1,4 +1,4 @@
-;;; scimax-latex.el --- Utilities to check the LaTeX setup
+;; scimax-latex.el --- Utilities to check the LaTeX setup
 
 
 ;;; Commentary:
@@ -79,13 +79,8 @@ Missing files should be installed in the TEXMFHOME directory listed above. See h
 		       collect
 		       (list (car latex-class)
 			     (nth 1 latex-class)
-			     (let ((header-string (nth 1 latex-class)))
-			       (when (string-match "documentclass.*?{\\(.*?\\)}" header-string)
-				 (match-string 1 header-string))))))
-	  do
-	  (let ((cls-path (s-trim (shell-command-to-string (format "kpsewhich %s.cls" cls))))
-		(sty-path (s-trim (shell-command-to-string (format "kpsewhich %s.sty" cls)))))
-	    (insert (s-format "
+			     (shell-command-to-string (format "kpsewhich %s.sty" cls)))))
+	  (insert (s-format "
 ** ${org-name} creates documents with this LaTeX documentclass: ${cls}
 This is the header that is expanded.
 
@@ -98,27 +93,27 @@ LaTeX path for class: [[${cls-path}]]
 Latex style path: [[${sty-path}]]
  
 " 
-			      (lambda (arg &optional extra)
-				(eval (read arg)))))))
-
-    (insert "* org-mode default latex packages\n\n")
-    (loop for (options package snippet compilers) in org-latex-default-packages-alist
-	  do
-	  (insert (s-format "- ${package} (options=${options}) [[elisp:(shell-command \"texdoc ${package}\"][texdoc ${package}]]\n"
 			    (lambda (arg &optional extra)
-			      (eval (read arg))))))
+			      (eval (read arg)))))))
 
-    (insert "\n* org-mode defined latex packages\n\n")
-    (loop for (options package snippet compilers) in org-latex-packages-alist
-	  do
-	  (insert (s-format "- ${package} [${options}] [[elisp:(shell-command \"texdoc ${package}\"][texdoc ${package}]]\n"
-			    (lambda (arg &optional extra)
-			      (eval (read arg))))))
+  (insert "* org-mode default latex packages\n\n")
+  (loop for (options package snippet compilers) in org-latex-default-packages-alist
+	do
+	(insert (s-format "- ${package} (options=${options}) [[elisp:(shell-command \"texdoc ${package}\"][texdoc ${package}]]\n"
+			  (lambda (arg &optional extra)
+			    (eval (read arg))))))
 
-    (insert "\n\n* org-mode LaTeX compiling setup\n\n")
-    (insert (format "org-latex-pdf-process = \"%s\"\n" org-latex-pdf-process))
-    (if (functionp org-latex-pdf-process)
-	(insert "%s" (describe-function org-latex-pdf-process))))
+  (insert "\n* org-mode defined latex packages\n\n")
+  (loop for (options package snippet compilers) in org-latex-packages-alist
+	do
+	(insert (s-format "- ${package} [${options}] [[elisp:(shell-command \"texdoc ${package}\"][texdoc ${package}]]\n"
+			  (lambda (arg &optional extra)
+			    (eval (read arg))))))
+
+  (insert "\n\n* org-mode LaTeX compiling setup\n\n")
+  (insert (format "org-latex-pdf-process = \"%s\"\n" org-latex-pdf-process))
+  (if (functionp org-latex-pdf-process)
+      (insert "%s" (describe-function org-latex-pdf-process))))
 
   (switch-to-buffer "*scimax-latex-setup*")
   (goto-char (point-min)))

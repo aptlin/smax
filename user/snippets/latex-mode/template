@@ -8,7 +8,7 @@
 %%% TeX-master: t
 %%% End:
 \documentclass[11pt]{scrartcl}
-\usepackage{sdll}
+\usepackage[beaue, pset, anon]{masty}
 \usepackage{lineno}
 % ----------------------------------------------------------------------
 % Page setup
@@ -53,9 +53,9 @@
 % ----------------------------------------------------------------------
 % Body
 % ----------------------------------------------------------------------
-\begin{linenumbers}
+
 
 $2
 
-\end{linenumbers}
+
 \end{document}

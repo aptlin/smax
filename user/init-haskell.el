@@ -20,21 +20,11 @@
     '(define-key haskell-cabal-mode-map (kbd "C-c C-o") 'haskell-compile))
   (add-hook 'haskell-mode-hook 'haskell-auto-insert-module-template))
 
-(use-package intero
-  :init
-  :config
-  ;; (add-hook 'haskell-mode-hook 'intero-mode)
-
-  (eval-after-load 'intero
-    '(eval-after-load 'flycheck
-       '(flycheck-add-next-checker 'intero
-				   '(warning . haskell-hlint)))
-    )
-  )
 (use-package hindent
   :init
   :config
-  (add-hook 'haskell-mode-hook 'hindent-mode))
+  (add-hook 'haskell-mode-hook 'hindent-mode)
+  )
 (use-package rainbow-delimiters
   :init
   :config

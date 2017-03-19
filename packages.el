@@ -48,7 +48,9 @@
   :diminish auto-complete-mode
   :config (ac-config-default))
 
-(use-package avy)
+(use-package avy
+  :ensure t
+  :bind ("M-'" . avy-goto-word-1))
 
 
 (use-package tex

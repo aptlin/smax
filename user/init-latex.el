@@ -25,17 +25,17 @@
 	 ;; make math mode easier to enter
 
 
-	 (add-hook 'plain-TeX-mode-hook
-		   (lambda () (set (make-variable-buffer-local 'TeX-electric-math)
-				   (cons "$" "$"))))
-	 (add-hook 'LaTeX-mode-hook
-		   (lambda () (set (make-variable-buffer-local 'TeX-electric-math)
-				   (cons "\\(" "\\)"))))
+	 ;; (add-hook 'plain-TeX-mode-hook
+	 ;; 	   (lambda () (set (make-variable-buffer-local 'TeX-electric-math)
+	 ;; 			   (cons "$" "$"))))
+	 ;; (add-hook 'LaTeX-mode-hook
+	 ;; 	   (lambda () (set (make-variable-buffer-local 'TeX-electric-math)
+	 ;; 			   (cons "\\(" ""))))
 
 
 	 (setq TeX-electric-sub-and-superscript t)
 
-	 (setq LaTeX-electric-left-right-brace t)
+	 ;; (setq LaTeX-electric-left-right-brace nil)
 	 ))
 
 (use-package company-auctex

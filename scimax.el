@@ -22,15 +22,31 @@
 
 (show-paren-mode 1)         ;; highlight parentheses
 (setq show-paren-style 'mixed) ;; alternative is 'expression,
-			       ;; 'parenthesis or 'mixed
+;; 'parenthesis or 'mixed
 
-(setq backup-inhibited t)  ;; disable backup file creation
+;; (setq backup-inhibited t)  ;; disable backup file creation
 
 (fset 'yes-or-no-p 'y-or-n-p) ; answer with y/n instead of yes/no
 
 (setq custom-file (expand-file-name "user/custom.el" scimax-dir))
 
 (setq auto-save-list-file-prefix (expand-file-name "auto-save-list/saves-" scimax-dir))
+
+(autoload 'zap-up-to-char "misc"
+  "Kill up to, but not including ARGth occurrence of CHAR." t)
+
+(global-set-key (kbd "M-z") 'zap-up-to-char)
+
+(setq x-select-enable-clipboard t
+      x-select-enable-primary t
+      save-interprogram-paste-before-kill t
+      apropos-do-all t
+      mouse-yank-at-point t
+      require-final-newline t
+      load-prefer-newer t
+      save-place-file (concat user-emacs-directory "places")
+      backup-directory-alist `(("." . ,(concat user-emacs-directory
+					       "backups"))))
 
 ;; abbrevs
 (setq abbrev-file-name (expand-file-name "user/abbrev_defs" scimax-dir))

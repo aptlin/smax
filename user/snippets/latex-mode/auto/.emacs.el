@@ -12,8 +12,6 @@
     "masty"
     "lineno")
    (TeX-add-symbols
-    '("lr" 1)
-    '("R" 1)
     '("mbt" 1)
     '("mbv" 1)
     '("mbn" 1)
@@ -22,8 +20,6 @@
     "LongestName"
     "LongestValue"
     "LongestText")
-   (LaTeX-add-labels
-    "#1")
    (LaTeX-add-lengths
     "LargestHenceSize"
     "LargestNameSize"

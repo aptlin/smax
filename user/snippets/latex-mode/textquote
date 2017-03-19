@@ -1,5 +1,5 @@
 # -*- mode: snippet -*-
 # name: textquote
-# key: teq
+# key: tq
 # --
 \textquote{$0}

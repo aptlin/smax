@@ -27,3 +27,7 @@ ltximg
 *.eld#
 /user/url/cache
 /user/.last-package-update-day
+/user/.historian
+/userplaces
+/userbackups
+
