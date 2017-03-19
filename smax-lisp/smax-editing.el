@@ -75,13 +75,17 @@
   :config
   (aggressive-indent-global-mode 1)
   (add-to-list 'aggressive-indent-excluded-modes 'haskell-mode))
+;; *** Operating on a Whole Line or a Region
+(use-package whole-line-or-region
+  :init
+  :config
+  (whole-line-or-region-mode 1))
 ;; ** Modes
 ;; *** Parentheses
 (show-paren-mode 1)         ;; highlight parentheses
 (setq show-paren-style 'mixed)
 ;; *** Paragraph
 (electric-indent-mode 0)
-(whole-line-or-region-mode 1)
 ;; ** Functions and Bindings
 ;; *** Functions
 
