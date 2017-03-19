@@ -23,18 +23,18 @@ if [ `emacs --batch --eval "(prin1 emacs-major-version)"` -eq 4 ]; then
 fi
 
 
-# Now clone scimax
-if [ ! -d "scimax" ]; then
-    git clone https://github.com/jkitchin/scimax.git
+# Now clone smax
+if [ ! -d "smax" ]; then
+    git clone https://github.com/sdll/smax.git
 fi
 
-echo "scimax is installed. To use it, run this command in your terminal."
-echo "emacs -q -l `pwd`/scimax/init.el"
+echo "smax is installed. To use it, run this command in your terminal."
+echo "emacs -q -l `pwd`/smax/init.el"
 echo "or"
-echo "run the scimax.sh script created in this directory as ./scimax.sh in the terminal."
+echo "run the smax.sh script created in this directory as ./smax.sh in the terminal."
 
 echo "#!/bin/bash
-emacs -q -l `pwd`/scimax/init.el
-#end" > scimax.sh
-chmod +x scimax.sh
+emacs -q -l `pwd`/smax/init.el
+#end" > smax.sh
+chmod +x smax.sh
 #end

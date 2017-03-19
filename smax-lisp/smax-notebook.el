@@ -57,7 +57,7 @@
 
 
 (easy-menu-change
- '("Scimax") "notebook"
+ '("Smax") "notebook"
  `(["New notebook" nb-new t]
    ["Open notebook" nb-open t]
    ("Projects"))
@@ -65,7 +65,7 @@
 
 (defun update-smax-projects-menu ()
   (easy-menu-change
-   '("Scimax" "notebook") "Projects" 
+   '("Smax" "notebook") "Projects" 
    (sort (mapcar (lambda (x)
 		   (vector
 		    ;; entry

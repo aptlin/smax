@@ -58,7 +58,7 @@ one and open it."
 
 (define-prefix-command 'smax-mode-map)
 (easy-menu-define my-menu smax-mode-map "My own menu"
-  '("Scimax"
+  '("Smax"
     [(format "Update (-%s)" (kg-get-num-incoming-changes)) kg-update t]
     ("email"
      ["email region" email-region t]

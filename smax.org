@@ -1,8 +1,6 @@
-#+TITLE: Scimax
-#+AUTHOR: John Kitchin
-#+DATE: 2016
+#+TITLE: Smax
 
-Scimax is an Emacs starterkit designed for people interested in reproducible research and publishing. Scimax is just Emacs that has been configured extensively to make it act like we need it to for research documentation and publication. The notes below document some features we have built into smax.
+Smax is an Emacs starterkit designed for people interested in reproducible research and publishing. Smax is just Emacs that has been configured extensively to make it act like we need it to for research documentation and publication. The notes below document some features we have built into smax.
 
 * Org-mode
 smax provides a lot of customization of org-mode. Here are some of the more important ones.
@@ -131,7 +129,7 @@ Here is a list of installed latex classes.
 
 ** Better image scaling
 
-Image rescaling in org-mode/Emacs used to require an Emacs with imagemagick support compiled in. This is a problem on Windows. Scimax support image rescaling with an external imagemagick program called mogrify. You can rescale the appearance of an image in org-mode by adding an attribute like this above the figure.
+Image rescaling in org-mode/Emacs used to require an Emacs with imagemagick support compiled in. This is a problem on Windows. Smax support image rescaling with an external imagemagick program called mogrify. You can rescale the appearance of an image in org-mode by adding an attribute like this above the figure.
 
 #+attr_org: :width resize-option
 
@@ -180,7 +178,7 @@ The best way to see other speed commands is to put your cursor at the beginning 
 
 ** Track changes
 
-Scimax provides some support for track changes and edit marks in org-mode.
+Smax provides some support for track changes and edit marks in org-mode.
 
 [[insert:Add this text]] [[delete:Delete this]] 
  [[comment:A comment]]
@@ -242,7 +240,7 @@ The commands all have key bindings. The prefix key for these is H-e.
 
 ** Highlighting and annotation
 
-Scimax provides some support for highlighting, comment overlays, and edit marks.
+Smax provides some support for highlighting, comment overlays, and edit marks.
 
 The main way to access the functions is via a hydra menu: `ov-highlighter/body' that is bound to H-h (hyper-h). 
 

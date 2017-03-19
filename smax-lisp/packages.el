@@ -327,7 +327,7 @@
   :config (global-undo-tree-mode))
 
 
-;; * Scimax packages
+;; * Smax packages
 
 ;; ** General
 (use-package smax
