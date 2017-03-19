@@ -10,7 +10,7 @@
 Install git (http://git-scm.com/download/win). Open a git bash terminal. Run this command.
 
 #+BEGIN_SRC sh
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/jkitchin/scimax/master/install-scimax-win.sh)"
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/sdll/smax/master/install-smax-win.sh)"
 #+END_SRC
 
 There is an emacs binary in this repository for Windows. You should be able to run the scimax.sh command to launch scimax now.
