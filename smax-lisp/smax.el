@@ -39,17 +39,23 @@
 (setq save-abbrevs t)
 (setq-default abbrev-mode t)
 (setq save-abbrevs 'silently)
-
+(setq vc-follow-symlinks nil)
 ;; ** Bindings
 (global-set-key (kbd "C-!") 'save-buffers-kill-emacs)
 ;; ** Modes
 (add-to-list 'auto-mode-alist '("\\.zsh\\'" . sh-mode))
+(if (version< emacs-version "25.0")
+    (progn
+      (require 'saveplace)
+      (setq-default save-place t))
+  (save-place-mode 1))
 ;; *** Diminish modes
-(diminish 'orgstruct-mode)
-(diminish 'ivy-mode)
 (diminish 'abbrev-mode)
-(diminish 'visual-line-mode)
 (diminish 'emacs-keybinding-command-tooltip-mode)
+(diminish 'ivy-mode)
+(diminish 'orgstruct-mode)
+(diminish 'save-place-mode)
+(diminish 'visual-line-mode)
 ;; * Helpers
 (use-package which-key
   :ensure t
