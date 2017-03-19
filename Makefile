@@ -7,6 +7,7 @@ SOURCES =   ${EL_SOURCES}
 INIT = init.el
 
 test: clean
+	${CASK_EXEC} ert-runner init
 	${CASK_EXEC} ert-runner
 
 build:

@@ -15,8 +15,8 @@
 (if (display-graphic-p)
     (progn
       (scroll-bar-mode -1)))
-(global-set-key (kbd "C-=") 'text-scale-increase)
-(global-set-key (kbd "C--") 'text-scale-decrease)
+
+
 
 (global-font-lock-mode t) ;; turn on font-lock mode everywhere
 
@@ -56,6 +56,13 @@
 (setq-default abbrev-mode t)
 (setq save-abbrevs 'silently)
 
+;; ** Keybindings
+(global-set-key (kbd "C-=") 'text-scale-increase)
+(global-set-key (kbd "C--") 'text-scale-decrease)
+(global-set-key (kbd "M-v") '(lambda nil (interactive) (condition-case nil
+							   (scroll-down) (beginning-of-buffer (goto-char (point-min))))))
+(global-set-key (kbd "C-v") '(lambda nil (interactive) (condition-case nil
+							   (scroll-up) (end-of-buffer (goto-char (point-max))))))
 ;; * Version control
 ;; Disable all version control. makes startup and opening files much faster
 ;; except git and svn which I actually use
