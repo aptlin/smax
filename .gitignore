@@ -33,3 +33,5 @@ ltximg
 \#*#
 user/projectile-bookmarks.eld
 /user/places
+/user/.mc-lists.el
+/user/custom.el
