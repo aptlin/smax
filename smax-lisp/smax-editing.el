@@ -63,6 +63,12 @@
   (global-set-key (kbd "C-c m e") 'mc/edit-ends-of-lines)
   (global-set-key (kbd "C-c m a") 'mc/edit-beginnings-of-lines))
 
+
+;; *** ZZZ-to-char
+(use-package zzz-to-char
+  :init
+  :config
+  (π "M-z"        #'zzz-up-to-char))
 ;; *** Hungry-Delete
 (use-package hungry-delete
   :ensure t
@@ -108,6 +114,44 @@
 	      (diminish 'historian-mode)
 	      (diminish 'ivy-historian-mode)))
   )
+;; *** Spelling
+(use-package flyspell-lazy
+  :ensure t
+  :diminish flyspell-mode
+  :init
+  :config
+  (setq-default  flyspell-lazy-disallow-buffers    nil ; do spell checking everywhere
+		 flyspell-lazy-idle-seconds        1   ; a bit faster)
+		 ispell-dictionary                 "en"	; default dictionary
+		 )
+  (flyspell-lazy-mode 1)
+  (flyspell-prog-mode)
+  (defun flyspell-correct-previous (&optional words)
+    "Correct word before point, reach distant words.
+
+     WORDS words at maximum are traversed backward until misspelled
+     word is found.  If it's not found, give up.  If argument WORDS is
+     not specified, traverse 12 words by default.
+     
+     Return T if misspelled word is found and NIL otherwise.  Never
+     move point."
+    (interactive "P")
+    (let* ((Δ (- (point-max) (point)))
+	   (counter (string-to-number (or words "12")))
+	   (result
+	    (catch 'result
+	      (while (>= counter 0)
+		(when (cl-some #'flyspell-overlay-p
+			       (overlays-at (point)))
+		  (flyspell-correct-word-before-point)
+		  (throw 'result t))
+		(backward-word 1)
+		(setq counter (1- counter))
+		nil))))
+      (goto-char (- (point-max) Δ))
+      result))
+  (τ flyspell flyspell "C-;" #'flyspell-correct-previous)
+  )
 ;; ** Modes
 ;; *** Parentheses
 (show-paren-mode 1)         ;; highlight parentheses
@@ -116,6 +160,138 @@
 (electric-indent-mode 0)
 ;; ** Functions and Bindings
 ;; *** Functions
+
+;; #############################################################################
+;;; Thank you, Mark. https://github.com/mrkkrp
+(defun mk-saturated-occurence (&optional after-space)
+  "Return position of first non-white space character after point.
+  If AFTER-SPACE is not NIL, require at least one space character
+  before target non-white space character."
+  (save-excursion
+    (let ((this-end (line-end-position)))
+      (if (re-search-forward
+           (concat (when after-space "[[:blank:]]")
+                   "[^[:blank:]]")
+           this-end			; don't go after this position
+           t)				; don't error
+          (1- (point))
+        this-end))))  
+
+(defun mk-column-at (point)
+  "Return column number at POINT."
+  (save-excursion
+    (goto-char point)
+    (current-column)))
+
+(defun mk-smart-indent (&optional arg)
+  "Align first non-white space char after point with content of previous line.
+
+   With prefix argument ARG, align to next line instead."
+  
+  (interactive "P")
+  (let* ((this-edge (mk-column-at (mk-saturated-occurence)))
+         (that-edge
+          (save-excursion
+            (forward-line (if arg 1 -1))
+            (move-to-column this-edge)
+            (mk-column-at (mk-saturated-occurence t)))))
+    (when (> that-edge this-edge)
+      (insert-char 32 (- that-edge this-edge))
+      (move-to-column that-edge))))
+(global-set-key (kbd  "C-S-r") #'mk-smart-indent)
+
+(defun mk-transpose-line-down (&optional arg)
+  "Move current line and cursor down.
+
+Argument ARG, if supplied, specifies how many times the operation
+should be performed."
+  (interactive "p")
+  (dotimes (_ (or arg 1))
+    (let ((col (current-column)))
+      (forward-line    1)
+      (transpose-lines 1)
+      (forward-line   -1)
+      (move-to-column col))))
+
+(defun mk-transpose-line-up (&optional arg)
+  "Move current line and cursor up.
+
+   Argument ARG, if supplied, specifies how many times the operation
+   should be performed."
+  (interactive "p")
+  (dotimes (_ (or arg 1))
+    (let ((col (current-column)))
+      (transpose-lines 1)
+      (forward-line   -2)
+      (move-to-column col))))
+(defun mk-show-date (&optional stamp)
+  "Show current date in the minibuffer.
+
+If STAMP is not NIL, insert date at point."
+  (interactive)
+  (funcall (if stamp #'insert #'message)
+           (format-time-string "%A, %e %B, %Y")))
+(defun mk-grab-input (prompt &optional initial-input add-space)
+  "Grab input from user.
+
+If there is an active region, use its contents, otherwise read
+text from the minibuffer.  PROMPT is a prompt to show,
+INITIAL-INPUT is the initial input.  If INITIAL-INPUT and
+ADD-SPACE are not NIL, add one space after the initial input."
+  (if mark-active
+      (buffer-substring (region-beginning)
+                        (region-end))
+    (read-string prompt
+                 (concat initial-input
+                         (when (and initial-input add-space) " ")))))
+
+(defun mk-show-default-dir ()
+  "Show default directory in the minibuffer."
+  (interactive)
+  (message (f-full default-directory)))
+
+(defun mk-file-name-to-kill-ring (arg)
+  "Put name of file into kill ring.
+
+   If user's visiting a buffer that's associated with a file, use
+   name of the file.  If major mode is ‘dired-mode’, use name of
+   file at point, but if point is not placed at any file, put name
+   of actual directory into kill ring.  Argument ARG, if given,
+   makes result string be quoted as for yanking into shell."
+  (interactive "P")
+  (let ((φ (if (cl-find major-mode
+                        '(dired-mode wdired-mode))
+               (or (dired-get-filename nil t)
+                   default-directory)
+	     (buffer-file-name))))
+    (when φ
+      (message "%s → kill ring"
+               (kill-new
+                (expand-file-name
+                 (if arg
+                     (shell-quote-argument φ)
+                   φ)))))))
+
+(defvar mk-search-prefix nil
+  "This is an alist that contains some prefixes for online search query.
+
+  Prefixes are picked up according to currect major mode.")
+
+(defun mk-search (what)
+  "Search Internet for WHAT thing, with DuckDuckGo.
+
+   When called interactively, it uses prefix corresponding to
+   current major mode, as specified in ‘mk-search-prefix’."
+  (interactive
+   (list (mk-grab-input "DuckDuckGo: "
+                        (cdr (assoc major-mode
+                                    mk-search-prefix))
+                        t)))
+  (browse-url
+   (concat "https://duckduckgo.com/html/?k1=-1&q="
+           (url-hexify-string what))))
+(π "C-c s"      #'mk-search)
+;; #############################################################################
 
 (defun swap-text (str1 str2 beg end)
   "Changes all STR1 to STR2 and all STR2 to STR1 in beg/end region."
@@ -148,11 +324,10 @@
   (fill-paragraph))
 
 ;; *** Bindings
-(global-set-key (kbd "S-RET"	) 'prettify-paragraph)
-(global-set-key (kbd "RET"	) 'newline-and-indent)
-(global-set-key (kbd "C-\."	) 'align-regexp)
+(π "S-RET"	#'prettify-paragraph)
+(π "RET"	#'newline-and-indent)
+(π "C-\."	#'align-regexp)
 
-(autoload 'zap-up-to-char "misc"
-  "Kill up to, but not including ARGth occurrence of CHAR." t)
-(global-set-key (kbd "M-z") 'zap-up-to-char)
+
+
 (provide 'smax-editing)

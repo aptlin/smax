@@ -323,6 +323,11 @@
   :ensure nil
   :load-path conf-dir
   :init (require 'smax-vc))
+;; ** Editing
+(use-package smax-editing
+  :ensure nil
+  :load-path conf-dir
+  :init (require 'smax-editing))
 ;; ** Programming
 
 (use-package smax-lisp
@@ -350,11 +355,7 @@
   :ensure nil
   :load-path conf-dir
   :init (require 'smax-navy))
-;; ** Editing
-(use-package smax-editing
-  :ensure nil
-  :load-path conf-dir
-  :init (require 'smax-editing))
+
 ;; ** LaTeX
 (use-package smax-latex
   :ensure nil

@@ -10,12 +10,17 @@
 ;; *** Packages
 ;; **** Magit
 (use-package magit
-  :init (setq magit-completing-read-function 'ivy-completing-read)
+  :init
   :bind
   ("<f5>" . magit-status)
   ("C-c v t" . magit-status)
   :config
+  (setq magit-completing-read-function #'ivy-completing-read
+	magit-push-always-verify       nil
+	magit-clone-set-remote.pushDefault t) ;; don't ask, just set
   (define-key 'vc-prefix-map "t" 'magit-status)
+  (τ git-commit git-commit "M-n" #'mk-transpose-line-down)
+  (τ git-commit git-commit "M-p" #'mk-transpose-line-up)
   )
 
 ;; **** Utilities
