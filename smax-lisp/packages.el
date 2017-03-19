@@ -390,7 +390,7 @@
 
 (use-package ox-manuscript
   :ensure nil
-  :load-path (lambda () (expand-file-name "ox-manuscript" conf-dir)))
+  :load-path (lambda () (expand-file-name "ox-manuscript" smax-dir)))
 
 (use-package words
   :ensure nil
