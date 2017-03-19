@@ -19,6 +19,11 @@
 
 (require 'bind-key) ;; if you use any :bind variant
 
+(use-package smax-builders
+  :ensure nil
+  :load-path conf-dir
+  :init (require 'smax-builders))
+
 (provide 'bootstrap)
 
 ;;; bootstrap.el ends here

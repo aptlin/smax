@@ -94,4 +94,5 @@
       '(
 	dired-previous-line
 	lispy-cursor-down
+	lispy-delete-backward
 	))

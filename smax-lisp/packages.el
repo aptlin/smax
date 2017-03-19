@@ -35,20 +35,9 @@
 
 ;; * Other packages
 
-(use-package aggressive-indent
-  :init
-  :config
-  (aggressive-indent-global-mode 1)
-  (add-to-list 'aggressive-indent-excluded-modes 'haskell-mode)
-  )
-
 (use-package auto-complete
   :diminish auto-complete-mode
   :config (ac-config-default))
-
-(use-package avy
-  :bind ("M-'" . avy-goto-word-1))
-
 
 (use-package tex
   :ensure auctex)
@@ -58,7 +47,6 @@
 (use-package beacon
   :config
   (beacon-mode 1))
-
 
 (use-package bookmark
   :init
@@ -346,7 +334,16 @@
   :ensure nil
   :load-path conf-dir
   :init (require 'smax-python))
-
+;; ** Navigation
+(use-package smax-navy
+  :ensure nil
+  :load-path conf-dir
+  :init (require 'smax-navy))
+;; ** Editing
+(use-package smax-editing
+  :ensure nil
+  :load-path conf-dir
+  :init (require 'smax-editing))
 ;; ** Etc
 (use-package smax-mode
   :ensure nil
