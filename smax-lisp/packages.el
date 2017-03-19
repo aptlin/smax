@@ -91,7 +91,7 @@
   (setq ivy-use-virtual-buffers t)
   (define-prefix-command 'counsel-prefix-map)
   (global-set-key (kbd "H-c") 'counsel-prefix-map)
-
+  
   ;; default pattern ignores order.
   (setf (cdr (assoc t ivy-re-builders-alist))
 	'ivy--regex-ignore-order)

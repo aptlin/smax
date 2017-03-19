@@ -1,6 +1,5 @@
 ;;(load "auctex.el" nil t t)
 ;;(load "preview-latex.el" nil t t)
-(setq-default TeX-engine 'xetex)
 (setq TeX-parse-self t); Enable parse on load.
 (setq TeX-auto-save t); Enable parse on save.
 ;;(setq-default TeX-master nil)

@@ -9,7 +9,7 @@
  t
  '(("i" (lambda (x) (with-ivy-window
 		      (insert x))) "insert candidate")
-   (" " (lambda (x) (ivy-resume)) "resume")
+   ("t" (lambda (x) (find-file )) "resume")
    ("?" (lambda (x)
 	  (interactive)
 	  (describe-keymap ivy-minibuffer-map)) "Describe keys")))

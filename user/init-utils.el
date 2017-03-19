@@ -26,6 +26,11 @@
 (define-key global-map (kbd "RET")	'newline-and-indent)
 (define-key global-map (kbd "C-\.")	'align-regexp)
 (subword-mode)
+(use-package ace-link
+  :ensure t
+  :init
+  :config
+  (ace-link-setup-default))
 (use-package hungry-delete
   :ensure t
   :init
