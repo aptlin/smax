@@ -19,6 +19,7 @@
 (setq auto-save-list-file-prefix (expand-file-name "auto-save-list/saves-" smax-dir))
 
 ;; ** Behaviour
+
 (global-auto-revert-mode 1)
 (global-font-lock-mode t) ;; turn on font-lock mode everywhere
 (auto-fill-mode -1)
@@ -41,7 +42,14 @@
 
 ;; ** Bindings
 (global-set-key (kbd "C-!") 'save-buffers-kill-emacs)
-
+;; ** Modes
+(add-to-list 'auto-mode-alist '("\\.zsh\\'" . sh-mode))
+;; *** Diminish modes
+(diminish 'orgstruct-mode)
+(diminish 'ivy-mode)
+(diminish 'abbrev-mode)
+(diminish 'visual-line-mode)
+(diminish 'emacs-keybinding-command-tooltip-mode)
 ;; * Helpers
 (use-package which-key
   :ensure t
@@ -53,20 +61,13 @@
 	      (which-key-setup-side-window-right-bottom)
 	      (diminish 'guide-key-mode)
 	      )))
-
-
-;; * Diminish modes
-(diminish 'orgstruct-mode)
-(diminish 'ivy-mode)
-(diminish 'abbrev-mode)
-(diminish 'visual-line-mode)
-(diminish 'emacs-keybinding-command-tooltip-mode)
-
 ;; * Programming
 
+(use-package flycheck
+  :init
+  (global-flycheck-mode t))
 
-
-;; * Misc
+;; * Images
 
 (require 'image-mode)
 (define-key image-mode-map (kbd "q")
