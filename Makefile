@@ -19,9 +19,9 @@ clean:
 	rm -f *.elc
 
 travis:
-	open https://travis-ci.org/sdll/scimax
+	open https://travis-ci.org/sdll/EMACS
 
 github:
-	open https://github.com/sdll/scimax
+	open https://github.com/sdll/EMACS
 
 .PHONY:	all test package clean-elc test-melpa
