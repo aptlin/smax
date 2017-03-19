@@ -19,9 +19,9 @@ clean:
 	rm -f *.elc
 
 travis:
-	open https://travis-ci.org/jkitchin/scimax
+	open https://travis-ci.org/sdll/scimax
 
 github:
-	open https://github.com/jkitchin/scimax
+	open https://github.com/sdll/scimax
 
 .PHONY:	all test package clean-elc test-melpa

@@ -1,9 +1,11 @@
 #+TITLE: scimax - Awesome editing for scientists and engineers
-#+AUTHOR: John Kitchin
-
-Scimax is a rewrite of jmax, with lessons learned, and improvements.
 
 See the [[./scimax.org][manual]] for more details.
+
+#+BEGIN_HTML
+<a href="https://travis-ci.org/sdll/EMACS"><img src="https://travis-ci.org/sdll/EMACS.svg?branch=scimax"></a>
+<a href='https://coveralls.io/github/sdll/EMACS?branch=scimax'><img src='https://coveralls.io/repos/github/sdll/EMACS/badge.svg?branch=scimax' alt='Coverage Status' /></a>
+#+END_HTML
 
 * Installation
 
