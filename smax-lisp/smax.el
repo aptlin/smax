@@ -12,7 +12,7 @@
 (global-visual-line-mode 1) ;; how long lines are handled.  This
 ;; appears to wrap long lines visually,
 ;; but not add line-returns
-
+(scroll-bar-mode -1)
 (global-font-lock-mode t) ;; turn on font-lock mode everywhere
 
 ;; I do not like autofill mode.

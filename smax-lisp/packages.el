@@ -421,8 +421,4 @@
 
 ;;; packages.el ends here
 
-;; #  ov-highlight-data: nil
 
-;; Local Variables:
-;; eval: (ov-highlight-load)
-;; End:
