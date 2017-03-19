@@ -62,7 +62,7 @@
 
 (use-package bookmark
   :init
-  (setq bookmark-default-file (expand-file-name "user/bookmarks" conf-dir)
+  (setq bookmark-default-file (expand-file-name "user/bookmarks" smax-dir)
 	bookmark-save-flag 1))
 
 

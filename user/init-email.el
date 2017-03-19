@@ -2,9 +2,9 @@
 ;; https://nine27.com/2016-10-03/better-email-with-mu4e/
 
 ;;(add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e")
-(require 'mu4e)
 (use-package mu4e
   :ensure nil
+  :load-path (lambda () (expand-file-name "mu/mu4e" smax-dir))
   :init
   (progn
     ;; setting up variables
