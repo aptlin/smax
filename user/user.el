@@ -13,5 +13,4 @@
 (require 'init-yas)
 (require 'init-utils)
 (require 'init-bookmarks)
-(require 'init-blog)
 (require 'init-c)
