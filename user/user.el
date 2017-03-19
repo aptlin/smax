@@ -1,5 +1,6 @@
 (setq initial-buffer-choice "~/ORG/map.org")
 (save-place-mode 1)
+(setq vc-follow-symlinks nil)
 (require 'init-haskell)
 (require 'init-latex)
 (require 'init-locales)
