@@ -12,7 +12,12 @@
 (global-visual-line-mode 1) ;; how long lines are handled.  This
 ;; appears to wrap long lines visually,
 ;; but not add line-returns
-(scroll-bar-mode -1)
+(if (display-graphic-p)
+    (progn
+      (scroll-bar-mode -1)))
+(global-set-key (kbd "C-=") 'text-scale-increase)
+(global-set-key (kbd "C--") 'text-scale-decrease)
+
 (global-font-lock-mode t) ;; turn on font-lock mode everywhere
 
 ;; I do not like autofill mode.
@@ -28,6 +33,7 @@
 (setq custom-file (expand-file-name "user/custom.el" smax-dir))
 
 (setq auto-save-list-file-prefix (expand-file-name "auto-save-list/saves-" smax-dir))
+
 ;; ** Editing and Backups
 (autoload 'zap-up-to-char "misc"
   "Kill up to, but not including ARGth occurrence of CHAR." t)

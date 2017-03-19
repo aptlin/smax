@@ -22,10 +22,10 @@
 	  (when rx
 	    (if (listp rx)
 		;; If rx is a list, try each one for a match
-		(or (mu4e-message-maildir-matches msg (car rx))
-		    (mu4e-message-maildir-matches msg (cdr rx)))
-	      ;; Not a list, check rx
-	      (string-match rx (mu4e-message-field msg :maildir)))))
+		p		(or (mu4e-message-maildir-matches msg (car rx))
+				    (mu4e-message-maildir-matches msg (cdr rx)))
+		;; Not a list, check rx
+		(string-match rx (mu4e-message-field msg :maildir)))))
 
 	;; Choose account label to feed msmtp -a option based on From header
 	;; in Message buffer; This function must be added to
