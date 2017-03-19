@@ -12,9 +12,6 @@
 ;; appears to wrap long lines visually,
 ;; but not add line-returns
 
-(set-scroll-bar-mode nil)
-(setq scroll-error-top-bottom 'true)
-
 (global-font-lock-mode t) ;; turn on font-lock mode everywhere
 
 ;; I do not like autofill mode.

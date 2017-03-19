@@ -7,7 +7,7 @@
 ;; * Setup
 
 (defvar nb-notebook-directory
-  "~/vc/projects/"
+  "~/ORG/PROJECTS/"
   "Directory where projects are stored.")
 
 (unless (file-directory-p nb-notebook-directory)
@@ -16,7 +16,7 @@
 (defvar nb-master-file "README.org"
   "Name of the master file in each project")
 
-;;;###autoload
+;;;###
 (defun nb-open ()
   "Switch to a project and open the main file."
   (interactive)
@@ -24,10 +24,10 @@
 					    (find-file nb-master-file)))) 
     (projectile-switch-project)))
 
-;;;###autoload
+;;;###
 (defun nb-new (name)
   "Create a new project of NAME in `nb-notebook-directory'."
-  (interactive "sNew project name: ")
+  (interactive "New project name: ")
   (let ((dir (file-name-as-directory (expand-file-name name nb-notebook-directory))))
     (unless (file-directory-p dir)
       (make-directory dir t)
@@ -39,7 +39,7 @@
 
 
 ;; * Notebook agenda
-;;;###autoload
+;;;###
 (defun nb-agenda ()
   "Show org-agenda for org-files in the notebook."
   (interactive)

@@ -405,12 +405,6 @@
   :load-path scimax-dir
   :bind ("C-'" . words-hydra/body))
 
-(use-package ov-highlighter
-  :ensure nil
-  :load-path scimax-dir
-  :bind ("<f8> h" . ov-highlighter/body)
-  :init (require 'ov-highlighter))
-
 (use-package ore
   :ensure nil
   :load-path scimax-dir
