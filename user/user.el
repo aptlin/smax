@@ -1,5 +1,9 @@
 (setq initial-buffer-choice "~/ORG/map.org")
-(save-place-mode 1)
+(if (version< emacs-version "25.0")
+    (progn
+      (require 'saveplace)
+      (setq-default save-place t))
+  (save-place-mode 1))
 (setq vc-follow-symlinks nil)
 (require 'init-haskell)
 (require 'init-latex)
