@@ -133,3 +133,15 @@ TODO: sorting, actions."
 (provide 'smax-ivy)
 
 ;;; smax-ivy.el ends here
+;; * Helpers
+(defun mk-anti-ivy-advice (func &rest args)
+  "Temporarily disable Ivy and call function FUNC with arguments ARGS."
+  (interactive)
+  (let ((completing-read-function #'completing-read-default))
+    (if (called-interactively-p 'any)
+        (call-interactively func)
+      (apply func args))))
+
+(defun mk-disable-ivy (command)
+  "Disable IDO when command COMMAND is called."
+  (advice-add command :around #'mk-anti-ivy-advice))
