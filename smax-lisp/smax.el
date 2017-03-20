@@ -9,9 +9,11 @@
 (tool-bar-mode -1)           ; remove the icons
 (menu-bar-mode -1)           ; keep the menus
 (global-visual-line-mode 1) ;; how long lines are handled. 
-(if (display-graphic-p)
-    (progn
-      (scroll-bar-mode -1)))
+(defun smax-disable-scroll-bar (frame)
+  (modify-frame-parameters frame
+			   '((vertical-scroll-bars . nil)
+			     (horizontal-scroll-bars . nil))))
+(add-hook 'after-make-frame-functions 'smax-disable-scroll-bar)
 
 ;; ** Locations
 

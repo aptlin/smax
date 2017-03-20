@@ -318,6 +318,15 @@
   :load-path conf-dir
   :init (require 'smax))
 
+;; ** Appearance
+(use-package mk-highlight-line
+  :ensure nil
+  :load-path conf-dir
+  :init
+  :config
+  (require 'mk-highlight-line)
+  (mk-highlight-line-mode           1) ; highlight lines in list-like buffers
+  )
 ;; ** Version Control
 (use-package smax-vc
   :ensure nil
