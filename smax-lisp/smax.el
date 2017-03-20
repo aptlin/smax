@@ -43,7 +43,7 @@
 (setq save-abbrevs 'silently)
 (setq vc-follow-symlinks nil)
 ;; ** Bindings
-(global-set-key (kbd "C-!") 'save-buffers-kill-emacs)
+(π "C-!" #'save-buffers-kill-emacs)
 ;; ** Modes
 (add-to-list 'auto-mode-alist '("\\.zsh\\'" . sh-mode))
 (if (version< emacs-version "25.0")

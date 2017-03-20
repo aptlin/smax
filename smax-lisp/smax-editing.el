@@ -42,7 +42,9 @@
   (τ smartparens smartparens "M-f"           #'sp-forward-sexp)
   (τ smartparens smartparens "M-h"           #'sp-select-next-thing)
   (τ smartparens smartparens "M-k"           #'sp-kill-hybrid-sexp)
+  (τ smartparens smartparens "M-u"           #'sp-backward-unwrap-sexp)
   (τ smartparens smartparens "M-t"           #'sp-add-to-previous-sexp))
+
 ;; **** Expand-region
 (use-package expand-region
   :ensure t
@@ -55,13 +57,13 @@
   :ensure t
   :init
   :config
-  (global-set-key (kbd "C-c m p") 'mc/mark-previous-like-this)
-  (global-set-key (kbd "C-c m n") 'mc/mark-next-like-this)
-  (global-set-key (kbd "C-c m t") 'mc/mark-all-like-this)
-  (global-set-key (kbd "C-c m r") 'set-rectangular-region-anchor)
-  (global-set-key (kbd "C-c m c") 'mc/edit-lines)
-  (global-set-key (kbd "C-c m e") 'mc/edit-ends-of-lines)
-  (global-set-key (kbd "C-c m a") 'mc/edit-beginnings-of-lines))
+  (π "C-c m p" #'mc/mark-previous-like-this)
+  (π "C-c m n" #'mc/mark-next-like-this)
+  (π "C-c m t" #'mc/mark-all-like-this)
+  (π "C-c m r" #'set-rectangular-region-anchor)
+  (π "C-c m c" #'mc/edit-lines)
+  (π "C-c m e" #'mc/edit-ends-of-lines)
+  (π "C-c m a" #'mc/edit-beginnings-of-lines))
 
 
 ;; *** ZZZ-to-char
@@ -198,7 +200,7 @@
     (when (> that-edge this-edge)
       (insert-char 32 (- that-edge this-edge))
       (move-to-column that-edge))))
-(global-set-key (kbd  "C-S-r") #'mk-smart-indent)
+(π "C-S-r" #'mk-smart-indent)
 
 (defun mk-transpose-line-down (&optional arg)
   "Move current line and cursor down.

@@ -186,7 +186,7 @@
 	navy-semicolon 'avy-goto-char)
   (navy/body))
 
-(global-set-key (kbd "<f12>") 'navy)
+(π "<f12>" #'navy)
 
 (provide 'smax-navy)
 ;;; smax-navy.el ends here
@@ -197,14 +197,14 @@
 ;; ** Functions and Bindings
 ;; *** Functions
 ;; **** Search
-(global-set-key (kbd "C-<") 'counsel-ag)
-(global-set-key (kbd "C->") 'helm-locate)
+(π "C-<" #'counsel-ag)
+(π "C->" #'helm-locate)
 ;; **** Buffers
 
-(global-set-key (kbd "M-v") '(lambda nil (interactive) (condition-case nil
-							   (scroll-down) (beginning-of-buffer (goto-char (point-min))))))
-(global-set-key (kbd "C-v") '(lambda nil (interactive) (condition-case nil
-							   (scroll-up) (end-of-buffer (goto-char (point-max))))))
+(π "M-v" #'(lambda nil (interactive) (condition-case nil
+					 (scroll-down) (beginning-of-buffer (goto-char (point-min))))))
+(π "C-v" #'(lambda nil (interactive) (condition-case nil
+					 (scroll-up) (end-of-buffer (goto-char (point-max))))))
 ;; presentability
-(global-set-key (kbd "C-=") 'text-scale-increase)
-(global-set-key (kbd "C--") 'text-scale-decrease)
+(π "C-=" #'text-scale-increase)
+(π "C--" #'text-scale-decrease)
