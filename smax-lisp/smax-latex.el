@@ -161,21 +161,21 @@
   (setq helm-bibtex-notes-path smax-bibnotes))
 ;; *** Completion
 ;; **** Company
-(use-package company-auctex
-  :ensure company
-  :defer t
-  :init
-  (add-hook 'LaTeX-mode-hook 'company-auctex-init))
-(use-package company-math
-  :ensure auctex
-  :defer t
-  :init
-  (defun latex-mode-setup ()
-    (setq-local company-backends
-		(append '((company-math-symbols-latex company-latex-commands))
-			company-backends)))
-  
-  (add-hook 'TeX-mode-hook 'latex-mode-setup))
+;; (use-package company-auctex
+;;   :ensure company
+;;   :defer t
+;;   :init
+;;   (add-hook 'LaTeX-mode-hook 'company-auctex-init))
+;; (use-package company-math
+;;   :ensure auctex
+;;   :defer t
+;;   :init
+;;   (defun latex-mode-setup ()
+;;     (setq-local company-backends
+;; 		(append '((company-math-symbols-latex company-latex-commands))
+;; 			company-backends)))
+
+;;   (add-hook 'TeX-mode-hook 'latex-mode-setup))
 ;; ** Functions and Bindings
 (defvar tlmgr-installed-packages nil
   "Cached list of installed LaTeX packages.")

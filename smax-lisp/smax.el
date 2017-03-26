@@ -21,7 +21,7 @@
 (setq auto-save-list-file-prefix (expand-file-name "auto-save-list/saves-" smax-dir))
 
 ;; ** Behaviour
-
+(setq redisplay-dont-pause t)
 (global-auto-revert-mode 1)
 (global-font-lock-mode t) ;; turn on font-lock mode everywhere
 (auto-fill-mode -1)

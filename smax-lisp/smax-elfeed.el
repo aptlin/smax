@@ -18,6 +18,7 @@
 	("http://export.arxiv.org/rss/math.MG" math.MG)
 	("http://export.arxiv.org/rss/math.RT" math.RT)
 	("http://export.arxiv.org/rss/math.SP" math.SP)
+	("https://usamo.wordpress.com/feed/" Personal)
 	("https://www.quantamagazine.org/feed/" General)
 	("http://rss.sciam.com/sciam/math" General)
 	("https://rss.sciencedaily.com/computers_math.xml" General)

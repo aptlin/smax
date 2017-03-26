@@ -5,11 +5,13 @@
   :config
   (setq
    ebal-operation-mode                   'stack
-   haskell-ask-also-kill-buffers         nil  ; don't ask
-   haskell-process-load-or-reload-prompt t    ; please ask
-   haskell-process-show-debug-tips       nil  ; don't show anything
+   haskell-ask-also-kill-buffers         nil ; don't ask
+   haskell-process-load-or-reload-prompt t   ; please ask
+   haskell-process-show-debug-tips       nil ; don't show anything
    haskell-process-type                  'stack-ghci
-   haskell-process-args-stack-ghci       '("--ghci-options=-ferror-spans")))
+   haskell-process-args-stack-ghci       '("--ghci-options=-ferror-spans"))
+  (τ haskell haskell             "C-c e" #'ebal-execute)
+  )
 
 ;; ** Haskell Mode
 ;;; Code:
@@ -85,7 +87,7 @@
 (use-package hasky-extensions
   :defer t
   :config
-  (τ haskell-mode     haskell             "C-c y" #'hasky-extensions)
+  (τ haskell haskell             "C-c y" #'hasky-extensions)
   (add-hook 'hasky-extensions-prettifying-hook #'whitespace-cleanup)
   (add-hook 'hasky-extensions-prettifying-hook #'mk-single-empty-line)
   )

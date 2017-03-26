@@ -1,6 +1,6 @@
 # -*- mode: snippet -*-
-# name: note_template
-# key: note
+# name: note_automatic
+# key: note_automatic
 # --
 % -*- coding: utf-8; -*-
 %%% Local Variables:
@@ -10,7 +10,7 @@
 %%% End:
 \documentclass[11pt]{scrartcl}
 \usepackage[fancy, beaue, pset, anon]{masty}
-\pSet{\nt{$1}{$2}{$3}
+\pSet{\nt{${1:`(insert subject-key)`}}{$2}{${3:`(insert topic-key)`}}}
 \usepackage{lineno}
 % ----------------------------------------------------------------------
 % Page setup
@@ -55,7 +55,8 @@
 
 \begin{document}
 
-\section{$3}
+\section{${3:`(insert topic-key)`}}
 
   $0  
+
 \end{document}

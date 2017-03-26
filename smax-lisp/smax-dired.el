@@ -41,6 +41,7 @@
   :init
   :config
   (when (require 'openwith nil 'noerror)
+    (setq large-file-warning-threshold nil)
     (setq openwith-associations
 	  (list
 	   (list (openwith-make-extension-regexp
@@ -62,7 +63,7 @@
 	   '("\\.chm" "kchmviewer" (file))
 	   (list (openwith-make-extension-regexp
 		  '("pdf" "ps" "ps.gz" "dvi" "djvu"))
-		 smax-reader
+		 "zathura"
 		 '(file))
 	   )))
 
@@ -141,6 +142,30 @@ Version 2016-12-22"
 
 (define-key dired-mode-map (kbd "_") 'xah-dired-rename-space-to-underscore)
 (define-key dired-mode-map (kbd "-") 'xah-dired-rename-space-to-hyphen)
+
+;; -*- lexical-binding: t -*-
+(defun ora-ediff-files ()
+  (interactive)
+  (let ((files (dired-get-marked-files))
+        (wnd (current-window-configuration)))
+    (if (<= (length files) 2)
+        (let ((file1 (car files))
+              (file2 (if (cdr files)
+                         (cadr files)
+                       (read-file-name
+                        "file: "
+                        (dired-dwim-target-directory)))))
+          (if (file-newer-than-file-p file1 file2)
+              (ediff-files file2 file1)
+            (ediff-files file1 file2))
+          (add-hook 'ediff-after-quit-hook-internal
+                    (lambda ()
+                      (setq ediff-after-quit-hook-internal nil)
+                      (set-window-configuration wnd))))
+      (error "no more than 2 files should be marked"))))
+
+(define-key dired-mode-map "e" 'ora-ediff-files)
+
 ;; * End
 (provide 'smax-dired)
 
