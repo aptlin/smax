@@ -10,7 +10,7 @@
   (ace-link-setup-default))
 
 (use-package avy
-  :bind ("M-'" . avy-goto-word-1))
+  :bind ("C-'" . avy-goto-word-1))
 
 ;; ** Navy Toolbar
 (defvar navy-l 'forward-char

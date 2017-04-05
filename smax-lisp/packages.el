@@ -16,6 +16,7 @@
 ;; load this first before anything else to avoid mixed installations
 (use-package org-plus-contrib
   :mode ("\\.org\\'" . org-mode)
+  :diminish outline-minor-mode
   :init
   ;; Use the current window for C-c ' source editing
   (setq org-src-window-setup 'current-window
@@ -282,11 +283,15 @@
 (use-package rainbow-mode)
 
 (use-package recentf
+  :init
+  :diminish recentf-mode
   :config
+  (recentf-mode 1)
   (setq recentf-exclude
         '("COMMIT_MSG" "COMMIT_EDITMSG" "github.*txt$"
           ".*png$" "\\*message\\*" "auto-save-list\\*"))
-  (setq recentf-max-saved-items 600))
+  (setq recentf-max-saved-items 700)
+  )
 
 
 ;; Functions for working with strings
@@ -403,6 +408,10 @@
   :ensure nil
   :load-path conf-dir)
 
+(use-package smax-dired
+  :ensure nil
+  :load-path conf-dir)
+
 (use-package smax-utils
   :ensure nil
   :load-path conf-dir
@@ -415,7 +424,7 @@
 (use-package words
   :ensure nil
   :load-path conf-dir
-  :bind ("C-'" . words-hydra/body))
+  :bind ("M-'" . words-hydra/body))
 
 (use-package ore
   :ensure nil

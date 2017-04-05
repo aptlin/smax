@@ -21,7 +21,7 @@
 (setq auto-save-list-file-prefix (expand-file-name "auto-save-list/saves-" smax-dir))
 
 ;; ** Behaviour
-(setq redisplay-dont-pause t)
+(setq redisplay-dont-pause nil)
 (global-auto-revert-mode 1)
 (global-font-lock-mode t) ;; turn on font-lock mode everywhere
 (auto-fill-mode -1)
@@ -62,6 +62,7 @@
 (use-package which-key
   :ensure t
   :init
+  :diminish which-key-mode
   :config
   (add-hook 'after-init-hook
 	    (lambda ()
@@ -72,6 +73,7 @@
 ;; * Programming
 
 (use-package flycheck
+  :diminish flycheck-mode
   :init
   (global-flycheck-mode t))
 

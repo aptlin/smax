@@ -31,6 +31,7 @@
 ;; **** Smartparens
 (use-package smartparens-config
   :ensure smartparens
+  :diminish smartparens-mode
   :config
   (show-smartparens-global-mode t)
   (smartparens-global-mode 1)
@@ -38,7 +39,6 @@
   (add-hook 'prog-mode-hook 'turn-on-smartparens-strict-mode) 
   (τ smartparens smartparens "<C-backspace>" #'sp-backward-kill-sexp)
   (τ smartparens smartparens "M-b"           #'sp-backward-sexp)
-  (τ smartparens smartparens "M-d"           #'sp-kill-sexp)
   (τ smartparens smartparens "M-f"           #'sp-forward-sexp)
   (τ smartparens smartparens "M-h"           #'sp-select-next-thing)
   (τ smartparens smartparens "M-k"           #'sp-kill-hybrid-sexp)
@@ -90,6 +90,13 @@
   :config
   (whole-line-or-region-mode 1))
 ;; *** Completion
+;; *** Wrapping
+(use-package wrap-region
+  :init
+  :config
+  (wrap-region-global-mode +1)
+  (wrap-region-add-wrapper "$" "$")
+  )
 ;; **** Hippie-Expand
 
 (use-package hippie-expand

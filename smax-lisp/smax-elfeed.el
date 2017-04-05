@@ -11,13 +11,13 @@
 
 (setq elfeed-feeds
       '(
-	("http://export.arxiv.org/rss/math.AG" math.AG)
-	("http://export.arxiv.org/rss/math.AT" math.AT)
-	("http://export.arxiv.org/rss/math.AC" math.AC)
-	("http://export.arxiv.org/rss/math.GT" math.GT)
-	("http://export.arxiv.org/rss/math.MG" math.MG)
-	("http://export.arxiv.org/rss/math.RT" math.RT)
-	("http://export.arxiv.org/rss/math.SP" math.SP)
+	;; ("http://export.arxiv.org/rss/math.AG" math.AG)
+	;; ("http://export.arxiv.org/rss/math.AT" math.AT)
+	;; ("http://export.arxiv.org/rss/math.AC" math.AC)
+	;; ("http://export.arxiv.org/rss/math.GT" math.GT)
+	;; ("http://export.arxiv.org/rss/math.MG" math.MG)
+	;; ("http://export.arxiv.org/rss/math.RT" math.RT)
+	;; ("http://export.arxiv.org/rss/math.SP" math.SP)
 	("https://usamo.wordpress.com/feed/" Personal)
 	("https://www.quantamagazine.org/feed/" General)
 	("http://rss.sciam.com/sciam/math" General)

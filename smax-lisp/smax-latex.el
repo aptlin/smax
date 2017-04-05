@@ -9,6 +9,7 @@
 ;; ** Variables
 (setq smax-bibnotes "~/ORG/bibnotes.org")
 (setq smax-references "~/ORG/references.bib")
+(setq cdlatex-paired-parens "$[{(")
 ;; ** Default Behaviour
 ;;(load "auctex.el" nil t t)
 ;;(load "preview-latex.el" nil t t)

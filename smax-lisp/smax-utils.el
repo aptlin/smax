@@ -51,6 +51,13 @@ recent files and bookmarks. You can set a bookmark also."
               "smax.org"
 	      smax-dir)))
 
+;; * Packages
+;; ** pdf
+
+(use-package pdf-tools
+  :ensure t
+  :config
+  :init (pdf-tools-install))
 ;; * Utilities
 ;;;###
 (defun kill-all-buffers ()

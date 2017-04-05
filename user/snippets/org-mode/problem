@@ -3,5 +3,7 @@
 # key: prob
 # --
 \begin{problem*}
+\hfill
+
 $0
 \end{problem*}

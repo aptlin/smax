@@ -26,7 +26,7 @@
 (put 'dired-do-copy   'ido nil) ; use ido there
 (put 'dired-do-rename 'ido nil) ; ^
 
-(mk-disable-ivy 'dired-create-directory)
+
 ;; ** Packages
 (use-package ztree
   :init
