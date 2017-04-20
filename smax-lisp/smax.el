@@ -23,6 +23,7 @@
 ;; ** Behaviour
 (setq redisplay-dont-pause nil)
 (global-auto-revert-mode 1)
+(setq auto-revert-verbose nil)
 (global-font-lock-mode t) ;; turn on font-lock mode everywhere
 (auto-fill-mode -1)
 (fset 'yes-or-no-p 'y-or-n-p) ; answer with y/n instead of yes/no

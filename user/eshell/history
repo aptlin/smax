@@ -1,0 +1,4 @@
+xelatex
+xelatex test.tex
+za test.pdf
+zathura test.pdf
