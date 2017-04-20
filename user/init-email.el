@@ -1,10 +1,13 @@
 ;; Thank you, Nan.
 ;; https://nine27.com/2016-10-03/better-email-with-mu4e/
 
-;;(add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e")
-
+(add-to-list 'load-path "/run/current-system/sw/share/emacs/site-lisp/")
+(setq mu4e-mu-binary (substring 
+		      (shell-command-to-string "which mu") 
+		      0 -1))
 (if (executable-find "mu")
     (use-package mu4e
+      :load-path "/run/current-system/sw/share/emacs/site-lisp/mu4e"
       :ensure nil
       :init
       (require 'mu4e)
@@ -46,7 +49,6 @@
 		  (setq message-sendmail-extra-arguments (list '"-a" account))))))
 
 	(setq mail-user-agent 'mu4e-user-agent)
-	(setq mu4e-mu-binary "/usr/bin/mu")
 	(setq mu4e-maildir "~/.mail")
 	(setq mu4e-get-mail-command "offlineimap -o")
 	(setq mu4e-update-interval 3600)

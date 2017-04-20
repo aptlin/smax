@@ -18,6 +18,12 @@
 ;;(setq-default TeX-master nil)
 ;;(setq-default TeX-master "master") ;
 (setq TeX-PDF-mode t); PDF mode (rather than DVI-mode)
+(defun reader-hook()
+  (add-to-list 'TeX-view-program-list '("Zathura" "zathura %o"))
+  (setq TeX-view-program-selection '((output-pdf "Zathura"))) 
+  )
+(add-hook 'LaTeX-mode-hook 'reader-hook)
+
 ;; ** Packages
 ;; *** cdLaTeX
 (use-package cdlatex
