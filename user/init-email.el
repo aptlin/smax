@@ -76,7 +76,6 @@
 	  ;; Sometimes html email is just not readable in a text based client, this lets me open the
 	  ;; email in my browser.
 	  ;; Spell checking ftw.
-	  (add-hook 'mu4e-compose-mode-hook 'flyspell-mode)
 	  (add-hook 'mu4e-compose-mode-hook (lambda ()
 					      (set-fill-column 40)))
 
@@ -122,7 +121,7 @@
 	  
 	  ;; Configure sending mail.
 	  (setq message-send-mail-function 'message-send-mail-with-sendmail
-		sendmail-program "/usr/bin/msmtp"
+		sendmail-program (my-shell-command-to-string "which msmtp")
 		user-full-name "Alexander Illarionov")
 
 	  ;; Use the correct account context when sending mail based on the from header.
