@@ -386,12 +386,12 @@ This function is called by `org-babel-execute-src-block'."
 	       "<src lang=\"hy\">\n?\n</src>"))
 
 ;; * Calendar Support
-(use-package calfw
-  :init
-  :config
-  (require 'calfw)
-  (require 'calfw-org)
-  )
+;; (use-package calfw
+;;   :init
+;;   :config
+;;   (require 'calfw)
+;;   (require 'calfw-org)
+;;   )
 ;; * Images in org-mode
 
 ;; default with images open

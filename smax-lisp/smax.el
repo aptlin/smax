@@ -71,6 +71,9 @@
 	      (which-key-setup-side-window-right-bottom)
 	      (diminish 'guide-key-mode)
 	      )))
+(use-package auto-package-update
+  :ensure t
+  :init)
 ;; * Programming
 
 (use-package flycheck

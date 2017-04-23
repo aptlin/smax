@@ -58,6 +58,20 @@ recent files and bookmarks. You can set a bookmark also."
 ;;   :ensure t
 ;;   :config
 ;;   :init (pdf-tools-install))
+;; ** Lua
+(use-package lua-mode
+  :config
+  :init
+  (setq auto-mode-alist (append '(("\\.lua$" . lua-mode))
+				auto-mode-alist))
+  )
+;; ** Nix
+(use-package nix-mode
+  :init
+  :config
+  (setq auto-mode-alist (append '(("\\.nix$" . nix-mode))
+				auto-mode-alist))
+  )
 ;; * Utilities
 ;;;###
 (defun kill-all-buffers ()

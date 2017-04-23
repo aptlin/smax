@@ -83,7 +83,10 @@
   :diminish aggressive-indent
   :config
   (aggressive-indent-global-mode 1)
-  (add-to-list 'aggressive-indent-excluded-modes 'haskell-mode))
+  (add-to-list 'aggressive-indent-excluded-modes 'haskell-mode)
+  (add-to-list 'aggressive-indent-excluded-modes 'nix-mode)
+  )
+
 ;; *** Operating on a Whole Line or a Region
 (use-package whole-line-or-region
   :init
@@ -122,44 +125,6 @@
 	      (ivy-historian-mode)
 	      (diminish 'historian-mode)
 	      (diminish 'ivy-historian-mode)))
-  )
-;; *** Spelling
-(use-package flyspell-lazy
-  :ensure t
-  :diminish flyspell-mode
-  :init
-  :config
-  (setq-default  flyspell-lazy-disallow-buffers    nil ; do spell checking everywhere
-		 flyspell-lazy-idle-seconds        1   ; a bit faster)
-		 ispell-dictionary                 "en"	; default dictionary
-		 )
-  (flyspell-lazy-mode 1)
-  (flyspell-prog-mode)
-  (defun flyspell-correct-previous (&optional words)
-    "Correct word before point, reach distant words.
-
-     WORDS words at maximum are traversed backward until misspelled
-     word is found.  If it's not found, give up.  If argument WORDS is
-     not specified, traverse 12 words by default.
-     
-     Return T if misspelled word is found and NIL otherwise.  Never
-     move point."
-    (interactive "P")
-    (let* ((Δ (- (point-max) (point)))
-	   (counter (string-to-number (or words "12")))
-	   (result
-	    (catch 'result
-	      (while (>= counter 0)
-		(when (cl-some #'flyspell-overlay-p
-			       (overlays-at (point)))
-		  (flyspell-correct-word-before-point)
-		  (throw 'result t))
-		(backward-word 1)
-		(setq counter (1- counter))
-		nil))))
-      (goto-char (- (point-max) Δ))
-      result))
-  (τ flyspell flyspell "C-;" #'flyspell-correct-previous)
   )
 ;; ** Modes
 ;; *** Parentheses
