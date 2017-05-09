@@ -361,6 +361,11 @@
   :load-path conf-dir
   :init (require 'smax-c))
 
+;; ** Budgeting
+(use-package smax-hledger
+  :ensure nil
+  :load-path conf-dir
+  :init (require 'smax-hledger))
 ;; ** Navigation
 (use-package smax-navy
   :ensure nil
