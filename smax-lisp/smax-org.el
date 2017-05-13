@@ -6,6 +6,7 @@
 ;;; Code:
 (require 'org)
 (require 'ox-latex)
+(require 'ox-ipynb)
 (require 'org-inlinetask)
 (require 'org-mouse)
 (require 'org-ref)

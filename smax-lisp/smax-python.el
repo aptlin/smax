@@ -30,6 +30,11 @@
   (interactive)
   (comint-send-string (python-shell-get-process)
                       "%reset\ny\n"))
+;; ** Development
+;; Python editing mode
+(use-package elpy
+  :config
+  (elpy-enable))
 ;; ** Search
 
 (add-to-list 'mk-search-prefix '(inferior-python-mode . "python"))
