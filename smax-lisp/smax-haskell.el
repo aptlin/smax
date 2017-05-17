@@ -23,14 +23,10 @@
   (add-hook 'haskell-mode-hook                 #'turn-on-haskell-indentation)
   (eval-after-load 'haskell-mode
     '(define-key haskell-mode-map [f2] 'haskell-navigate-imports))
-  ;; necessary for hasktags
-  (let ((my-cabal-path (expand-file-name "~/.cabal/bin")))
-    (setenv "PATH" (concat my-cabal-path path-separator (getenv "PATH")))
-    (add-to-list 'exec-path my-cabal-path))
-  (custom-set-variables '(haskell-tags-on-save t))
-  ;; stylish-haskell formatting on save
 
-  (setq-default haskell-stylish-on-save t)
+  ;; (custom-set-variables '(haskell-tags-on-save t))
+  ;; stylish-haskell formatting on
+  (setq-default haskell-stylish-on-save t) 
 
   (eval-after-load 'haskell-mode
     '(define-key haskell-mode-map (kbd "C-c C-o") 'haskell-compile))
