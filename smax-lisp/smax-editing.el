@@ -301,7 +301,7 @@ ADD-SPACE are not NIL, add one space after the initial input."
 (π "S-RET"	#'prettify-paragraph)
 (π "RET"	#'newline-and-indent)
 (π "C-\."	#'align-regexp)
-
+(π "<f2> t"     #'replace-string)
 
 
 (provide 'smax-editing)

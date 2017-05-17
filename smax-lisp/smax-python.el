@@ -6,30 +6,11 @@
 
 ;; * Python
 ;; ** Behaviour
-(setq-default
- python-fill-docstring-style 'django
- python-indent-offset        4)
+(setq python-indent-offset 4)
 ;; This eliminates an annoying message about the interpreter not using
 ;; readline. That doesn't seem to matter at all.
 (setq warning-suppress-types '((python)
 			       (emacs)))
-;; ** Interpreter
-(when (executable-find "ipython")
-  (setq
-   python-shell-interpreter          "ipython"
-   python-shell-prompt-output-regexp "Out\\[[0-9 +]\\]: "
-   python-shell-prompt-regexp        "In \\[[0-9]+\\]: "))
-(defun python-shell-ensure-proc (&rest _rest)
-  "Make sure that python process is running for current buffer."
-  (unless (python-shell-get-process)
-    (let ((win (get-buffer-window)))
-      (run-python nil nil t)
-      (select-window win))))
-(defun ipython-reset ()
-  "Reset iPython shell."
-  (interactive)
-  (comint-send-string (python-shell-get-process)
-                      "%reset\ny\n"))
 ;; ** Development
 ;; Python editing mode
 (use-package elpy
@@ -87,10 +68,6 @@
 (τ python python          "C-c C-c" #'python-shell-send-defun)
 (τ python python          "C-c C-l" #'python-shell-send-buffer)
 (τ python python          "C-c h"   #'mk-python-docs)
-;; ** Advice
-(advice-add 'python-shell-send-buffer :before #'python-shell-ensure-proc)
-(advice-add 'python-shell-send-defun  :before #'python-shell-ensure-proc)
-(advice-add 'run-python               :after  (η #'python-shell-switch-to-shell))
 
 ;; * End
 (provide 'smax-python)

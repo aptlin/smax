@@ -197,6 +197,9 @@ is positive, move after, and if negative, move before."
 (add-to-list 'org-structure-template-alist
 	     '("p" "#+BEGIN_SRC python :results output org drawer\n?\n#+END_SRC"
 	       "<src lang=\"python\">\n?\n</src>"))
+(add-to-list 'org-structure-template-alist
+	     '("ip" "#+BEGIN_SRC ipython :session :results output drawer\n?\n#+END_SRC"
+	       "<src lang=\"python\">\n?\n</src>"))
 
 ;; add <por for python expansion with raw output
 (add-to-list 'org-structure-template-alist
@@ -256,6 +259,15 @@ is positive, move after, and if negative, move before."
 		     `(,template ,expansion ""))))
 
 ;; * Babel settings
+(use-package ob-ipython
+  :init
+  :config
+  (require 'ob-ipython))
+
+(setq org-startup-indented t)
+;; Update images from babel code blocks automatically
+
+(setq org-src-tab-acts-natively t)
 ;; do not evaluate code on export by default
 (setq org-export-babel-evaluate nil)
 
@@ -267,7 +279,8 @@ is positive, move after, and if negative, move before."
 ;; register languages in org-mode
 (org-babel-do-load-languages
  'org-babel-load-languages
- '((emacs-lisp . t)
+ '((ipython . t)
+   (emacs-lisp . t)
    (python . t)
    (shell . t)
    (matlab . t)
@@ -287,50 +300,15 @@ is positive, move after, and if negative, move before."
 ;; use syntax highlighting in org-file code blocks
 (setq org-src-fontify-natively t)
 
-(setq org-babel-default-header-args:python
-      '((:results . "output replace")
-	(:session . "none")
-	(:exports . "both")
-	(:cache .   "no")
-	(:noweb . "no")
-	(:hlines . "no")
-	(:tangle . "no")))
-
-;; ** jupyter ipython blocks
-
-(add-to-list 'org-structure-template-alist
-	     '("ip" "#+BEGIN_SRC ipython :session :results output drawer\n?\n#+END_SRC"
-	       "<src lang=\"python\">\n?\n</src>"))
-
-(setq org-babel-default-header-args:ipython
-      '((:results . "output replace")
-	(:session . "none")
-	(:exports . "both")
-	(:cache .   "no")
-	(:noweb . "no")
-	(:hlines . "no")
-	(:tangle . "no")))
-
-(defun smax-install-ipython-lexer ()
-  "Install the IPython lexer for Pygments.
-You need this to get syntax highlighting."
-  (interactive)
-  (unless (= 0
-	     (shell-command
-	      "python -c \"import pygments.lexers; pygments.lexers.get_lexer_by_name('ipython')\""))
-    (shell-command "pip install git+git://github.com/sanguineturtle/pygments-ipython-console")))
-
-;; I added this function
 (defun ob-ipython-inline-image (b64-string)
   "Write the b64-string to a temporary file.
 Returns an org-link to the file."
   (let* ((tfile (make-temp-file "ob-ipython-" nil ".png"))
-	 (link (format "[[file:%s]]" tfile)))
+         (link (format "[[file:%s]]" tfile)))
     (ob-ipython--write-base64-string tfile b64-string)
     link))
 
 
-;; This overwrites the ob-ipython function
 (defun org-babel-execute:ipython (body params)
   "Execute a block of IPython code with Babel.
 This function is called by `org-babel-execute-src-block'."
@@ -346,14 +324,14 @@ This function is called by `org-babel-execute-src-block'."
       (let ((result (cdr (assoc :result ret)))
             (output (cdr (assoc :output ret))))
         (if (eq result-type 'output)
-	    (concat
-	     output 
-	     (format "%s"
-		     (mapconcat 'identity
-				(loop for res in result
-				      if (eq 'image/png (car res))
-				      collect (ob-ipython-inline-image (cdr res)))
-				"\n")))
+            (concat
+             output 
+             (format "%s"
+                     (mapconcat 'identity
+                                (loop for res in result
+                                      if (eq 'image/png (car res))
+                                      collect (ob-ipython-inline-image (cdr res)))
+                                "\n")))
           (ob-ipython--create-stdout-buffer output)
           (cond ((and file (string= (f-ext file) "png"))
                  (->> result (assoc 'image/png) cdr (ob-ipython--write-base64-string file)))
@@ -361,31 +339,6 @@ This function is called by `org-babel-execute-src-block'."
                  (->> result (assoc 'image/svg+xml) cdr (ob-ipython--write-string-to-file file)))
                 (file (error "%s is currently an unsupported file extension." (f-ext file)))
                 (t (->> result (assoc 'text/plain) cdr))))))))
-
-;; ** jupyter-hy blocks
-;; make src blocks open in the right mode
-(add-to-list 'org-src-lang-modes '("jupyter-hy" . hy))
-(add-to-list 'org-latex-minted-langs '(jupyter-hy  "hylang"))
-
-;; set default headers for convenience
-(setq org-babel-default-header-args:jupyter-hy
-      '((:results . "output replace")
-	(:session . "hy")
-	(:kernel . "hy")
-	(:exports . "code")
-	(:cache .   "no")
-	(:noweb . "no")
-	(:hlines . "no")
-	(:tangle . "no")))
-
-(defalias 'org-babel-execute:jupyter-hy 'org-babel-execute:ipython)
-(defalias 'org-babel-prep-session:jupyter-hy 'org-babel-prep-session:ipython)
-(defalias 'org-babel-jupyter-hy-initiate-session 'org-babel-ipython-initiate-session)
-
-(add-to-list 'org-structure-template-alist
-	     '("hy" "#+BEGIN_SRC jupyter-hy\n?\n#+END_SRC"
-	       "<src lang=\"hy\">\n?\n</src>"))
-
 ;; * Calendar Support
 ;; (use-package calfw
 ;;   :init
@@ -1097,162 +1050,6 @@ for colored headlines."
 		(not (s-contains? "#" f))))
 	     (projectile-current-project-files)))
    fontify))
-
-
-(require 'smax-org-babel-python)
-
-;; * Rescaling inline-images
-;; This will eventually be obsolete if this makes it into org-mode
-(defvar org-inline-image-resize-function
-  #'org-inline-image-resize
-  "Function that takes a filename and resize argument and returns
- a new filename pointing to the resized image.")
-
-(defun org-inline-image-resize (fname resize-options)
-  "Resize FNAME with RESIZE-OPTIONS.
-RESIZE-OPTIONS are passed to \"mogrify resized-fname -resize resize-options\".
-RESIZE-OPTIONS could be:
-
-N% to scale the image by a percentage.
-N to set the width, keeping the aspect ratio constant.
-xN to set the height, keeping the aspect ratio constant.
-NxM! to set the width and height, ignoring the aspect ratio.
-
-See http://www.imagemagick.org/Usage/resize/#resize for more options."
-  (let* ((md5-hash (with-temp-buffer (insert-file-contents fname)
-				     (insert (format "%s" resize-options))
-				     (md5 (buffer-string))))
-	 (resized-fname (concat (expand-file-name
-				 md5-hash
-				 temporary-file-directory)
-				"."
-				(file-name-extension fname)))
-	 (cmd (format "mogrify -resize %s %s"
-		      resize-options
-		      resized-fname)))
-    (if (not (executable-find "mogrify"))
-	(progn
-	  (message "No mogrify executable found. To eliminate this message, set  `org-inline-image-resize-function' to nil or install imagemagick from http://www.imagemagick.org/script/binary-releases.php")
-	  fname)
-      (unless (file-exists-p resized-fname)
-	(copy-file fname resized-fname)
-	(shell-command cmd))
-      resized-fname)))
-
-;; this is copied and modified from org.el
-(defun org-display-inline-images (&optional include-linked refresh beg end)
-  "Display inline images.
-
-An inline image is a link which follows either of these
-conventions:
-
-  1. Its path is a file with an extension matching return value
-     from `image-file-name-regexp' and it has no contents.
-
-  2. Its description consists in a single link of the previous
-     type.
-
-When optional argument INCLUDE-LINKED is non-nil, also links with
-a text description part will be inlined.  This can be nice for
-a quick look at those images, but it does not reflect what
-exported files will look like.
-
-When optional argument REFRESH is non-nil, refresh existing
-images between BEG and END.  This will create new image displays
-only if necessary.  BEG and END default to the buffer
-boundaries."
-  (interactive "P")
-  (when (display-graphic-p)
-    (unless refresh
-      (org-remove-inline-images)
-      (when (fboundp 'clear-image-cache) (clear-image-cache)))
-    (org-with-wide-buffer
-     (goto-char (or beg (point-min)))
-     (let ((case-fold-search t)
-	   (file-extension-re (image-file-name-regexp)))
-       (while (re-search-forward "[][]\\[\\(?:file\\|[./~]\\)" end t)
-	 (let ((link (save-match-data (org-element-context))))
-	   ;; Check if we're at an inline image.
-	   (when (and (equal (org-element-property :type link) "file")
-		      (or include-linked
-			  (not (org-element-property :contents-begin link)))
-		      (let ((parent (org-element-property :parent link)))
-			(or (not (eq (org-element-type parent) 'link))
-			    (not (cdr (org-element-contents parent)))))
-		      (org-string-match-p file-extension-re
-					  (org-element-property :path link)))
-	     (let ((file (expand-file-name
-			  (org-link-unescape
-			   (org-element-property :path link)))))
-	       (when (file-exists-p file)
-		 (let ((width
-			;; Apply `org-image-actual-width' specifications.
-			(cond
-			 ((and (not (image-type-available-p 'imagemagick))
-			       (not org-inline-image-resize-function))
-			  nil)
-			 ((eq org-image-actual-width t) nil)
-			 ((listp org-image-actual-width)
-			  (or
-			   ;; First try to find a width among
-			   ;; attributes associated to the paragraph
-			   ;; containing link.
-			   (let* ((paragraph
-				   (let ((e link))
-				     (while (and (setq e (org-element-property
-							  :parent e))
-						 (not (eq (org-element-type e)
-							  'paragraph))))
-				     e))
-				  (attr_org (org-element-property :attr_org paragraph)))
-			     (when attr_org
-			       (plist-get
-				(org-export-read-attribute :attr_org  paragraph) :width)))
-			   ;; Otherwise, fall-back to provided number.
-			   (car org-image-actual-width)))
-			 ((numberp org-image-actual-width)
-			  org-image-actual-width)))
-		       (old (get-char-property-and-overlay
-			     (org-element-property :begin link)
-			     'org-image-overlay))) 
-		   (if (and (car-safe old) refresh)
-		       (image-refresh (overlay-get (cdr old) 'display))
-		     
-		     (when org-inline-image-resize-function
-		       (setq file (funcall  org-inline-image-resize-function file width)
-			     width nil))
-		     (let ((image (create-image file
-						(cond
-						 ((image-type-available-p 'imagemagick)
-						  (and width 'imagemagick))
-						 (t nil)) 
-						nil
-						:width width)))
-		       (when image
-			 (let* ((link
-				 ;; If inline image is the description
-				 ;; of another link, be sure to
-				 ;; consider the latter as the one to
-				 ;; apply the overlay on.
-				 (let ((parent
-					(org-element-property :parent link)))
-				   (if (eq (org-element-type parent) 'link)
-				       parent
-				     link)))
-				(ov (make-overlay
-				     (org-element-property :begin link)
-				     (progn
-				       (goto-char
-					(org-element-property :end link))
-				       (skip-chars-backward " \t")
-				       (point)))))
-			   (overlay-put ov 'display image)
-			   (overlay-put ov 'face 'default)
-			   (overlay-put ov 'org-image-overlay t)
-			   (overlay-put
-			    ov 'modification-hooks
-			    (list 'org-display-inline-remove-overlay))
-			   (push ov org-inline-image-overlays)))))))))))))))
 
 ;; * The end
 (provide 'smax-org)

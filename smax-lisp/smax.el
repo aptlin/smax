@@ -54,7 +54,6 @@
   (save-place-mode 1))
 ;; *** Diminish modes
 (diminish 'abbrev-mode)
-(diminish 'emacs-keybinding-command-tooltip-mode)
 (diminish 'ivy-mode)
 (diminish 'orgstruct-mode)
 (diminish 'save-place-mode)

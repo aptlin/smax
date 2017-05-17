@@ -45,10 +45,10 @@
 
 
 ;; Make cursor more visible when you move a long distance
-(use-package beacon
-  :diminish beacon-mode
-  :config
-  (beacon-mode 1))
+;; (use-package beacon
+;;   :diminish beacon-mode
+;;   :config
+;;   (beacon-mode 1))
 
 (use-package bookmark
   :init
@@ -427,11 +427,6 @@
   :ensure nil
   :load-path conf-dir
   :bind ("M-'" . words-hydra/body))
-
-(use-package ore
-  :ensure nil
-  :load-path conf-dir
-  :bind ("H-o" . ore))
 
 (use-package smax-ivy
   :ensure nil
