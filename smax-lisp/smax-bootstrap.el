@@ -19,15 +19,7 @@
 (require 'diminish) ;; if you use :diminish
 
 (require 'bind-key) ;; if you use any :bind variant
-;; * Helpers
-(use-package smax-builders
-  :ensure nil
-  :load-path conf-dir
-  :init (require 'smax-builders))
 
-;; * Variables
-(setq smax-reader "zathura")
-(setq smax-reader-path "/usr/bin/zathura")
-(provide 'bootstrap)
+(provide 'smax-bootstrap)
 
 ;;; bootstrap.el ends here

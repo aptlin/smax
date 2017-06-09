@@ -26,8 +26,8 @@
 
   ;; (custom-set-variables '(haskell-tags-on-save t))
   ;; stylish-haskell formatting on
-  (setq-default haskell-stylish-on-save t) 
-
+  (setq-default haskell-stylish-on-save nil)
+  
   (eval-after-load 'haskell-mode
     '(define-key haskell-mode-map (kbd "C-c C-o") 'haskell-compile))
   (eval-after-load 'haskell-cabal
@@ -105,8 +105,6 @@
 (use-package rainbow-delimiters
   :init
   :config
-  (add-hook 'haskell-mode-hook 'rainbow-delimiters-mode)
-  
-  )
+  (add-hook 'haskell-mode-hook 'rainbow-delimiters-mode))
 
 (provide 'smax-haskell)

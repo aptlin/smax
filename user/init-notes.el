@@ -14,7 +14,7 @@
 ;; ** org
 (setq org-directory "~/ORG/")
 (setq org-default-notes-file (concat org-directory "/notes.org"))
-(π "<f2> c" 'org-capture)
+(define-key global-map (kbd "<f2> c") 'org-capture)
 
 ;; ** Functions
 (defun add-note (name)

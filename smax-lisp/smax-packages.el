@@ -433,7 +433,7 @@
   (load (expand-file-name "user.el" user-dir)))
 
 ;; * The end
-(provide 'packages)
+(provide 'smax-packages)
 
 ;;; packages.el ends here
 

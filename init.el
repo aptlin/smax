@@ -67,8 +67,8 @@
 (let ((default-directory smax-dir))
   (shell-command "git submodule update --init"))
 
-(require 'bootstrap)
-(require 'packages)
+(require 'smax-bootstrap)
+(require 'smax-packages)
 
 (provide 'init)
 

@@ -27,7 +27,6 @@
   :ensure t
   :init)
 ;; ** Functions and Bindings
-
 ;; *** Functions
 (defun smax-update ()
   "Update smax from github."

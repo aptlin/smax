@@ -10,6 +10,9 @@
 (setq smax-bibnotes "~/ORG/bibnotes.org")
 (setq smax-references "~/ORG/references.bib")
 (setq cdlatex-paired-parens "$[{(")
+(setq smax-reader "zathura")
+(setq smax-reader-path "/usr/bin/zathura")
+
 ;; ** Default Behaviour
 ;;(load "auctex.el" nil t t)
 ;;(load "preview-latex.el" nil t t)
