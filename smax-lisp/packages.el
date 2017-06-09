@@ -81,7 +81,7 @@
   (setq ivy-use-virtual-buffers t)
   ;; default pattern ignores order.
   (setf (cdr (assoc t ivy-re-builders-alist))
-	'ivy--regex-ignore-order)
+        'ivy--regex-ignore-order)
   :bind
   (("M-x" . counsel-M-x)
    ("C-x b" . ivy-switch-buffer)
@@ -94,8 +94,6 @@
    ("<f8> g" . counsel-git-grep)
    ("<f8> a" . counsel-ag)
    ("<f8> p" . counsel-pt)
-   ("<f8> b" . ox-manuscript-export-and-build-and-open)
-   ("<f8> c" . ox-manuscript-new-helm)
    )
   
   :diminish ""
@@ -108,36 +106,36 @@
     ;; C-RET call and go to next
     (define-key ivy-minibuffer-map (kbd "C-<return>")
       (lambda ()
-	"Apply action and move to next/previous candidate."
-	(interactive)
-	(ivy-call)
-	(ivy-next-line)))
+        "Apply action and move to next/previous candidate."
+        (interactive)
+        (ivy-call)
+        (ivy-next-line)))
 
     ;; M-RET calls action on all candidates to end.
     (define-key ivy-minibuffer-map (kbd "M-<return>")
       (lambda ()
-	"Apply default action to all candidates."
-	(interactive)
-	(ivy-beginning-of-buffer)
-	(loop for i from 0 to (- ivy--length 1)
-	      do
-	      (ivy-call)
-	      (ivy-next-line)
-	      (ivy--exhibit))
-	(exit-minibuffer)))
+        "Apply default action to all candidates."
+        (interactive)
+        (ivy-beginning-of-buffer)
+        (loop for i from 0 to (- ivy--length 1)
+              do
+              (ivy-call)
+              (ivy-next-line)
+              (ivy--exhibit))
+        (exit-minibuffer)))
 
     ;; s-RET to quit
     (define-key ivy-minibuffer-map (kbd "s-<return>")
       (lambda ()
-	"Exit with no action."
-	(interactive)
-	(ivy-exit-with-action
-	 (lambda (x) nil))))
+        "Exit with no action."
+        (interactive)
+        (ivy-exit-with-action
+         (lambda (x) nil))))
 
     (define-key ivy-minibuffer-map (kbd "?")
       (lambda ()
-	(interactive)
-	(describe-keymap ivy-minibuffer-map)))
+        (interactive)
+        (describe-keymap ivy-minibuffer-map)))
 
     (define-key ivy-minibuffer-map (kbd "<left>") 'ivy-backward-delete-char)
     (define-key ivy-minibuffer-map (kbd "C-d") 'ivy-backward-delete-char)))
@@ -419,15 +417,6 @@
   :ensure nil
   :load-path conf-dir
   :bind ( "<f9>" . hotspots))
-
-(use-package ox-manuscript
-  :ensure nil
-  :load-path (lambda () (expand-file-name "ox-manuscript" smax-dir)))
-
-(use-package words
-  :ensure nil
-  :load-path conf-dir
-  :bind ("M-'" . words-hydra/body))
 
 (use-package smax-ivy
   :ensure nil

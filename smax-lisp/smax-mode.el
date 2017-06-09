@@ -63,7 +63,6 @@ one and open it."
     ("email"
      ["email region" email-region t]
      ["email org-mode heading" email-heading t]
-     ["email org-mode as PDF" ox-manuscript-export-and-build-and-email t]
      ["email org-zip" org-create-zip-and-mail t])
     ("org-mode"
      ["Toggle symbols" org-toggle-pretty-entities t]
@@ -81,16 +80,14 @@ one and open it."
       ["Latex snippet" latex-math-region-or-point t])
      ("Track changes"
       ["Toggle track changes" (lambda ()
-				(interactive)
-				(unless cm-mode
-				  (cm-mode))
-				(cm-follow-changes 'toggle))
+                                (interactive)
+                                (unless cm-mode
+                                  (cm-mode))
+                                (cm-follow-changes 'toggle))
        t]
       ["Accept/reject changes" cm-accept/reject-all-changes t]
       ["Track change hydra" cm/body t])
-     ("export"
-      ["manuscript PDF" ox-manuscript-export-and-build-and-open t]
-      ["submission PDF" ox-manuscript-build-submission-manuscript-and-open t]))
+     )
     ("bibtex"
      ["find non-ascii characters" org-ref-find-non-ascii-characters t]
      ["extract bibtex entries from org" org-ref-extract-bibtex-entries t]
