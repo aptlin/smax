@@ -64,10 +64,10 @@
 
 
 ;; ** Keybindings
-(τ python inferior-python "C-c r"   #'ipython-reset)
-(τ python python          "C-c C-c" #'python-shell-send-defun)
-(τ python python          "C-c C-l" #'python-shell-send-buffer)
-(τ python python          "C-c h"   #'mk-python-docs)
+(define-key inferior-python-mode-map (kbd "C-c r")   'ipython-reset)
+(define-key python-mode-map (kbd "C-c C-c") 'python-shell-send-defun)
+(define-key python-mode-map (kbd "C-c C-l") 'python-shell-send-buffer)
+(define-key python-mode-map (kbd "C-c h")   'mk-python-docs)
 
 ;; * End
 (provide 'smax-python)

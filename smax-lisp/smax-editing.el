@@ -37,13 +37,13 @@
   (smartparens-global-mode 1)
   (require 'smartparens-latex)
   (add-hook 'prog-mode-hook 'turn-on-smartparens-strict-mode) 
-  (τ smartparens smartparens "<C-backspace>" #'sp-backward-kill-sexp)
-  (τ smartparens smartparens "M-b"           #'sp-backward-sexp)
-  (τ smartparens smartparens "M-f"           #'sp-forward-sexp)
-  (τ smartparens smartparens "M-h"           #'sp-select-next-thing)
-  (τ smartparens smartparens "M-k"           #'sp-kill-hybrid-sexp)
-  (τ smartparens smartparens "M-u"           #'sp-backward-unwrap-sexp)
-  (τ smartparens smartparens "M-t"           #'sp-add-to-previous-sexp))
+  (define-key smartparens-mode-map (kbd  "<C-backspace>") 'sp-backward-kill-sexp)
+  (define-key smartparens-mode-map (kbd  "M-b")           'sp-backward-sexp)
+  (define-key smartparens-mode-map (kbd  "M-f")           'sp-forward-sexp)
+  (define-key smartparens-mode-map (kbd  "M-h")           'sp-select-next-thing)
+  (define-key smartparens-mode-map (kbd  "M-k")           'sp-kill-hybrid-sexp)
+  (define-key smartparens-mode-map (kbd  "M-u")           'sp-backward-unwrap-sexp)
+  (define-key smartparens-mode-map (kbd  "M-t")           'sp-add-to-previous-sexp))
 
 ;; **** Expand-region
 (use-package expand-region
@@ -57,20 +57,20 @@
   :ensure t
   :init
   :config
-  (π "C-c m p" #'mc/mark-previous-like-this)
-  (π "C-c m n" #'mc/mark-next-like-this)
-  (π "C-c m t" #'mc/mark-all-like-this)
-  (π "C-c m r" #'set-rectangular-region-anchor)
-  (π "C-c m c" #'mc/edit-lines)
-  (π "C-c m e" #'mc/edit-ends-of-lines)
-  (π "C-c m a" #'mc/edit-beginnings-of-lines))
+  (define-key global-map (kbd  "C-c m p") 'mc/mark-previous-like-this)
+  (define-key global-map (kbd  "C-c m n") 'mc/mark-next-like-this)
+  (define-key global-map (kbd  "C-c m t") 'mc/mark-all-like-this)
+  (define-key global-map (kbd  "C-c m r") 'set-rectangular-region-anchor)
+  (define-key global-map (kbd  "C-c m c") 'mc/edit-lines)
+  (define-key global-map (kbd  "C-c m e") 'mc/edit-ends-of-lines)
+  (define-key global-map (kbd  "C-c m a") 'mc/edit-beginnings-of-lines))
 
 
 ;; *** ZZZ-to-char
 (use-package zzz-to-char
   :init
   :config
-  (π "M-z"        #'zzz-up-to-char))
+  (define-key global-map (kbd  "M-z")       'zzz-up-to-char))
 ;; *** Hungry-Delete
 (use-package hungry-delete
   :ensure t
@@ -83,8 +83,14 @@
   :diminish aggressive-indent
   :config
   (aggressive-indent-global-mode 1)
-  (add-to-list 'aggressive-indent-excluded-modes 'haskell-mode)
-  (add-to-list 'aggressive-indent-excluded-modes 'nix-mode)
+  (add-to-list 'aggressive-indent-excluded-modes '(python-mode
+						   nix-mode
+						   haskell-mode))
+  (add-to-list
+   'aggressive-indent-dont-indent-if
+   '(and (derived-mode-p 'python-mode)
+	 (null (string-match "\\([#\\b\\*{}]\\)"
+			     (thing-at-point 'line)))))  
   )
 
 ;; *** Operating on a Whole Line or a Region
@@ -131,7 +137,7 @@
 (show-paren-mode 1)         ;; highlight parentheses
 (setq show-paren-style 'mixed)
 ;; *** Paragraph
-(electric-indent-mode 0)
+(electric-indent-mode 1)
 ;; ** Functions and Bindings
 ;; *** Functions
 
@@ -172,7 +178,7 @@
     (when (> that-edge this-edge)
       (insert-char 32 (- that-edge this-edge))
       (move-to-column that-edge))))
-(π "C-S-r" #'mk-smart-indent)
+(define-key global-map (kbd  "C-S-r") 'mk-smart-indent)
 
 (defun mk-transpose-line-down (&optional arg)
   "Move current line and cursor down.
@@ -203,7 +209,7 @@ should be performed."
 
 If STAMP is not NIL, insert date at point."
   (interactive)
-  (funcall (if stamp #'insert #'message)
+  (funcall (if stamp 'insert 'message)
            (format-time-string "%A, %e %B, %Y")))
 (defun mk-grab-input (prompt &optional initial-input add-space)
   "Grab input from user.
@@ -264,7 +270,7 @@ ADD-SPACE are not NIL, add one space after the initial input."
   (browse-url
    (concat "https://duckduckgo.com/html/?k1=-1&q="
            (url-hexify-string what))))
-(π "C-c s"      #'mk-search)
+(define-key global-map (kbd  "C-c s") 'mk-search)
 ;; #############################################################################
 
 (defun swap-text (str1 str2 beg end)
@@ -296,12 +302,24 @@ ADD-SPACE are not NIL, add one space after the initial input."
   (interactive)
   (align-current)
   (fill-paragraph))
-
+(defun insert-tab-char ()
+  "Insert 4 spaces."
+  (interactive)
+  (insert "    ")
+  )
 ;; *** Bindings
-(π "S-RET"	#'prettify-paragraph)
-(π "RET"	#'newline-and-indent)
-(π "C-\."	#'align-regexp)
-(π "<f2> t"     #'replace-string)
+(define-key global-map (kbd  "S-RET")	'prettify-paragraph)
+(define-key global-map (kbd  "S-SPC")	'insert-tab-char)
+(define-key global-map (kbd  "RET")	'newline-and-indent)
+(define-key global-map (kbd  "C-\.")	'align-regexp)
+(define-key global-map (kbd  "<f2> t")    'replace-string)
 
+;; make indentation commands use space only (never tab character)
+(setq-default indent-tabs-mode nil) ; emacs 23.1, 24.2, default to t
+;; if indent-tabs-mode is t, it means it may use tab, resulting mixed space and tab
+;; set default tab char's display width to 4 spaces
+(setq-default tab-width 4) ; emacs 23.1, 24.2, default to 8
+;; make tab key do indent first then completion.
+(setq-default tab-always-indent 'complete)
 
 (provide 'smax-editing)

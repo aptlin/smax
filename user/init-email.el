@@ -57,7 +57,7 @@
 	  (setq mu4e-get-mail-command "offlineimap -o")
 	  (setq mu4e-update-interval 3600)
 	  (setq mu4e-view-show-images t)
-	  (setq mu4e-html2text-command "html2text;")
+	  (setq mu4e-html2text-command "html2text -style pretty -width 72")
 	  ;; This enables unicode chars to be used for things like flags in the message index screens.
 	  ;; I've disabled it because the font I am using doesn't support this very well. With this
 	  ;; disabled, regular ascii characters are used instead.

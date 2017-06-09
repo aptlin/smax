@@ -10,7 +10,7 @@
   (ace-link-setup-default))
 
 (use-package avy
-  :bind ("C-'" . avy-goto-word-1))
+  :bind ("C-\"" . avy-goto-word-1))
 
 ;; ** Navy Toolbar
 (defvar navy-l 'forward-char
@@ -176,17 +176,17 @@
   "Run the `navy/body' hydra."
   (interactive)
   (setq navy-mode "char"
-	navy-h 'backward-char
-	navy-k 'previous-line
-	navy-l 'forward-char 
-	navy-j 'next-line
-	navy-quote 'avy-goto-line
-	navy-comma 'avy-goto-char-2
-	navy-period 'avy-goto-char-in-line
-	navy-semicolon 'avy-goto-char)
+        navy-h 'backward-char
+        navy-k 'previous-line
+        navy-l 'forward-char 
+        navy-j 'next-line
+        navy-quote 'avy-goto-line
+        navy-comma 'avy-goto-char-2
+        navy-period 'avy-goto-char-in-line
+        navy-semicolon 'avy-goto-char)
   (navy/body))
 
-(π "<f12>" #'navy)
+(define-key global-map (kbd "<f12>") 'navy)
 
 (provide 'smax-navy)
 ;;; smax-navy.el ends here
@@ -197,14 +197,14 @@
 ;; ** Functions and Bindings
 ;; *** Functions
 ;; **** Search
-(π "C-<" #'counsel-ag)
-(π "C->" #'helm-locate)
+(define-key global-map (kbd "C-<") 'counsel-ag)
+(define-key global-map (kbd "C->") 'helm-locate)
 ;; **** Buffers
 
-(π "M-v" #'(lambda nil (interactive) (condition-case nil
-					 (scroll-down) (beginning-of-buffer (goto-char (point-min))))))
-(π "C-v" #'(lambda nil (interactive) (condition-case nil
-					 (scroll-up) (end-of-buffer (goto-char (point-max))))))
+(define-key global-map (kbd "M-v") '(lambda nil (interactive) (condition-case nil
+                                                                  (scroll-down) (beginning-of-buffer (goto-char (point-min))))))
+(define-key global-map (kbd "C-v") '(lambda nil (interactive) (condition-case nil
+                                                                  (scroll-up) (end-of-buffer (goto-char (point-max))))))
 ;; presentability
-(π "C-=" #'text-scale-increase)
-(π "C--" #'text-scale-decrease)
+(define-key global-map (kbd "C-=") 'text-scale-increase)
+(define-key global-map (kbd "C--") 'text-scale-decrease)

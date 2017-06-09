@@ -10,7 +10,7 @@
    haskell-process-show-debug-tips       nil ; don't show anything
    haskell-process-type                  'stack-ghci
    haskell-process-args-stack-ghci       '("--ghci-options=-ferror-spans"))
-  (τ haskell haskell             "C-c e" #'ebal-execute)
+  (define-key haskell-mode-map (kbd  "C-c e") 'ebal-execute)
   )
 
 ;; ** Haskell Mode
@@ -19,8 +19,8 @@
   :ensure t
   :init
   :config
-  (add-hook 'haskell-mode-hook                 #'interactive-haskell-mode)
-  (add-hook 'haskell-mode-hook                 #'turn-on-haskell-indentation)
+  (add-hook 'haskell-mode-hook                 'interactive-haskell-mode)
+  (add-hook 'haskell-mode-hook                 'turn-on-haskell-indentation)
   (eval-after-load 'haskell-mode
     '(define-key haskell-mode-map [f2] 'haskell-navigate-imports))
 
@@ -50,18 +50,18 @@
     
     (dolist (item lib-list)
       (cl-destructuring-bind (lib a b c) item
-	(let ((definition
-		(format
-		 "((a<%d)||(a==%d&&b<%d)||(a==%d&&b==%d&&c<=%d))"
-		 a a b a b c)))
-	  (add-to-list
-	   'flycheck-ghc-args
-	   (format "-DMIN_VERSION_%s(a,b,c)=%s"
-		   lib definition))
-	  (add-to-list
-	   'flycheck-hlint-args
-	   (format "--cpp-define=MIN_VERSION_%s(a,b,c)=%s"
-		   lib definition))))))
+        (let ((definition
+                (format
+                 "((a<%d)||(a==%d&&b<%d)||(a==%d&&b==%d&&c<=%d))"
+                 a a b a b c)))
+          (add-to-list
+           'flycheck-ghc-args
+           (format "-DMIN_VERSION_%s(a,b,c)=%s"
+                   lib definition))
+          (add-to-list
+           'flycheck-hlint-args
+           (format "--cpp-define=MIN_VERSION_%s(a,b,c)=%s"
+                   lib definition))))))
 
   (mk-haskell-set-min-versions
    '(("Cabal"      1 22 0)
@@ -83,9 +83,9 @@
 (use-package hasky-extensions
   :defer t
   :config
-  (τ haskell haskell             "C-c y" #'hasky-extensions)
-  (add-hook 'hasky-extensions-prettifying-hook #'whitespace-cleanup)
-  (add-hook 'hasky-extensions-prettifying-hook #'mk-single-empty-line)
+  (define-key haskell-mode-map (kbd  "C-c y") 'hasky-extensions)
+  (add-hook 'hasky-extensions-prettifying-hook 'whitespace-cleanup)
+  (add-hook 'hasky-extensions-prettifying-hook 'mk-single-empty-line)
   )
 ;; ** Refactoring
 ;; *** Hindent
@@ -98,14 +98,14 @@
 (use-package flycheck-haskell
   :defer t
   :config
-  (add-hook 'flycheck-mode-hook #'flycheck-haskell-setup))
+  (add-hook 'flycheck-mode-hook 'flycheck-haskell-setup))
 
 
 ;; ** Visual
 (use-package rainbow-delimiters
   :init
   :config
-  (add-hook 'haskell-mode-hook #'rainbow-delimiters-mode)
+  (add-hook 'haskell-mode-hook 'rainbow-delimiters-mode)
   
   )
 

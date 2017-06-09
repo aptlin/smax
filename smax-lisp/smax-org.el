@@ -24,6 +24,10 @@
 
 
 ;; * Speed commands
+(define-key org-mode-map (kbd "C-c C-c")
+  (lambda () (interactive)
+    (org-display-inline-images)
+    (org-ctrl-c-ctrl-c)))
 (defun scimax/org-return (&optional ignore)
   "Add new list item, heading or table row with RET.
 A double return on an empty element deletes it.
@@ -346,6 +350,8 @@ This function is called by `org-babel-execute-src-block'."
 ;;   (require 'calfw)
 ;;   (require 'calfw-org)
 ;;   )
+;; * TaskJuggler
+(require 'ox-taskjuggler)
 ;; * Images in org-mode
 
 ;; default with images open

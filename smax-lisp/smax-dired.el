@@ -89,17 +89,18 @@
   (interactive)
   (image-dired-show-all-from-dir dired-directory))
 
-(τ dired dired   "<down>"   #'mk-dired-last-file)
-(τ dired dired   "<up>"     #'mk-dired-first-file)
-(τ dired dired   "b"        #'dired-up-directory)
-(τ dired dired   "e"        #'mk-dired-open-external)
-(τ dired dired   "i"        #'mk-image-dired-show-current)
-(τ dired dired   "w"        #'wdired-change-to-wdired-mode)
-(τ dired dired   "z"        (ε #'ztree-dir default-directory))
-(τ wdired wdired "<down>"   #'mk-dired-last-file)
-(τ wdired wdired "<up>"     #'mk-dired-first-file)
+(define-key dired-mode-map (kbd  "<down>") 'mk-dired-last-file)
+(define-key dired-mode-map (kbd  "<up>")   'mk-dired-first-file)
+(define-key dired-mode-map (kbd  "b")      'dired-up-directory)
+(define-key dired-mode-map (kbd  "e")      'mk-dired-open-external)
+(define-key dired-mode-map (kbd  "i")      'mk-image-dired-show-current)
+(define-key dired-mode-map (kbd  "w")      'wdired-change-to-wdired-mode)
+(define-key dired-mode-map (kbd "z")       '(lambda () (interactive)
+                                              (ztree-dir default-directory)))
+(define-key wdired-mode-map (kbd  "<down>")   'mk-dired-last-file)
+(define-key wdired-mode-map (kbd  "<up>")     'mk-dired-first-file)
 
-(add-hook 'dired-mode-hook #'toggle-truncate-lines)
+(add-hook 'dired-mode-hook 'toggle-truncate-lines)
 ;; *** Utilities
 (defun xah-dired-rename-space-to-underscore ()
   "In dired, rename current or marked files by replacing space to underscore _.
