@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: Dear
+# key: Dear
+# --
+Dear ${1:`(malb/yas-get-names-from-to-fields)`},
+
+$0
+
+Kind regards,
+
+Alexander Illarionov

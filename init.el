@@ -18,7 +18,18 @@
 
 (package-initialize)
 
-(setq gc-cons-threshold 80000000)
+(setq global-mark-ring-max 256
+      mark-ring-max 256
+      kill-ring-max 256)
+
+(defun minibuffer-setup-hook ()
+  (setq gc-cons-threshold most-positive-fixnum))
+
+(defun minibuffer-exit-hook ()
+  (setq gc-cons-threshold 1048576))
+
+(add-hook 'minibuffer-setup-hook #'minibuffer-setup-hook)
+(add-hook 'minibuffer-exit-hook #'minibuffer-exit-hook)
 
 (when (version< emacs-version "24.4")
   (warn "You probably need at least Emacs 24.4. You should upgrade. You may need to install leuven-theme manually."))
@@ -62,6 +73,12 @@
 
 (add-to-list 'load-path smax-dir)
 (add-to-list 'load-path conf-dir)
+(dolist (f (directory-files conf-dir))
+  (let ((name (concat conf-dir "/" f)))
+    (when (and (file-directory-p name)
+               (not (equal f ".."))
+               (not (equal f ".")))
+      (add-to-list 'load-path name))))
 (add-to-list 'load-path user-dir)
 
 (let ((default-directory smax-dir))
@@ -69,7 +86,7 @@
 
 (require 'smax-bootstrap)
 (require 'smax-packages)
-
+(require 'smax-finish)
 (provide 'init)
 
 ;;; init.el ends here

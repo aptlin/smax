@@ -78,7 +78,8 @@
 (use-package flycheck
   :diminish flycheck-mode
   :init
-  (global-flycheck-mode t))
+  (global-flycheck-mode t)
+  )
 
 ;; * Images
 

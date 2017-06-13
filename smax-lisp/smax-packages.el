@@ -316,6 +316,13 @@
   :load-path conf-dir
   :init (require 'smax))
 
+(use-package key-chord
+  :ensure t
+  :config (progn
+            (setq key-chord-one-key-delay 0.2
+                  key-chord-two-keys-delay 0.1)
+            (key-chord-mode 1)))
+
 ;; ** Appearance
 (use-package mk-highlight-line
   :ensure nil
@@ -325,6 +332,82 @@
   (require 'mk-highlight-line)
   (mk-highlight-line-mode           1) ; highlight lines in list-like buffers
   )
+
+(defvar malb/popup-windows '("\\`\\*helm flycheck\\*\\'"
+                             "\\`\\*Flycheck errors\\*\\'"
+                             "\\`\\*helm projectile\\*\\'"
+                             "\\`\\*Helm all the things\\*\\'"
+                             "\\`\\*Helm Find Files\\*\\'"
+                             "\\`\\*Help\\*\\'"
+                             "\\`\\*ielm\\*\\'"
+                             "\\`\\*Synonyms List\\*\\'"
+                             "\\`\\*anaconda-doc\\*\\'"
+                             "\\`\\*Google Translate\\*\\'"
+                             "\\` \\*LanguageTool Errors\\* \\'"
+                             "\\`\\*Edit footnote .*\\*\\'"
+                             "\\`\\*TeX errors*\\*\\'"
+                             "\\`\\*mu4e-update*\\*\\'"
+                             "\\`\\*prodigy-.*\\*\\'"
+                             "\\`\\*Org Export Dispatcher\\*\\'"
+                             "\\`\\*Helm Swoop\\*\\'"
+                             "\\`\\*Backtrace\\*\\'"))
+
+(dolist (name malb/popup-windows)
+  (add-to-list 'display-buffer-alist
+               `(,name
+                 (display-buffer-reuse-window
+                  display-buffer-in-side-window)
+                 (reusable-frames . visible)
+                 (side            . bottom)
+                 ;; height only applies when golden-ratio-mode is off
+                 (window-height   . 0.3))))
+(defun malb/quit-bottom-side-windows ()
+  "Quit side windows of the current frame."
+  (interactive)
+  (dolist (window (window-at-side-list))
+    (delete-window window)))
+
+(key-chord-define-global "qq" #'malb/quit-bottom-side-windows)
+
+(use-package golden-ratio
+  :ensure t
+  :diminish golden-ratio-mode
+  :config (progn
+
+            (require 'ispell)
+            (setq golden-ratio-adjust-factor 1.0
+                  golden-ratio-exclude-modes '(imenu-list-major-mode
+                                               eshell-mode
+                                               pdf-view-mode
+                                               mu4e-view-mode
+                                               mu4e-main-mode
+                                               mu4e-headers-mode
+                                               calendar-mode
+                                               compilation-mode))
+
+            (defun malb/golden-ratio-inhibit-functions ()
+              (cond
+               ;; which function is exempt
+               ((bound-and-true-p which-key--current-page-n))
+               ;; helm is exempt
+               ((bound-and-true-p helm-alive-p))
+               ;; embrace is exempt
+               ((eq this-command 'embrace-commander))
+               ;; if ispell is running let's not golden ratio
+               ((get-buffer ispell-choices-buffer))
+               ;; any olivetti mode buffer disables gr
+               ;; we also block if any buffer has inhibit major-mode not only target
+               (t (catch 'inhibit
+                    (dolist (window (window-list))
+                      (with-current-buffer (window-buffer window)
+                        (if (or (memq major-mode golden-ratio-exclude-modes)
+                                (bound-and-true-p olivetti-mode))
+                            (throw 'inhibit t))))
+                    (throw 'inhibit nil)))))
+
+            (setq golden-ratio-exclude-buffer-regexp malb/popup-windows)
+
+            (setq golden-ratio-inhibit-functions '(malb/golden-ratio-inhibit-functions))))
 ;; ** Version Control
 (use-package smax-vc
   :ensure nil

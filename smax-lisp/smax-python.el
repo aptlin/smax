@@ -10,12 +10,7 @@
 ;; This eliminates an annoying message about the interpreter not using
 ;; readline. That doesn't seem to matter at all.
 (setq warning-suppress-types '((python)
-			       (emacs)))
-;; ** Development
-;; Python editing mode
-(use-package elpy
-  :config
-  (elpy-enable))
+                               (emacs)))
 ;; ** Search
 
 (add-to-list 'mk-search-prefix '(inferior-python-mode . "python"))
@@ -55,11 +50,14 @@
 	t))))
 
 (add-hook 'python-mode-hook
-	  (lambda ()
-	    (setq outline-regexp "# \\*+"
-		  orgstruct-heading-prefix-regexp "# ?\\*+\\|\\`")
-	    (orgstruct-mode)
-	    (org-global-cycle 3)))
+          (lambda ()
+            (setq outline-regexp "# \\*+"
+                  orgstruct-heading-prefix-regexp "# ?\\*+\\|\\`")
+            (orgstruct-mode)
+            (org-global-cycle 3)))
+;; ** Autocompletion
+(use-package company-anaconda
+  :ensure t)
 
 
 

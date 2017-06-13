@@ -2,6 +2,45 @@
 ;;; Commentary:
 ;;; Code:
 ;; * Editing
+;; ** Behaviour
+(defun malb/indent-or-complete (&optional arg)
+  (interactive "P")
+  (cond
+   ;; if a region is active, indent
+   ((use-region-p)
+    (indent-region (region-beginning)
+                   (region-end)))
+   ;; if the next char is space or eol, but prev char not whitespace
+   ((and (not (active-minibuffer-window))
+         (or (looking-at " ")
+             (looking-at "$"))
+         (looking-back "[^[:space:]]")
+         (not (looking-back "^")))
+
+    (cond (company-mode (company-complete-common))
+          (auto-complete-mode (auto-complete))))
+
+   ;; no whitespace anywhere
+   ((and (not (active-minibuffer-window))
+         (looking-at "[^[:space:]]")
+         (looking-back "[^[:space:]]")
+         (not (looking-back "^")))
+    (cond
+     ((bound-and-true-p origami-mode)
+      (origami-toggle-node (current-buffer) (point)))
+     ((bound-and-true-p outline-minor-mode)
+      (save-excursion (outline-cycle)))))
+
+   ;; by default just call whatever was bound
+   (t
+    (let ((fn (or (lookup-key (current-local-map) (kbd "TAB"))
+                  'indent-for-tab-command)))
+      (if (not (called-interactively-p 'any))
+          (fn arg)
+        (setq this-command fn)
+        (call-interactively fn))))))
+
+(bind-key "<tab>" #'malb/indent-or-complete)
 ;; ** Packages
 ;; *** Delimiters
 
@@ -20,7 +59,7 @@
   ;; Enable `paredit-mode' in the minibuffer, during `eval-expression'.
   (defun conditionally-enable-paredit-mode ()
     (if (eq this-command 'eval-expression)
-	(paredit-mode 1)))
+        (paredit-mode 1)))
 
   (add-hook 'minibuffer-setup-hook 'conditionally-enable-paredit-mode)
 
@@ -36,7 +75,7 @@
   (show-smartparens-global-mode t)
   (smartparens-global-mode 1)
   (require 'smartparens-latex)
-  (add-hook 'prog-mode-hook 'turn-on-smartparens-strict-mode) 
+  (add-hook 'prog-mode-hook 'turn-on-smartparens-strict-mode)
   (define-key smartparens-mode-map (kbd  "<C-backspace>") 'sp-backward-kill-sexp)
   (define-key smartparens-mode-map (kbd  "M-b")           'sp-backward-sexp)
   (define-key smartparens-mode-map (kbd  "M-f")           'sp-forward-sexp)
@@ -50,7 +89,7 @@
   :ensure t
   :init
   :bind (
-	 ("C-@" . er/expand-region)))
+         ("C-@" . er/expand-region)))
 ;; *** Multiple-cursors
 
 (use-package multiple-cursors
@@ -84,13 +123,13 @@
   :config
   (aggressive-indent-global-mode 1)
   (add-to-list 'aggressive-indent-excluded-modes '(python-mode
-						   nix-mode
-						   haskell-mode))
+                                                   nix-mode
+                                                   haskell-mode))
   (add-to-list
    'aggressive-indent-dont-indent-if
    '(and (derived-mode-p 'python-mode)
-	 (null (string-match "\\([#\\b\\*{}]\\)"
-			     (thing-at-point 'line)))))  
+         (null (string-match "\\([#\\b\\*{}]\\)"
+                             (thing-at-point 'line)))))
   )
 
 ;; *** Operating on a Whole Line or a Region
@@ -99,6 +138,10 @@
   :config
   (whole-line-or-region-mode 1))
 ;; *** Completion
+(use-package company
+  :init
+  (require 'company)
+  (add-hook 'after-init-hook 'global-company-mode))
 ;; *** Wrapping
 (use-package wrap-region
   :init
@@ -106,18 +149,27 @@
   (wrap-region-global-mode +1)
   (wrap-region-add-wrapper "$" "$")
   )
+;; *** Speedbar
+(use-package sr-speedbar
+  :init
+  (setq speedbar-use-images nil)
+  (defadvice sr-speedbar-toggle (after speedbar-jump activate)
+    (other-window 1))
+  :bind (("<f11>" . sr-speedbar-toggle))
+
+  )
 ;; **** Hippie-Expand
 
 (use-package hippie-expand
   :ensure nil
   :init
   (setq hippie-expand-try-functions-list
-	'(yas-hippie-try-expand
-	  try-complete-file-name-partially
-	  try-complete-file-name
-	  try-expand-dabbrev
-	  try-expand-dabbrev-all-buffers
-	  try-expand-dabbrev-from-kill))
+        '(yas-hippie-try-expand
+          try-complete-file-name-partially
+          try-complete-file-name
+          try-expand-dabbrev
+          try-expand-dabbrev-all-buffers
+          try-expand-dabbrev-from-kill))
   :bind
   ("M-SPC" . hippie-expand))
 
@@ -127,11 +179,36 @@
   :init
   :config
   (add-hook 'after-init-hook
-	    (lambda ()
-	      (ivy-historian-mode)
-	      (diminish 'historian-mode)
-	      (diminish 'ivy-historian-mode)))
+            (lambda ()
+              (ivy-historian-mode)
+              (diminish 'historian-mode)
+              (diminish 'ivy-historian-mode)))
   )
+;; *** Whitespace Clean-up
+(use-package clean-aindent-mode
+  :init
+  (require 'clean-aindent-mode)
+  (clean-aindent-mode t))
+(use-package dtrt-indent
+  :init
+  (require 'dtrt-indent)
+  (dtrt-indent-mode 1)
+  (setq dtrt-indent-verbosity 0))
+(use-package ws-butler
+  :init
+  (require 'ws-butler)
+  (add-hook 'c-mode-common-hook 'ws-butler-mode))
+;; *** Make typography better
+(use-package typo
+  :init
+  )
+;; *** Smart dictionary switching
+(use-package auto-dictionary
+  :init
+  (require 'auto-dictionary)
+  (add-hook 'flyspell-mode-hook (lambda () (auto-dictionary-mode 1)))
+  )
+
 ;; ** Modes
 ;; *** Parentheses
 (show-paren-mode 1)         ;; highlight parentheses
@@ -155,7 +232,7 @@
            this-end			; don't go after this position
            t)				; don't error
           (1- (point))
-        this-end))))  
+        this-end))))
 
 (defun mk-column-at (point)
   "Return column number at POINT."
@@ -167,7 +244,7 @@
   "Align first non-white space char after point with content of previous line.
 
    With prefix argument ARG, align to next line instead."
-  
+
   (interactive "P")
   (let* ((this-edge (mk-column-at (mk-saturated-occurence)))
          (that-edge
@@ -243,7 +320,7 @@ ADD-SPACE are not NIL, add one space after the initial input."
                         '(dired-mode wdired-mode))
                (or (dired-get-filename nil t)
                    default-directory)
-	     (buffer-file-name))))
+             (buffer-file-name))))
     (when φ
       (message "%s → kill ring"
                (kill-new
@@ -278,13 +355,13 @@ ADD-SPACE are not NIL, add one space after the initial input."
   (interactive "sString A: \nsString B: \nr")
   (if mark-active
       (setq deactivate-mark t)
-    (setq beg (point-min) end (point-max))) 
+    (setq beg (point-min) end (point-max)))
   (goto-char beg)
   (while (re-search-forward
           (concat "\\(?:\\b\\(" (regexp-quote str1) "\\)\\|\\("
                   (regexp-quote str2) "\\)\\b\\)") end t)
     (if (match-string 1)
-	(replace-match str2 t t)
+        (replace-match str2 t t)
       (replace-match str1 t t))))
 (defun rename-this-file-and-buffer (new-name)
   "Renames both current buffer and file it's visiting to NEW-NAME."
@@ -313,7 +390,11 @@ ADD-SPACE are not NIL, add one space after the initial input."
 (define-key global-map (kbd  "RET")	'newline-and-indent)
 (define-key global-map (kbd  "C-\.")	'align-regexp)
 (define-key global-map (kbd  "<f2> t")    'replace-string)
-
+;; activate whitespace-mode to view all whitespace characters
+(define-key global-map (kbd "C-c w") 'whitespace-mode)
+(define-key global-map (kbd "<f2> l") 'whitespace-cleanup)
+;; show unncessary whitespace that can mess up your diff
+(add-hook 'prog-mode-hook (lambda () (interactive) (setq show-trailing-whitespace 1)))
 ;; make indentation commands use space only (never tab character)
 (setq-default indent-tabs-mode nil) ; emacs 23.1, 24.2, default to t
 ;; if indent-tabs-mode is t, it means it may use tab, resulting mixed space and tab

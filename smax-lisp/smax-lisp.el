@@ -5,12 +5,12 @@
 ;; * Emacs lisp
 ;; ** Debugging
 (add-hook 'edebug-mode-hook
-	  (lambda ()
-	    (define-key edebug-mode-map (kbd "h") 'edebug-goto-here)))
+          (lambda ()
+            (define-key edebug-mode-map (kbd "h") 'edebug-goto-here)))
 ;; ** Looks
 ;; *** Outlines
 ;; Setup pretty outlines in Emacs-lisp code
-"^;; \\(\\*+.*\\)$"
+
 (defconst lel-font-lock-keywords
   '(("^;; ?\\(\\* .*\\)$" 1 'org-level-1 prepend)
     ("^;; ?\\(\\*\\* .*\\)$" 1 'org-level-2 prepend)
