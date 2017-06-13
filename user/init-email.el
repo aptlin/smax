@@ -163,76 +163,78 @@
 
           ;;  key bindings
           (global-unset-key (kbd "<f2> m"))
-          (global-set-key (kbd "<f2> m") 'mu4e))))
+          (global-set-key (kbd "<f2> m") 'mu4e)
+          ;; * Make search more responsive
+          (use-package helm-mu
+            :ensure t
+            :config (progn
+                      (bind-key "S" #'helm-mu mu4e-main-mode-map)))
+
+          ;; * Make naming homogeneous
+          (setq malb/mu4e-name-replacements '(("" . "")))
+          (defun malb/canonicalise-contact-name (name)
+            (let ((case-fold-search nil))
+              (setq name (or name ""))
+              (if (string-match-p "^[^ ]+@[^ ]+\.[^ ]" name)
+                  ""
+                (progn
+                  ;; drop email address
+                  (setq name (replace-regexp-in-string "^\\(.*\\) [^ ]+@[^ ]+\.[^ ]" "\\1" name))
+                  ;; strip quotes
+                  (setq name (replace-regexp-in-string "^\"\\(.*\\)\"" "\\1" name))
+                  ;; deal with YELL’d last names
+                  (setq name (replace-regexp-in-string "^\\(\\<[[:upper:]]+\\>\\) \\(.*\\)" "\\2 \\1" name))
+                  ;; Foo, Bar becomes Bar Foo
+                  (setq name (replace-regexp-in-string "^\\(.*\\), \\([^ ]+\\).*" "\\2 \\1" name))
+                  ;; look up names and replace from static table, TODO look this up by email
+                  (setq name (or (cdr (assoc name malb/mu4e-name-replacements)) name))
+                  ))))
+
+          (defun malb/mu4e-contact-rewrite-function (contact)
+            (let* ((name (or (plist-get contact :name) ""))
+                   (mail (plist-get contact :mail))
+                   (case-fold-search nil))
+              (plist-put contact :name (malb/canonicalise-contact-name name))
+              contact))
+
+          (setq mu4e-contact-rewrite-function #'malb/mu4e-contact-rewrite-function)
+
+          ;; * Automate Replies
+          (defun malb/yas-get-names-from-fields (fields)
+            (let (names
+                  ret
+                  name
+                  point-end-of-line
+                  (search-regexp (mapconcat (lambda (arg)
+                                              (concat "^" arg ": "))
+                                            fields "\\|"))
+                  (case-fold-search nil))
+              (save-excursion
+                (goto-char (point-min))
+                (while (re-search-forward search-regexp nil t)
+                  (save-excursion
+                    (setq point-end-of-line (re-search-forward "$")))
+                  (setq name (buffer-substring-no-properties (point) point-end-of-line))
+                  (setq name (split-string name "[^ ]+@[^ ]+," t " ")) ;; split on email@address,
+                  (setq names (append names name)))
+                (dolist (name names)
+                  (setq name (malb/canonicalise-contact-name name))
+                  (if (string-match "\\([^ ,]+\\)" name)
+                      (progn
+                        (setq name (match-string 1 name))
+                        (setq name (capitalize name))
+                        (if ret
+                            (setq ret (concat ret ", " name))
+                          (setq ret name)))))
+                (if ret ret ""))))
+
+          (defun malb/yas-get-names-from-to-fields ()
+            (interactive)
+            (malb/yas-get-names-from-fields '("To")))
+          ;; * Make writing more polished
+          (add-hook 'message-mode-hook #'typo-mode)
+          (add-hook 'message-mode-hook #'footnote-mode)
+          )))
   (message "Cannot load mu4e: mu is required to proceed!"))
-;; * Make search more responsive
-(use-package helm-mu
-  :ensure t
-  :config (progn
-            (bind-key "S" #'helm-mu mu4e-main-mode-map)))
 
-;; * Make naming homogeneous
-(setq malb/mu4e-name-replacements '(("" . "")))
-(defun malb/canonicalise-contact-name (name)
-  (let ((case-fold-search nil))
-    (setq name (or name ""))
-    (if (string-match-p "^[^ ]+@[^ ]+\.[^ ]" name)
-        ""
-      (progn
-        ;; drop email address
-        (setq name (replace-regexp-in-string "^\\(.*\\) [^ ]+@[^ ]+\.[^ ]" "\\1" name))
-        ;; strip quotes
-        (setq name (replace-regexp-in-string "^\"\\(.*\\)\"" "\\1" name))
-        ;; deal with YELL’d last names
-        (setq name (replace-regexp-in-string "^\\(\\<[[:upper:]]+\\>\\) \\(.*\\)" "\\2 \\1" name))
-        ;; Foo, Bar becomes Bar Foo
-        (setq name (replace-regexp-in-string "^\\(.*\\), \\([^ ]+\\).*" "\\2 \\1" name))
-        ;; look up names and replace from static table, TODO look this up by email
-        (setq name (or (cdr (assoc name malb/mu4e-name-replacements)) name))
-        ))))
-
-(defun malb/mu4e-contact-rewrite-function (contact)
-  (let* ((name (or (plist-get contact :name) ""))
-         (mail (plist-get contact :mail))
-         (case-fold-search nil))
-    (plist-put contact :name (malb/canonicalise-contact-name name))
-    contact))
-
-(setq mu4e-contact-rewrite-function #'malb/mu4e-contact-rewrite-function)
-
-;; * Automate Replies
-(defun malb/yas-get-names-from-fields (fields)
-  (let (names
-        ret
-        name
-        point-end-of-line
-        (search-regexp (mapconcat (lambda (arg)
-                                    (concat "^" arg ": "))
-                                  fields "\\|"))
-        (case-fold-search nil))
-    (save-excursion
-      (goto-char (point-min))
-      (while (re-search-forward search-regexp nil t)
-        (save-excursion
-          (setq point-end-of-line (re-search-forward "$")))
-        (setq name (buffer-substring-no-properties (point) point-end-of-line))
-        (setq name (split-string name "[^ ]+@[^ ]+," t " ")) ;; split on email@address,
-        (setq names (append names name)))
-      (dolist (name names)
-        (setq name (malb/canonicalise-contact-name name))
-        (if (string-match "\\([^ ,]+\\)" name)
-            (progn
-              (setq name (match-string 1 name))
-              (setq name (capitalize name))
-              (if ret
-                  (setq ret (concat ret ", " name))
-                (setq ret name)))))
-      (if ret ret ""))))
-
-(defun malb/yas-get-names-from-to-fields ()
-  (interactive)
-  (malb/yas-get-names-from-fields '("To")))
-;; * Make writing more polished
-(add-hook 'message-mode-hook #'typo-mode)
-(add-hook 'message-mode-hook #'footnote-mode)
 (provide 'init-email)
