@@ -38,3 +38,6 @@ user/projectile-bookmarks.eld
 /user/init-irc.el
 /user/init-irc.el.gpg
 */auto/*
+/user/srecode-map.el
+user/semanticdb
+smax-lisp/lib

@@ -3,6 +3,7 @@
 ;;; Code:
 ;; * Editing
 ;; ** Behaviour
+;; *** Better Indentation
 (defun malb/indent-or-complete (&optional arg)
   (interactive "P")
   (cond
@@ -41,10 +42,16 @@
         (call-interactively fn))))))
 
 (bind-key "<tab>" #'malb/indent-or-complete)
+;; *** Dealing with sentences
+(setq sentence-end-double-space nil)
+(bind-key "C-x C-t" #'transpose-sentences)
+(defadvice kill-sentence (after delete-horizontal-space activate)
+  "Delete trailing spaces and tabs as well."
+  (delete-horizontal-space))
 ;; ** Packages
 ;; *** Delimiters
 
-;; **** Paredit
+;;**** Paredit
 (use-package paredit
   :ensure t
   :init
@@ -67,7 +74,7 @@
   (put 'paredit-forward-delete 'delete-selection 'supersede)
   (put 'paredit-backward-delete 'delete-selection 'supersede)
   (put 'paredit-newline 'delete-selection t))
-;; **** Smartparens
+;;**** Smartparens
 (use-package smartparens-config
   :ensure smartparens
   :diminish smartparens-mode
@@ -84,12 +91,19 @@
   (define-key smartparens-mode-map (kbd  "M-u")           'sp-backward-unwrap-sexp)
   (define-key smartparens-mode-map (kbd  "M-t")           'sp-add-to-previous-sexp))
 
-;; **** Expand-region
+;;**** Expand-region
 (use-package expand-region
   :ensure t
   :init
   :bind (
          ("C-@" . er/expand-region)))
+;;**** Embrace
+(use-package embrace
+  :ensure t
+  :config (progn
+            (bind-key "M-`" #'embrace-commander)
+            (add-hook 'org-mode-hook #'embrace-org-mode-hook)))
+
 ;; *** Multiple-cursors
 
 (use-package multiple-cursors
@@ -137,6 +151,29 @@
   :init
   :config
   (whole-line-or-region-mode 1))
+(use-package drag-stuff
+  :ensure t
+  :diminish drag-stuff-mode
+  :config (progn
+            (defhydra malb/hydra-drag-stuff (:color red)
+              "drag stuff"
+              ("p" drag-stuff-up "↑")
+              ("n" drag-stuff-down "↓")
+              ("SPC" nil)
+              ("q" nil))
+            (bind-key "C-c d" #'malb/hydra-drag-stuff/body)))
+;; *** Regexp
+
+
+(use-package visual-regexp-steroids
+  :ensure t)
+
+(use-package visual-regexp
+  :ensure t
+  :bind (("C-x m" . vr/mc-mark)
+         ("M-%" . vr/query-replace)
+         ("C-S-s" . vr/isearch-forward)
+         ("C-S-r" . vr/isearch-backward)))
 ;; *** Completion
 (use-package company
   :init
@@ -158,7 +195,7 @@
   :bind (("<f11>" . sr-speedbar-toggle))
 
   )
-;; **** Hippie-Expand
+;;**** Hippie-Expand
 
 (use-package hippie-expand
   :ensure nil
@@ -173,7 +210,7 @@
   :bind
   ("M-SPC" . hippie-expand))
 
-;; **** Ivy-Historian
+;;**** Ivy-Historian
 ;; Persistent storage of completions
 (use-package ivy-historian
   :init
@@ -199,9 +236,16 @@
   (require 'ws-butler)
   (add-hook 'c-mode-common-hook 'ws-butler-mode))
 ;; *** Make typography better
+
 (use-package typo
-  :init
-  )
+  :ensure t
+  :diminish typo-mode
+  :config (progn
+            (setq-default  typo-language "English")
+            (add-hook 'markdown-mode-hook #'typo-mode)
+            (add-hook 'org-mode-hook #'typo-mode)
+            (add-hook 'rst-mode-hook #'typo-mode)))
+
 ;; *** Smart dictionary switching
 (use-package auto-dictionary
   :init
@@ -209,6 +253,18 @@
   (add-hook 'flyspell-mode-hook (lambda () (auto-dictionary-mode 1)))
   )
 
+;; *** Writing Helpers
+;;**** Proselint
+(flycheck-define-checker proselint
+  "A linter for prose."
+  :command ("proselint" source-inplace)
+  :error-patterns
+  ((warning line-start (file-name) ":" line ":" column ": "
+            (id (one-or-more (not (any " "))))
+            (message) line-end))
+  :modes (text-mode markdown-mode gfm-mode org-mode message-mode))
+
+(add-to-list 'flycheck-checkers 'proselint)
 ;; ** Modes
 ;; *** Parentheses
 (show-paren-mode 1)         ;; highlight parentheses
@@ -217,139 +273,42 @@
 (electric-indent-mode 1)
 ;; ** Functions and Bindings
 ;; *** Functions
+;;**** Swooping
+(defun malb/helm-swoop-pre-fill ()
+  (thing-at-point 'symbol)) ;; I’m going back and forth what I prefer
 
-;; #############################################################################
-;;; Thank you, Mark. https://github.com/mrkkrp
-(defun mk-saturated-occurence (&optional after-space)
-  "Return position of first non-white space character after point.
-  If AFTER-SPACE is not NIL, require at least one space character
-  before target non-white space character."
-  (save-excursion
-    (let ((this-end (line-end-position)))
-      (if (re-search-forward
-           (concat (when after-space "[[:blank:]]")
-                   "[^[:blank:]]")
-           this-end			; don't go after this position
-           t)				; don't error
-          (1- (point))
-        this-end))))
+(setq malb/helm-swoop-ignore-major-mode
+      '(dired-mode paradox-menu-mode doc-view-mode pdf-view-mode mu4e-headers-mode org-mode markdown-mode latex-mode))
 
-(defun mk-column-at (point)
-  "Return column number at POINT."
-  (save-excursion
-    (goto-char point)
-    (current-column)))
+(use-package helm-swoop
+  :ensure t
+  :bind (("C-c s" . helm-multi-swoop-org)
+         ("<f2> s" . helm-multi-swoop-all))
+  :config (progn
 
-(defun mk-smart-indent (&optional arg)
-  "Align first non-white space char after point with content of previous line.
+            (setq helm-swoop-pre-input-function  #'malb/helm-swoop-pre-fill
+                  helm-swoop-split-with-multiple-windows nil
+                  helm-swoop-split-direction #'split-window-horizontally
+                  helm-swoop-split-window-function 'helm-default-display-buffer
+                  helm-swoop-speed-or-color t)
 
-   With prefix argument ARG, align to next line instead."
+            ;; https://emacs.stackexchange.com/questions/28790/helm-swoop-how-to-make-it-behave-more-like-isearch
+            (defun malb/helm-swoop-C-s ()
+              (interactive)
+              (if (boundp 'helm-swoop-pattern)
+                  (if (equal helm-swoop-pattern "")
+                      (previous-history-element 1)
+                    (helm-next-line))
+                (helm-next-line)))
 
-  (interactive "P")
-  (let* ((this-edge (mk-column-at (mk-saturated-occurence)))
-         (that-edge
-          (save-excursion
-            (forward-line (if arg 1 -1))
-            (move-to-column this-edge)
-            (mk-column-at (mk-saturated-occurence t)))))
-    (when (> that-edge this-edge)
-      (insert-char 32 (- that-edge this-edge))
-      (move-to-column that-edge))))
-(define-key global-map (kbd  "C-S-r") 'mk-smart-indent)
+            (bind-key "C-S-s" #'helm-swoop-from-isearch isearch-mode-map)
+            (bind-key "C-S-s" #'helm-multi-swoop-all-from-helm-swoop helm-swoop-map)
+            (bind-key "C-r"   #'helm-previous-line helm-swoop-map)
+            (bind-key "C-s"   #'malb/helm-swoop-C-s helm-swoop-map)
+            (bind-key "C-r"   #'helm-previous-line helm-multi-swoop-map)
+            (bind-key "C-s"   #'malb/helm-swoop-C-s helm-multi-swoop-map)))
 
-(defun mk-transpose-line-down (&optional arg)
-  "Move current line and cursor down.
-
-Argument ARG, if supplied, specifies how many times the operation
-should be performed."
-  (interactive "p")
-  (dotimes (_ (or arg 1))
-    (let ((col (current-column)))
-      (forward-line    1)
-      (transpose-lines 1)
-      (forward-line   -1)
-      (move-to-column col))))
-
-(defun mk-transpose-line-up (&optional arg)
-  "Move current line and cursor up.
-
-   Argument ARG, if supplied, specifies how many times the operation
-   should be performed."
-  (interactive "p")
-  (dotimes (_ (or arg 1))
-    (let ((col (current-column)))
-      (transpose-lines 1)
-      (forward-line   -2)
-      (move-to-column col))))
-(defun mk-show-date (&optional stamp)
-  "Show current date in the minibuffer.
-
-If STAMP is not NIL, insert date at point."
-  (interactive)
-  (funcall (if stamp 'insert 'message)
-           (format-time-string "%A, %e %B, %Y")))
-(defun mk-grab-input (prompt &optional initial-input add-space)
-  "Grab input from user.
-
-If there is an active region, use its contents, otherwise read
-text from the minibuffer.  PROMPT is a prompt to show,
-INITIAL-INPUT is the initial input.  If INITIAL-INPUT and
-ADD-SPACE are not NIL, add one space after the initial input."
-  (if mark-active
-      (buffer-substring (region-beginning)
-                        (region-end))
-    (read-string prompt
-                 (concat initial-input
-                         (when (and initial-input add-space) " ")))))
-
-(defun mk-show-default-dir ()
-  "Show default directory in the minibuffer."
-  (interactive)
-  (message (f-full default-directory)))
-
-(defun mk-file-name-to-kill-ring (arg)
-  "Put name of file into kill ring.
-
-   If user's visiting a buffer that's associated with a file, use
-   name of the file.  If major mode is ‘dired-mode’, use name of
-   file at point, but if point is not placed at any file, put name
-   of actual directory into kill ring.  Argument ARG, if given,
-   makes result string be quoted as for yanking into shell."
-  (interactive "P")
-  (let ((φ (if (cl-find major-mode
-                        '(dired-mode wdired-mode))
-               (or (dired-get-filename nil t)
-                   default-directory)
-             (buffer-file-name))))
-    (when φ
-      (message "%s → kill ring"
-               (kill-new
-                (expand-file-name
-                 (if arg
-                     (shell-quote-argument φ)
-                   φ)))))))
-
-(defvar mk-search-prefix nil
-  "This is an alist that contains some prefixes for online search query.
-
-  Prefixes are picked up according to currect major mode.")
-
-(defun mk-search (what)
-  "Search Internet for WHAT thing, with DuckDuckGo.
-
-   When called interactively, it uses prefix corresponding to
-   current major mode, as specified in ‘mk-search-prefix’."
-  (interactive
-   (list (mk-grab-input "DuckDuckGo: "
-                        (cdr (assoc major-mode
-                                    mk-search-prefix))
-                        t)))
-  (browse-url
-   (concat "https://duckduckgo.com/html/?k1=-1&q="
-           (url-hexify-string what))))
-(define-key global-map (kbd  "C-c s") 'mk-search)
-;; #############################################################################
-
+;;**** Utilities
 (defun swap-text (str1 str2 beg end)
   "Changes all STR1 to STR2 and all STR2 to STR1 in beg/end region."
   (interactive "sString A: \nsString B: \nr")

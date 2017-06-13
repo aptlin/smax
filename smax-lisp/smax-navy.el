@@ -3,15 +3,50 @@
 ;;; Code:
 ;; * Navigation
 ;; ** Packages
+;;*** Ace
 (use-package ace-link
   :ensure t
   :init
   :config
   (ace-link-setup-default))
-
+;; *** Avy
 (use-package avy
   :bind ("C-\"" . avy-goto-word-1))
+;; ***    Deft
+(use-package deft
+  :ensure t
+  :bind ("<f8> <f8>" . malb/deft)
+  :bind ("S-<f8>" . malb/blog)
+  :init (progn
+          (setq deft-extensions '("org" "tex")
+                deft-default-extension "org"
+                deft-directory "~/ORG"
+                deft-text-mode 'org-mode
+                deft-recursive t
+                deft-use-filename-as-title t
+                deft-auto-save-interval 300.0
+                deft-use-filter-string-for-filename t
+                deft-current-sort-method 'title
+                deft-file-naming-rules '((noslash . "-")
+                                         (nospace . "-")
+                                         (case-fn . downcase)))
 
+          (defun malb/deft-in-dir (dir)
+            "Run deft in directory DIR"
+            (setq deft-directory dir)
+            (switch-to-buffer "*Deft*")
+            (kill-this-buffer)
+            (deft))
+
+          (defun malb/blog ()
+            (interactive)
+            (malb/deft-in-dir "~/WERKE/sdll.github.io"))
+
+          (defun malb/deft ()
+            (interactive)
+            (malb/deft-in-dir "~/ORG"))
+
+          (add-hook 'deft-mode-hook #'hl-line-mode)))
 ;; ** Navy Toolbar
 (defvar navy-l 'forward-char
   "The next item in a forward sense.")
@@ -258,4 +293,22 @@ switch to another frame."
                (snwob--current-window-or-buffer))
          (snwob--other-window-or-buffer))))
 
-(global-set-key (kbd "<f2> r") #'smart-next-window-or-buffer)
+(global-set-key (kbd "<f2> <f2>") #'smart-next-window-or-buffer)
+;; **** Smart C-a
+(defun malb/beginning-of-line-dwim ()
+  "Toggles between moving point to the first non-whitespace character, and
+  the start of the line."
+  (interactive)
+  (let ((start-position (point)))
+    ;; Move to the first non-whitespace character.
+    (back-to-indentation)
+
+    ;; If we haven't moved position, go to start of the line.
+    (when (= (point) start-position)
+      (move-beginning-of-line nil))))
+
+
+(bind-key "C-a" #'malb/beginning-of-line-dwim)
+(bind-key "<home>"  #'malb/beginning-of-line-dwim lisp-mode-map)
+;; *** Bindings
+(bind-key "<f2> k" #'kill-this-buffer)

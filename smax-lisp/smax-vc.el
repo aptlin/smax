@@ -12,7 +12,7 @@
 (use-package magit
   :init
   :bind
-  ("<f5>" . magit-status)
+  ("<f2> g" . magit-status)
   :config
   (setq magit-completing-read-function #'ivy-completing-read
         magit-push-always-verify       nil

@@ -20,7 +20,7 @@
   :init
   ;; Use the current window for C-c ' source editing
   (setq org-src-window-setup 'current-window
-	org-support-shift-select t)
+    org-support-shift-select t)
 
   ;; I like to press enter to follow a link. mouse clicks also work.
   (setq org-return-follows-link t)
@@ -53,7 +53,7 @@
 (use-package bookmark
   :init
   (setq bookmark-default-file (expand-file-name "user/bookmarks" smax-dir)
-	bookmark-save-flag 1))
+    bookmark-save-flag 1))
 
 
 (use-package bookmark+
@@ -95,7 +95,7 @@
    ("<f8> a" . counsel-ag)
    ("<f8> p" . counsel-pt)
    )
-  
+
   :diminish ""
   :config
   (progn
@@ -164,35 +164,39 @@
   ;; ("C-h C-f" . helm-apropos)
   :config
   (add-hook 'helm-find-files-before-init-hook
-	    (lambda ()
-	      (helm-add-action-to-source
-	       "Insert path"
-	       (lambda (target)
-		 (insert (file-relative-name target)))
-	       helm-source-find-files)
+        (lambda ()
+          (helm-add-action-to-source
+           "Insert path"
+           (lambda (target)
+         (insert (file-relative-name target)))
+           helm-source-find-files)
 
-	      (helm-add-action-to-source
-	       "Insert absolute path"
-	       (lambda (target)
-		 (insert (expand-file-name target)))
-	       helm-source-find-files)
+          (helm-add-action-to-source
+           "Insert absolute path"
+           (lambda (target)
+         (insert (expand-file-name target)))
+           helm-source-find-files)
 
-	      (helm-add-action-to-source
-	       "Attach file to email"
-	       (lambda (candidate)
-		 (mml-attach-file candidate))
-	       helm-source-find-files)
+          (helm-add-action-to-source
+           "Attach file to email"
+           (lambda (candidate)
+         (mml-attach-file candidate))
+           helm-source-find-files)
 
-	      (helm-add-action-to-source
-	       "Make directory"
-	       (lambda (target)
-		 (make-directory target))
-	       helm-source-find-files))))
+          (helm-add-action-to-source
+           "Make directory"
+           (lambda (target)
+         (make-directory target))
+           helm-source-find-files))))
 
 
 (use-package helm-bibtex)
 
-(use-package helm-projectile)
+(use-package helm-projectile
+  :init
+  :config
+  (require 'helm-projectile)
+  (helm-projectile-on))
 
 (use-package help-fns+)
 
@@ -221,11 +225,11 @@
   :diminish lispy-mode
   :config
   (dolist (hook '(emacs-lisp-mode-hook
-		  hy-mode-hook))
+                  hy-mode-hook))
     (add-hook hook
-	      (lambda ()
-		(lispy-mode)
-		(eldoc-mode)))))
+              (lambda ()
+                (lispy-mode)
+                (eldoc-mode)))))
 
 
 
@@ -244,7 +248,7 @@
 (use-package org-ref
   :ensure t
   :init
-  
+
   (setq bibtex-autokey-year-length 4
         bibtex-autokey-name-year-separator "-"
         bibtex-autokey-year-title-separator "-"
@@ -259,10 +263,12 @@
 ;; https://github.com/bbatsov/projectile
 (use-package projectile
   :init (setq projectile-cache-file
-	      (expand-file-name "user/projectile.cache" conf-dir)
-	      projectile-known-projects-file
-	      (expand-file-name "user/projectile-bookmarks.eld" conf-dir))
+              (expand-file-name "user/projectile.cache" conf-dir)
+              projectile-known-projects-file
+              (expand-file-name "user/projectile-bookmarks.eld" conf-dir))
   :bind
+  ("<f5>" . projectile-compile-project)
+  ("<f6>" . next-error)
   ("C-c pp" . projectile-switch-project)
   ("C-c pb" . projectile-switch-to-buffer)
   ("C-c pf" . projectile-find-file)
@@ -271,8 +277,20 @@
   ;; nothing good in the modeline to keep.
   :diminish ""
   :config
-  (define-key projectile-mode-map (kbd "H-p") 'projectile-command-map)
-  (projectile-global-mode))
+  (define-key projectile-mode-map (kbd "<f2> p") 'projectile-command-map)
+  (projectile-global-mode)
+  (defun malb/projectile-ignore-projects (project-root)
+    (progn
+      (or (file-remote-p project-root)
+          (and  (string-match (rx-to-string `(: bos "/tmp/" ) t)
+                              project-root) t))))
+
+
+  (setq projectile-make-test-cmd "make check"
+        projectile-ignored-project-function #'malb/projectile-ignore-projects
+        projectile-switch-project-action 'helm-projectile
+        projectile-mode-line  '(:eval (format "\xf07c[%s]" (projectile-project-name))))
+  )
 
 (use-package pydoc)
 
@@ -519,5 +537,3 @@
 (provide 'smax-packages)
 
 ;;; packages.el ends here
-
-

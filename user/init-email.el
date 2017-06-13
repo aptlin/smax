@@ -162,8 +162,8 @@
           (add-hook 'dired-mode-hook 'turn-on-gnus-dired-mode)
 
           ;;  key bindings
-          (global-unset-key (kbd "C-x m"))
-          (global-set-key (kbd "C-x m") 'mu4e))))
+          (global-unset-key (kbd "<f2> m"))
+          (global-set-key (kbd "<f2> m") 'mu4e))))
   (message "Cannot load mu4e: mu is required to proceed!"))
 ;; * Make search more responsive
 (use-package helm-mu

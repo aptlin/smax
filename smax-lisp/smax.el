@@ -79,8 +79,62 @@
   :diminish flycheck-mode
   :init
   (global-flycheck-mode t)
-  )
 
+  (bind-key "C-c f n" #'flycheck-next-error flycheck-mode-map)
+  (bind-key "C-c f p" #'flycheck-previous-error flycheck-mode-map)
+  (bind-key "C-c f l" #'flycheck-list-errors flycheck-mode-map)
+  (setq flycheck-check-syntax-automatically '(save mode-enabled))
+  (setq flycheck-standard-error-navigation nil)
+
+  (when (fboundp 'define-fringe-bitmap)
+    (define-fringe-bitmap 'my-flycheck-fringe-indicator
+      (vector #b00000000
+              #b00000000
+              #b00000000
+              #b00000000
+              #b00011000
+              #b01111110
+              #b11111111
+              #b11111111
+              #b11111111
+              #b11111111
+              #b11111111
+              #b01111110
+              #b00011000
+              #b00000000
+              #b00000000
+              #b00000000
+              #b00000000)))
+
+
+  (flycheck-define-error-level 'error
+    :overlay-category 'flycheck-error-overlay
+    :fringe-bitmap 'my-flycheck-fringe-indicator
+    :fringe-face 'flycheck-fringe-error)
+
+  (flycheck-define-error-level 'warning
+    :overlay-category 'flycheck-warning-overlay
+    :fringe-bitmap 'my-flycheck-fringe-indicator
+    :fringe-face 'flycheck-fringe-warning)
+
+  (flycheck-define-error-level 'info
+    :overlay-category 'flycheck-info-overlay
+    :fringe-bitmap 'my-flycheck-fringe-indicator
+    :fringe-face 'flycheck-fringe-info)
+  )
+(use-package helm-flycheck
+  :ensure t
+  :config (progn
+            (bind-key "C-c f h" #'helm-flycheck flycheck-mode-map)))
+(use-package flycheck-pos-tip
+  :ensure t
+  :config (progn
+            ;; flycheck errors on a tooltip (doesnt work on console)
+            (when (display-graphic-p (selected-frame))
+              (eval-after-load 'flycheck
+                '(custom-set-variables
+                  '(flycheck-display-errors-function #'flycheck-pos-tip-error-messages)))
+              )))
 ;; * Images
 
 (require 'image-mode)
