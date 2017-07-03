@@ -1,4 +1,4 @@
-(setq initial-buffer-choice "~/ORG/map.org")
+(setq initial-buffer-choice "~/org/plan/map.org")
 (require 'init-locales)
 (require 'init-notes)
 (require 'init-email)

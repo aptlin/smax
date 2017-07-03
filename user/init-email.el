@@ -3,7 +3,7 @@
 ;; * Helpers
 (defun my-shell-command-to-string (&rest cmd)
   (replace-regexp-in-string "\r?\n$" ""
-                (shell-command-to-string (mapconcat 'identity cmd " "))))
+                            (shell-command-to-string (mapconcat 'identity cmd " "))))
 ;; * Mu4e
 (when (f-exists? "/run/current-system/sw/share/emacs/site-lisp")
   (add-to-list 'load-path "/run/current-system/sw/share/emacs/site-lisp/"))
@@ -55,16 +55,20 @@
           (setq mail-user-agent 'mu4e-user-agent)
           (setq mu4e-maildir "~/.mail")
           (setq mu4e-get-mail-command "offlineimap -o")
-          (setq mu4e-update-interval 3600)
+          (setq mu4e-update-interval 180)
           (setq mu4e-view-show-images t)
-          (setq mu4e-html2text-command "html2text -style pretty -width 72")
+          ;; use imagemagick, if available
+          (when (fboundp 'imagemagick-register-types)
+            (imagemagick-register-types))
+          (setq mu4e-html2text-command #'mu4e-shr2text)
+          ;; (setq mu4e-html2text-command "html2text -style pretty -width 72")
           ;; This enables unicode chars to be used for things like flags in the message index screens.
           ;; I've disabled it because the font I am using doesn't support this very well. With this
           ;; disabled, regular ascii characters are used instead.
                                         ;(setq mu4e-use-fancy-chars t)
           ;; This enabled the thread like viewing of email similar to gmail's UI.
           ;;(setq mu4e-headers-include-related nil)
-          (setq mu4e-attachment-dir "~/TMP/MAIL")
+          (setq mu4e-attachment-dir "~/tmp/mail")
           ;; This prevents saving the email to the Sent folder since gmail will do this for us on their end.
           (setq message-kill-buffer-on-exit t)
           ;; Enable inline images.
@@ -82,22 +86,19 @@
           ;; This sets up my two different context for my personal and university emails.
           (setq mu4e-contexts
                 `( ,(make-mu4e-context
-                     :name "delly"
-                     :enter-func (lambda () (mu4e-message "Switch to the delly context"))
+                     :name "sdll"
+                     :enter-func (lambda () (mu4e-message "Switch to sdll"))
                      :match-func  (lambda (msg)
                                     (when msg
                                       (mu4e-message-contact-field-matches msg
                                                                           :to "sasha.delly@gmail.com")))
-                     ;; (lambda (msg)
-                     ;;      (when msg
-                     ;;        (mu4e-message-maildir-matches msg "^/delly")))
                      :leave-func (lambda () (mu4e-clear-caches))
                      :vars '((user-mail-address     . "sasha.delly@gmail.com")
                              (user-full-name        . "Alexander Illarionov")
-                             (mu4e-sent-folder      . "/delly/sent")
-                             (mu4e-drafts-folder    . "/delly/drafts")
-                             (mu4e-trash-folder     . "/delly/trash")
-                             (mu4e-refile-folder    . "/delly/archive")))
+                             (mu4e-sent-folder      . "/sdll/sent")
+                             (mu4e-drafts-folder    . "/sdll/drafts")
+                             (mu4e-trash-folder     . "/sdll/trash")
+                             (mu4e-refile-folder    . "/sdll/archive")))
                    ,(make-mu4e-context
                      :name "ut"
                      :enter-func (lambda () (mu4e-message "Switch to the ut context"))
@@ -108,10 +109,10 @@
                      :leave-func (lambda () (mu4e-clear-caches))
                      :vars '((user-mail-address     . "sasha.illarionov@mail.utoronto.ca")
                              (user-full-name        . "Alexander Illarionov")
-                             (mu4e-sent-folder      . "/delly/sent")
-                             (mu4e-drafts-folder    . "/delly/drafts")
-                             (mu4e-trash-folder     . "/delly/trash")
-                             (mu4e-refile-folder    . "/delly/archive")))))
+                             (mu4e-sent-folder      . "/sdll/sent")
+                             (mu4e-drafts-folder    . "/sdll/drafts")
+                             (mu4e-trash-folder     . "/sdll/trash")
+                             (mu4e-refile-folder    . "/sdll/archive")))))
 
           ;; start with the first (default) context;
           (setq mu4e-context-policy 'pick-first)
@@ -129,18 +130,18 @@
           (add-hook 'message-send-mail-hook 'choose-msmtp-account)
 
           ;; Bookmarks for common searches that I use.
-          (setq mu4e-bookmarks '(("\\\\delly/INBOX" "Inbox" ?i)
+          (setq mu4e-bookmarks '(("\\\\sdll/INBOX" "Inbox" ?i)
                                  ("flag:unread" "Unread messages" ?u)
                                  ("date:today..now" "Today's messages" ?t)
                                  ("date:7d..now" "Last 7 days" ?w)
                                  ("mime:image/*" "Messages with images" ?p)))
 
           (setq mu4e-maildir-shortcuts
-                '( ("/delly/INBOX"               . ?i)
-                   ("/delly/sent"   . ?s)
-                   ("/delly/drafts"   . ?d)
-                   ("/delly/trash"       . ?t)
-                   ("/delly/archive"    . ?a)))
+                '( ("/sdll/INBOX"               . ?i)
+                   ("/sdll/sent"   . ?s)
+                   ("/sdll/drafts"   . ?d)
+                   ("/sdll/trash"       . ?t)
+                   ("/sdll/archive"    . ?a)))
 
           ;; use dired
           ;; http://www.djcbsoftware.nl/code/mu/mu4e/Attaching-files-with-dired.html
@@ -202,6 +203,13 @@
   (setq mu4e-contact-rewrite-function #'malb/mu4e-contact-rewrite-function))
 
 
+;; * Add Notifications
+(when ( require 'mu4e nil 'noerror)
+  (use-package mu4e-alert
+    :init
+    :config
+    (mu4e-alert-set-default-style 'libnotify)
+    (add-hook 'after-init-hook #'mu4e-alert-enable-notifications)))
 ;; * Automate Replies
 (when ( require 'mu4e nil 'noerror)
   (defun malb/yas-get-names-from-fields (fields)

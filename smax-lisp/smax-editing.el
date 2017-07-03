@@ -178,6 +178,14 @@
 (use-package company
   :init
   (require 'company)
+  (setq company-backends
+        '((company-yasnippet
+           company-files                ; files & directory
+           company-keywords             ; keywords
+           company-capf
+           )
+          (company-abbrev company-dabbrev)
+          ))
   (add-hook 'after-init-hook 'global-company-mode))
 ;; *** Wrapping
 (use-package wrap-region
@@ -235,17 +243,6 @@
   :init
   (require 'ws-butler)
   (add-hook 'c-mode-common-hook 'ws-butler-mode))
-;; *** Make typography better
-
-(use-package typo
-  :ensure t
-  :diminish typo-mode
-  :config (progn
-            (setq-default  typo-language "English")
-            (add-hook 'markdown-mode-hook #'typo-mode)
-            (add-hook 'org-mode-hook #'typo-mode)
-            (add-hook 'rst-mode-hook #'typo-mode)))
-
 ;; *** Smart dictionary switching
 (use-package auto-dictionary
   :init
@@ -345,7 +342,6 @@
   )
 ;; *** Bindings
 (define-key global-map (kbd  "S-RET")	'prettify-paragraph)
-(define-key global-map (kbd  "S-SPC")	'insert-tab-char)
 (define-key global-map (kbd  "RET")	'newline-and-indent)
 (define-key global-map (kbd  "C-\.")	'align-regexp)
 (define-key global-map (kbd  "<f2> t")    'replace-string)

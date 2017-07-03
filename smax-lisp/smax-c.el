@@ -1,5 +1,5 @@
 ;; * Orgstruct
-
+(require 'cc-mode)
 (defconst lel-font-lock-keywords
   '(("^// ?\\(\\* .*\\)$" 1 'org-level-1 prepend)
     ("^// ?\\(\\*\\* .*\\)$" 1 'org-level-2 prepend)
@@ -60,7 +60,7 @@ This enables you to use tab to open and close outlines."
   )
 (use-package semantic
   :init
-  (require 'cc-mode)
+  
   (require 'semantic)
 
   (global-semanticdb-minor-mode 1)
