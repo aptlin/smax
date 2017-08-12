@@ -41,11 +41,15 @@
                   orgstruct-heading-prefix-regexp "# ?\\*+\\|\\`")
             (orgstruct-mode)
             (org-global-cycle 3)))
-;; **    Autocompletion
-(use-package company-anaconda
-  :ensure t)
+;; **    Elpy
 
-
+(use-package elpy
+  :init
+  :bind (("M-." . elpy-doc)
+         ("M-*" . elpy-goto-definition))
+  :config
+  (add-hook 'python-mode-hook 'elpy-enable)
+  )
 
 ;; **    Keybindings
 (define-key inferior-python-mode-map (kbd "C-c r")   'ipython-reset)

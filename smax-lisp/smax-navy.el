@@ -11,7 +11,8 @@
   (ace-link-setup-default))
 ;; *** Avy
 (use-package avy
-  :bind ("C-\"" . avy-goto-word-1))
+  :bind ( ("C-\"" . avy-goto-word-1))
+  )
 ;; ***    Deft
 (use-package deft
   :ensure t
@@ -244,6 +245,11 @@
 ;; presentability
 (define-key global-map (kbd "C-=") 'text-scale-increase)
 (define-key global-map (kbd "C--") 'text-scale-decrease)
+(define-key global-map (kbd "C-{") 'shrink-window-horizontally)
+(define-key global-map (kbd "C-}") 'enlarge-window-horizontally)
+;; (define-key global-map (kbd "C-[") 'shrink-window)
+;; (define-key global-map (kbd "C-]") 'enlarge-window)
+
 ;; **** Smart Other Window
 (defvar snwob-starting-window-or-buffer nil)
 

@@ -136,9 +136,10 @@
   :diminish aggressive-indent
   :config
   (aggressive-indent-global-mode 1)
-  (add-to-list 'aggressive-indent-excluded-modes '(python-mode
-                                                   nix-mode
-                                                   haskell-mode))
+  (dolist (item '(python-mode
+                  nix-mode
+                  haskell-mode))
+    (add-to-list 'aggressive-indent-excluded-modes item))
   (add-to-list
    'aggressive-indent-dont-indent-if
    '(and (derived-mode-p 'python-mode)

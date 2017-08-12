@@ -46,7 +46,7 @@ recent files and bookmarks. You can set a bookmark also."
   (interactive)
   (find-file (expand-file-name
               "smax.org"
-	      smax-dir)))
+              smax-dir)))
 
 ;; * Packages
 ;; ** pdf
@@ -60,14 +60,38 @@ recent files and bookmarks. You can set a bookmark also."
   :config
   :init
   (setq auto-mode-alist (append '(("\\.lua$" . lua-mode))
-				auto-mode-alist))
+                                auto-mode-alist))
   )
 ;; ** Nix
 (use-package nix-mode
   :init
   :config
   (setq auto-mode-alist (append '(("\\.nix$" . nix-mode))
-				auto-mode-alist))
+                                auto-mode-alist))
+  )
+;; Markdown
+(use-package markdown-mode
+  :ensure t
+  :commands (markdown-mode gfm-mode)
+  :mode (("README\\.md\\'" . gfm-mode)
+         ("\\.md\\'" . markdown-mode)
+         ("\\.markdown\\'" . markdown-mode))
+  :init (setq markdown-command "multimarkdown"))
+
+;; ** Polymode
+
+(use-package polymode
+  :init
+  :config
+
+  ;;; MARKDOWN
+  (add-to-list 'auto-mode-alist '("\\.md" . poly-markdown-mode))
+
+  ;;; R modes
+  (add-to-list 'auto-mode-alist '("\\.Snw" . poly-noweb+r-mode))
+  (add-to-list 'auto-mode-alist '("\\.Rnw" . poly-noweb+r-mode))
+  (add-to-list 'auto-mode-alist '("\\.Rmd" . poly-markdown+r-mode))
+
   )
 ;; * Utilities
 ;;;###

@@ -11,7 +11,7 @@
     (progn
       (setq mu4e-mu-binary (my-shell-command-to-string "which mu"))
       (use-package mu4e
-        :load-path "/run/current-system/sw/share/emacs/site-lisp/mu4e"
+        :load-path "/usr/share/emacs/site-lisp/mu4e"
         :ensure nil
         :init
         (require 'mu4e)

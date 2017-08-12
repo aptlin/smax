@@ -448,6 +448,11 @@
   :load-path conf-dir
   :init (require 'smax-python))
 
+(use-package smax-r
+  :ensure nil
+  :load-path conf-dir
+  :init (require 'smax-r))
+
 (use-package smax-haskell
   :ensure nil
   :load-path conf-dir

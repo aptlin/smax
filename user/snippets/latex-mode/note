@@ -10,44 +10,17 @@
 %%% End:
 \documentclass[11pt]{scrartcl}
 \usepackage[fancy, beaue, pset, anon]{masty}
-\pSet{\nt{$1}{$2}{$3}
-\usepackage{lineno}
+\pSet{\nt{$1}{$2}{$3}}
+
 % ----------------------------------------------------------------------
-% Page setup
+% Page Setup
 % ----------------------------------------------------------------------
 
 \pagenumbering{gobble}
 
 % ----------------------------------------------------------------------
-% Custom commands
+% Custom Commands
 % ----------------------------------------------------------------------
-
-% alignment
-
-\newcommand*{\LongestHence}{$\Rightarrow$}% function name
-\newcommand*{\LongestName}{$f_o(-x)+f_e(-x)$}% function name
-\newcommand*{\LongestValue}{$(-a)x +(-a)(-y)$}% function value
-\newcommand*{\LongestText}{\defi}%
-
-\newlength{\LargestHenceSize}%
-\newlength{\LargestNameSize}%
-\newlength{\LargestValueSize}%
-\newlength{\LargestTextSize}%
-
-\settowidth{\LargestHenceSize}{\LongestHence}%
-\settowidth{\LargestNameSize}{\LongestName}%
-\settowidth{\LargestValueSize}{\LongestValue}%
-\settowidth{\LargestTextSize}{\LongestText}%
-
-% Choose alignment of the various elements here: [r], [l] or [c]
-
-\newcommand*{\mbh}[1]{{\makebox[\LargestHenceSize][r]{\ensuremath{#1}}}}%
-\newcommand*{\mbn}[1]{{\makebox[\LargestNameSize][r]{\ensuremath{#1}}}}%
-\newcommand*{\mbv}[1]{\ensuremath{\makebox[\LargestValueSize][r]{\ensuremath{#1}}}}%
-\newcommand*{\mbt}[1]{\makebox[\LargestTextSize][l]{#1}}%
-
-\newcommand{\R}[1]{\label{#1}\linelabel{#1}}
-\newcommand{\lr}[1]{line~\lineref{#1}}
 
 % ----------------------------------------------------------------------
 % Launch!
@@ -58,4 +31,5 @@
 \section{$3}
 
   $0  
+
 \end{document}

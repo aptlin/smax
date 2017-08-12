@@ -41,3 +41,6 @@ user/projectile-bookmarks.eld
 /user/srecode-map.el
 user/semanticdb
 
+anaconda-mode
+user/.python-environments
+/user/abbrev_defs

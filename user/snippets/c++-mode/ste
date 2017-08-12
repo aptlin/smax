@@ -1,0 +1,26 @@
+# -*- mode: snippet -*-
+# name: standard programme template
+# key: ste
+# --
+//* Libraries:
+//#include <algorithm>
+//#include <iostream>
+//#include <iomanip>
+//#include <ios>
+//#include <string>
+//#include <vector>
+
+//* Code:
+//using std::cin;
+//using std::cout;
+//using std::endl;
+//using std::setprecision;
+//using std::sort;
+//using std::streamsize;
+//using std::string;
+//using std::vector;
+
+int main()
+{
+  $0
+}
