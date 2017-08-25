@@ -44,3 +44,5 @@ user/semanticdb
 anaconda-mode
 user/.python-environments
 /user/abbrev_defs
+/user/irony
+/user/recentf~

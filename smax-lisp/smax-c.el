@@ -24,77 +24,92 @@ This enables you to use tab to open and close outlines."
 (add-hook 'c-mode-common-hook
           #'c-outline-setup)
 
+;; * Styling
+(c-add-style "my-style"
+             '("stroustrup"
+               (indent-tabs-mode . nil)        ; use spaces rather than tabs
+               (c-basic-offset . 4)            ; indent by four spaces
+               (c-offsets-alist . ((inline-open . 0)  ; custom indentation rules
+                                   (brace-list-open . 0)
+                                   (statement-case-open . +)))))
+
+(defun my-c++-mode-hook ()
+  (c-set-style "my-style")        ; use my-style defined above
+  (auto-fill-mode)
+  (c-toggle-auto-hungry-state 1))
+
+(add-hook 'c++-mode-hook 'my-c++-mode-hook)
+(font-lock-add-keywords 'c++-mode
+                        `((,(concat
+                             "\\<[_a-zA-Z][_a-zA-Z0-9]*\\>"       ; Object identifier
+                             "\\s *"                              ; Optional white space
+                             "\\(?:\\.\\|->\\)"                   ; Member access
+                             "\\s *"                              ; Optional white space
+                             "\\<\\([_a-zA-Z][_a-zA-Z0-9]*\\)\\>" ; Member identifier
+                             "\\s *"                              ; Optional white space
+                             "(")                                 ; Paren for method invocation
+                           1 'font-lock-function-name-face t)))
 
 ;; * Tagging
-(use-package counsel-gtags
+(use-package rtags
+  :bind (:map c++-mode-map
+              ("M-\." . rtags-find-symbol-at-point))
   :init
-  (add-hook 'c-mode-common-hook 'counsel-gtags-mode)
-
-
-  (with-eval-after-load 'counsel-gtags
-    (define-key counsel-gtags-mode-map (kbd "M-.") 'counsel-gtags-find-definition)
-    (define-key counsel-gtags-mode-map (kbd "M-r") 'counsel-gtags-find-reference)
-    (define-key counsel-gtags-mode-map (kbd "M-s") 'counsel-gtags-find-symbol)
-    (define-key counsel-gtags-mode-map (kbd "M-,") 'counsel-gtags-go-backward))
-  (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
-  )
-(use-package function-args
-  :init
-  (fa-config-default)
-  (set-default 'semantic-case-fold t)
+  :config
+  (require 'rtags)
+  (setq rtags-completions-enabled t)
+  (setq rtags-autostart-diagnostics t)
+  (rtags-enable-standard-keybindings)
+  (add-hook 'c-mode-hook 'rtags-start-process-unless-running)
+  (add-hook 'c++-mode-hook 'rtags-start-process-unless-running)
+  (add-hook 'objc-mode-hook 'rtags-start-process-unless-running)
+  (rtags-enable-standard-keybindings c-mode-base-map "<f2> r")
   )
 
-(use-package company
+(use-package company-rtags
   :init
-  (require 'company)
-  (add-hook 'after-init-hook 'global-company-mode)
-
-  (setq company-backends (delete 'company-semantic company-backends))
-  (define-key c-mode-map  [(tab)] 'company-complete)
-  (define-key c++-mode-map  [(tab)] 'company-complete)
-
-  (add-to-list 'company-backends 'company-c-headers))
-(use-package company-c-headers
-  :init
-  (add-to-list 'company-c-headers-path-system "/run/current-system/sw/lib")
+  :config
+  (require 'company-rtags)
+  (eval-after-load 'company
+    '(add-to-list
+      'company-backends 'company-rtags))
   )
-(use-package semantic
+
+(use-package helm-rtags
   :init
-  
-  (require 'semantic)
-
-  (global-semanticdb-minor-mode 1)
-  (global-semantic-idle-scheduler-mode 1)
-  (semantic-mode 1)
-  (semantic-add-system-include "/run/current-system/sw/lib")
+  :config
+  (setq rtags-use-helm t)
+  (setq rtags-display-result-backend 'helm)
   )
-;; (use-package srefactor
-;;   :init
-;;   (require 'srefactor)
-;;   (require 'srefactor-lisp)
 
-;;   (define-key c-mode-map (kbd "M-RET") 'srefactor-refactor-at-point)
-;;   (define-key c++-mode-map (kbd "M-RET") 'srefactor-refactor-at-point))
-;; (use-package ggtags
-;;   :ensure t
-;;   :config
-;;   (add-hook 'c-mode-common-hook
-;;             (lambda ()
-;;               (when (derived-mode-p 'c-mode 'c++-mode 'java-mode)
-;;                 (ggtags-mode 1))))
-;;   )
-;; (use-package irony
-;;   :init
-;;   (add-hook 'c++-mode-hook 'irony-mode)
-;;   (add-hook 'c-mode-hook 'irony-mode)
+;; * Misc
+(use-package irony
+  :init
+  (add-hook 'c++-mode-hook 'irony-mode)
+  (add-hook 'c-mode-hook 'irony-mode)
+  (add-hook 'objc-mode-hook 'irony-mode)
 
-;;   (defun my-irony-mode-hook ()
-;;     (define-key irony-mode-map
-;;       [remap completion-at-point] 'counsel-irony)
-;;     (define-key irony-mode-map
-;;       [remap complete-symbol] 'counsel-irony))
-;;   (add-hook 'irony-mode-hook 'my-irony-mode-hook)
-;;   (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
-;;   )
+  (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options))
+
+(use-package company-irony
+  :init
+  :config
+  (eval-after-load 'company
+    '(add-to-list 'company-backends 'company-irony))
+  )
+
+(use-package flycheck-irony
+  :init
+  :config
+  (add-hook 'c++-mode-hook 'flycheck-mode)
+  (add-hook 'c-mode-hook 'flycheck-mode)
+  (eval-after-load 'flycheck
+    '(add-hook 'flycheck-mode-hook #'flycheck-irony-setup))
+  )
+
+(use-package irony-eldoc
+  :init
+  :config
+  (add-hook 'irony-mode-hook 'irony-eldoc))
 
 (provide 'smax-c)

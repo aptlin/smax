@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: include_custom
+# key: incl
+# --
+#include "$1"
+$0

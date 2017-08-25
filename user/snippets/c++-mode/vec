@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: vector_short
+# key: vec
+# --
+vector<$1> $0;

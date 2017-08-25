@@ -3,45 +3,6 @@
 ;;; Code:
 ;; * Editing
 ;; ** Behaviour
-;; *** Better Indentation
-(defun malb/indent-or-complete (&optional arg)
-  (interactive "P")
-  (cond
-   ;; if a region is active, indent
-   ((use-region-p)
-    (indent-region (region-beginning)
-                   (region-end)))
-   ;; if the next char is space or eol, but prev char not whitespace
-   ((and (not (active-minibuffer-window))
-         (or (looking-at " ")
-             (looking-at "$"))
-         (looking-back "[^[:space:]]")
-         (not (looking-back "^")))
-
-    (cond (company-mode (company-complete-common))
-          (auto-complete-mode (auto-complete))))
-
-   ;; no whitespace anywhere
-   ((and (not (active-minibuffer-window))
-         (looking-at "[^[:space:]]")
-         (looking-back "[^[:space:]]")
-         (not (looking-back "^")))
-    (cond
-     ((bound-and-true-p origami-mode)
-      (origami-toggle-node (current-buffer) (point)))
-     ((bound-and-true-p outline-minor-mode)
-      (save-excursion (outline-cycle)))))
-
-   ;; by default just call whatever was bound
-   (t
-    (let ((fn (or (lookup-key (current-local-map) (kbd "TAB"))
-                  'indent-for-tab-command)))
-      (if (not (called-interactively-p 'any))
-          (fn arg)
-        (setq this-command fn)
-        (call-interactively fn))))))
-
-(bind-key "<tab>" #'malb/indent-or-complete)
 ;; *** Dealing with sentences
 (setq sentence-end-double-space nil)
 (bind-key "C-x C-t" #'transpose-sentences)
@@ -177,17 +138,18 @@
          ("C-S-r" . vr/isearch-backward)))
 ;; *** Completion
 (use-package company
+  :bind (("<C-tab>" . company-complete))
   :init
   (require 'company)
   (setq company-backends
-        '((company-yasnippet
-           company-files                ; files & directory
+        '((company-files                ; files & directory
            company-keywords             ; keywords
            company-capf
+           company-dabbrev
            )
-          (company-abbrev company-dabbrev)
           ))
-  (add-hook 'after-init-hook 'global-company-mode))
+  (add-hook 'after-init-hook 'global-company-mode)
+  )
 ;; *** Wrapping
 (use-package wrap-region
   :init
@@ -209,15 +171,37 @@
 (use-package hippie-expand
   :ensure nil
   :init
+  (defun my-try-expand-company (old)
+    (unless company-candidates
+      (company-auto-begin))
+    (if (not old)
+        (progn
+          (he-init-string (he-lisp-symbol-beg) (point))
+          (if (not (he-string-member he-search-string he-tried-table))
+              (setq he-tried-table (cons he-search-string he-tried-table)))
+          (setq he-expand-list
+                (and (not (equal he-search-string ""))
+                     company-candidates))))
+    (while (and he-expand-list
+                (he-string-member (car he-expand-list) he-tried-table))
+      (setq he-expand-list (cdr he-expand-list)))
+    (if (null he-expand-list)
+        (progn
+          (if old (he-reset-string))
+          ())
+      (progn
+        (he-substitute-string (car he-expand-list))
+        (setq he-expand-list (cdr he-expand-list))
+        t)))
   (setq hippie-expand-try-functions-list
-        '(yas-hippie-try-expand
+        '(yas-hippie-try-expand 
           try-complete-file-name-partially
           try-complete-file-name
           try-expand-dabbrev
           try-expand-dabbrev-all-buffers
-          try-expand-dabbrev-from-kill))
-  :bind
-  ("M-SPC" . hippie-expand))
+          try-expand-dabbrev-from-kill
+          my-try-expand-company))
+  :bind (([tab] . hippie-expand)))
 
 ;;**** Ivy-Historian
 ;; Persistent storage of completions
@@ -336,13 +320,14 @@
   (interactive)
   (align-current)
   (fill-paragraph))
-(defun insert-tab-char ()
+(defun insert-indent-char ()
   "Insert 4 spaces."
   (interactive)
   (insert "    ")
   )
 ;; *** Bindings
 (define-key global-map (kbd  "S-RET")	'prettify-paragraph)
+(define-key global-map (kbd  "<S-iso-lefttab>")	'insert-indent-char)
 (define-key global-map (kbd  "RET")	'newline-and-indent)
 (define-key global-map (kbd  "C-\.")	'align-regexp)
 (define-key global-map (kbd  "<f2> t")    'replace-string)

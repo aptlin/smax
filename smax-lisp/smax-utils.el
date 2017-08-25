@@ -1,7 +1,7 @@
 ;;; smax-utils.el --- Utility functions smax cannot live without
 
 ;;; Commentary:
-;; 
+;;
 
 ;;; Code:
 
@@ -27,17 +27,17 @@ locations (`smax-user-hotspot-locations'), org agenda files,
 recent files and bookmarks. You can set a bookmark also."
   (interactive "P")
   (helm :sources `(((name . "Commands")
-		    (candidates . ,smax-user-hotspot-commands)
-		    (action . (("Open" . (lambda (x) (funcall x))))))
-		   ((name . "My Locations")
-		    (candidates . ,smax-user-hotspot-locations)
-		    (action . (("Open" . (lambda (x) (find-file x))))))
-		   ((name . "My org files")
-		    (candidates . ,org-agenda-files)
-		    (action . (("Open" . (lambda (x) (find-file x))))))
-		   helm-source-recentf
-		   helm-source-bookmarks
-		   helm-source-bookmark-set)))
+                    (candidates . ,smax-user-hotspot-commands)
+                    (action . (("Open" . (lambda (x) (funcall x))))))
+                   ((name . "My Locations")
+                    (candidates . ,smax-user-hotspot-locations)
+                    (action . (("Open" . (lambda (x) (find-file x))))))
+                   ((name . "My org files")
+                    (candidates . ,org-agenda-files)
+                    (action . (("Open" . (lambda (x) (find-file x))))))
+                   helm-source-recentf
+                   helm-source-bookmarks
+                   helm-source-bookmark-set)))
 
 
 ;;;###
@@ -93,6 +93,12 @@ recent files and bookmarks. You can set a bookmark also."
   (add-to-list 'auto-mode-alist '("\\.Rmd" . poly-markdown+r-mode))
 
   )
+;; ** Column Rules
+(use-package column-enforce-mode
+  :init
+  :config
+  (setq column-enforce-column 100)
+  (global-column-enforce-mode t))
 ;; * Utilities
 ;;;###
 (defun kill-all-buffers ()
@@ -107,7 +113,7 @@ recent files and bookmarks. You can set a bookmark also."
   "Kill all other buffers but this one.  Leave one frame open."
   (interactive)
   (mapc 'kill-buffer
-	(delq (current-buffer) (buffer-list)))
+        (delq (current-buffer) (buffer-list)))
   (delete-other-windows))
 
 

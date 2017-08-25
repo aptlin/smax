@@ -45,8 +45,9 @@
 
 (use-package elpy
   :init
-  :bind (("M-." . elpy-doc)
-         ("M-*" . elpy-goto-definition))
+  :bind (:map python-mode-map
+              ("M-." . elpy-doc)
+              ("M-*" . elpy-goto-definition))
   :config
   (add-hook 'python-mode-hook 'elpy-enable)
   )

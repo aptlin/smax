@@ -20,7 +20,7 @@
   :init
   ;; Use the current window for C-c ' source editing
   (setq org-src-window-setup 'current-window
-    org-support-shift-select t)
+        org-support-shift-select t)
 
   ;; I like to press enter to follow a link. mouse clicks also work.
   (setq org-return-follows-link t)
@@ -35,10 +35,6 @@
 
 
 ;; * Other packages
-
-(use-package auto-complete
-  :diminish auto-complete-mode
-  :config (ac-config-default))
 
 (use-package tex
   :ensure auctex)
@@ -304,7 +300,8 @@
   (setq recentf-exclude
         '("COMMIT_MSG" "COMMIT_EDITMSG" "github.*txt$"
           ".*png$" "\\*message\\*" "auto-save-list\\*"))
-  (setq recentf-max-saved-items 700)
+  (setq recentf-max-saved-items 7000)
+  (run-at-time nil (* 1 60) 'recentf-save-list)
   )
 
 

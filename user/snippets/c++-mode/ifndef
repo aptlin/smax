@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: ifndef
+# key: ifn
+# --
+#ifndef GUARD_$1
+#define GUARD_$1
+$0
+#endif

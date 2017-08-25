@@ -1,18 +1,19 @@
 ;;; smax.el ---
 
 ;;; Commentary:
-;; 
+;;
 ;; * Basic settings
-;; ** Theme and Look 
+;; ** Theme and Look
 (load-theme 'leuven)
 (setq inhibit-startup-screen t) ;; stop showing startup screen
 (tool-bar-mode -1)           ; remove the icons
 (menu-bar-mode -1)           ; keep the menus
-(global-visual-line-mode 1) ;; how long lines are handled. 
+(global-visual-line-mode 1)
+(setq column-number-mode t)
 (defun smax-disable-scroll-bar (frame)
   (modify-frame-parameters frame
-			   '((vertical-scroll-bars . nil)
-			     (horizontal-scroll-bars . nil))))
+                           '((vertical-scroll-bars . nil)
+                             (horizontal-scroll-bars . nil))))
 (add-hook 'after-make-frame-functions 'smax-disable-scroll-bar)
 
 ;; ** Locations
@@ -36,7 +37,7 @@
       load-prefer-newer t
       save-place-file (concat user-emacs-directory "places")
       backup-directory-alist `(("." . ,(concat user-emacs-directory
-					       "backups"))))
+                           "backups"))))
 ;; abbrevs
 (setq abbrev-file-name (expand-file-name "user/abbrev_defs" smax-dir))
 (setq save-abbrevs t)
@@ -65,11 +66,11 @@
   :diminish which-key-mode
   :config
   (add-hook 'after-init-hook
-	    (lambda ()
-	      (which-key-mode)
-	      (which-key-setup-side-window-right-bottom)
-	      (diminish 'guide-key-mode)
-	      )))
+            (lambda ()
+              (which-key-mode)
+              (which-key-setup-side-window-right-bottom)
+              (diminish 'guide-key-mode)
+              )))
 (use-package auto-package-update
   :ensure t
   :init)
