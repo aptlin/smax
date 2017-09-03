@@ -97,7 +97,7 @@ recent files and bookmarks. You can set a bookmark also."
 (use-package column-enforce-mode
   :init
   :config
-  (setq column-enforce-column 100)
+  (setq column-enforce-column 80)
   (global-column-enforce-mode t))
 ;; * Utilities
 ;;;###
