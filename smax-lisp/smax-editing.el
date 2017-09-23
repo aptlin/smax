@@ -9,6 +9,24 @@
 (defadvice kill-sentence (after delete-horizontal-space activate)
   "Delete trailing spaces and tabs as well."
   (delete-horizontal-space))
+
+;; *** Structuring buffers
+
+(use-package outshine
+  :init
+  :config
+  (require 'outshine)
+  (add-hook 'outline-minor-mode-hook 'outshine-hook-function)
+  (add-hook 'emacs-lisp-mode-hook 'outline-minor-mode)
+  (add-hook 'python-mode-hook 'outline-minor-mode)
+  (add-hook 'LaTeX-mode-hook 'outline-minor-mode)
+  (add-hook 'picolisp-mode-hook 'outline-minor-mode)
+  (add-hook 'clojure-mode-hook 'outline-minor-mode)
+  (add-hook 'ess-mode-hook 'outline-minor-mode)
+  (add-hook 'ledger-mode-hook 'outline-minor-mode)
+  (add-hook 'message-mode-hook 'outline-minor-mode)
+  (setq outshine-use-speed-commands t)
+  )
 ;; ** Packages
 ;; *** Delimiters
 
@@ -194,7 +212,7 @@
         (setq he-expand-list (cdr he-expand-list))
         t)))
   (setq hippie-expand-try-functions-list
-        '(yas-hippie-try-expand 
+        '(yas-hippie-try-expand
           try-complete-file-name-partially
           try-complete-file-name
           try-expand-dabbrev

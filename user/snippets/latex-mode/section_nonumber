@@ -1,9 +1,7 @@
 # -*- mode: snippet -*-
 # name: section_noindex
-# key: seci
+# key: se
 # --
-\begin{section*}
+\section*{$0}
 
-$0
 
-\end{section*}

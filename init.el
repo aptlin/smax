@@ -1,19 +1,19 @@
-;;; init.el --- Where all the magic begins
+;;;; init.el --- Where all the magic begins
 ;;
 
-;;; Commentary:
+;;;; Commentary:
 ;;
-;; This is a starter kit for smax.
+;;; This is a starter kit for smax.
 
-;;; Code:
+;;;; Code:
 (package-initialize)
 
-;; * Key settings
-;; ** Buffer size
+;;;; * Key settings
+;;; ** Buffer size
 (setq global-mark-ring-max 256
       mark-ring-max 256
       kill-ring-max 256)
-;; ** Maximising performance
+;;; ** Maximising performance
 (defun minibuffer-setup-hook ()
   (setq gc-cons-threshold most-positive-fixnum))
 
@@ -22,13 +22,14 @@
 
 (add-hook 'minibuffer-setup-hook #'minibuffer-setup-hook)
 (add-hook 'minibuffer-exit-hook #'minibuffer-exit-hook)
-;; ** Checking compatibility
+;;; ** Checking compatibility
 (when (version< emacs-version "24.4")
   (warn "You probably need at least Emacs 24.4. You should
   upgrade. You may need to install leuven-theme manually."))
-
-;; * Key directories
-;; ** System and user folders
+;;; ** Defaults
+(defvar outline-minor-mode-prefix "\M-#")
+;;; * Key directories
+;;; ** System and user folders
 (defconst smax-dir (file-name-directory (or load-file-name (buffer-file-name)))
   "Directory where the smax is installed.")
 
@@ -41,10 +42,10 @@
 (setq user-emacs-directory user-dir)
 
 (setq package-user-dir (expand-file-name "elpa"  smax-dir))
-;; ** Allowing for customisations
-;; we load the user/preload.el file if it exists. This lets users define
-;; variables that might affect packages when they are loaded, e.g. key-bindings,
-;; etc... setup autoupdate, .
+;;; ** Allowing for customisations
+;;; we load the user/preload.el file if it exists. This lets users define
+;;; variables that might affect packages when they are loaded, e.g. key-bindings,
+;;; etc... setup autoupdate, .
 
 (let ((preload (expand-file-name "user/preload.el" smax-dir)))
   (when (file-exists-p preload)
@@ -53,7 +54,7 @@
 (defvar smax-load-user-dir t
   "Controls if the user directory is loaded.")
 
-;; ** Setting up the directories
+;;; ** Setting up the directories
 (add-to-list 'load-path smax-dir)
 (add-to-list 'load-path conf-dir)
 (dolist (f (directory-files conf-dir))
@@ -68,12 +69,12 @@
   (shell-command "git submodule update --init"))
 
 
-;; * Package management
+;;; * Package management
 (require 'package)
 
 (add-to-list
  'package-archives
- '("melpa" . "http://melpa.org/packages/") 
+ '("melpa" . "http://melpa.org/packages/")
  t)
 
 (add-to-list
@@ -85,6 +86,7 @@
  'package-archives
  '("elpy" . "http://jorgenschaefer.github.io/packages/")
  t)
+
 
 (require 'smax-bootstrap)
 (require 'smax-packages)

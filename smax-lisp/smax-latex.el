@@ -12,7 +12,36 @@
 (setq cdlatex-paired-parens "$[{(")
 (setq smax-reader "zathura")
 (setq smax-reader-path "/usr/bin/zathura")
+;; ** Styling
+;; (defconst latex-font-lock-keywords
+;;   '(("^\\% \\(\\* .*\\)$" 1 'org-level-1 prepend)
+;;     ("^\\% \\(\\*\\* .*\\)$" 1 'org-level-2 prepend)
+;;     ("^\\% \\(\\*\\*\\* .*\\)$" 1 'org-level-3 prepend)
+;;     ("^\\% \\(\\*\\*\\*\\* .*\\)$" 1 'org-level-4 prepend)
+;;     ("^\\% \\(\\*\\*\\*\\*\\* .*\\)$" 1 'org-level-5 prepend)
+;;     (latex-outline-comment-highlight 1 'default prepend)
+;;     ("`\\([^\n']+\\)'" 1 font-lock-constant-face prepend)))
 
+;; (font-lock-add-keywords 'TeX-mode latex-font-lock-keywords)
+
+;; (defun latex-outline-comment-highlight (limit)
+;;   (while (re-search-forward "^\\% \\(?:[^*]\\|$\\)" limit t)
+;;     (let* ((pt (point))
+;;            (success (save-excursion
+;;                       (and (re-search-backward "^\\% \\*" nil t)
+;;                            (null (re-search-forward "^[^\\%]" pt t))))))
+;;       (when success
+;;         (set-match-data (list (line-beginning-position) (line-end-position)
+;;                               (point) (line-end-position)))
+;;         (end-of-line)
+;;         t))))
+
+;; (add-hook 'LaTeX-mode-hook
+;;           (lambda ()
+;;             (setq outline-regexp "\\% \\*+"
+;;                   orgstruct-heading-prefix-regexp "\\% ?\\*+\\|\\`")
+;;             (orgstruct-mode)
+;;             (org-global-cycle 3)))
 ;; ** Default Behaviour
 ;;(load "auctex.el" nil t t)
 ;;(load "preview-latex.el" nil t t)

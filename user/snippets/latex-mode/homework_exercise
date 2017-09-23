@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: homework_exercise
+# key: hwe
+# --
+\hwe{$1}{$2}{$3}

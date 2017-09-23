@@ -1,28 +1,29 @@
-;; * Orgstruct
 (require 'cc-mode)
-(defconst lel-font-lock-keywords
-  '(("^// ?\\(\\* .*\\)$" 1 'org-level-1 prepend)
-    ("^// ?\\(\\*\\* .*\\)$" 1 'org-level-2 prepend)
-    ("^// ?\\(\\*\\*\\* .*\\)$" 1 'org-level-3 prepend)
-    ("^// ?\\(\\*\\*\\*\\* .*\\)$" 1 'org-level-4 prepend)
-    ("^// ?\\(\\*\\*\\*\\*\\* .*\\)$" 1 'org-level-5 prepend)
-    ;; (lel-outline-comment-highlight 1 'default prepend)
-    ("`\\([^\n']+\\)'" 1 font-lock-constant-face prepend)))
+;; * Orgstruct
 
-(font-lock-add-keywords 'c-mode lel-font-lock-keywords)
-(font-lock-add-keywords 'c++-mode lel-font-lock-keywords)
+;; (defconst lel-font-lock-keywords
+;;   '(("^// ?\\(\\* .*\\)$" 1 'org-level-1 prepend)
+;;     ("^// ?\\(\\*\\* .*\\)$" 1 'org-level-2 prepend)
+;;     ("^// ?\\(\\*\\*\\* .*\\)$" 1 'org-level-3 prepend)
+;;     ("^// ?\\(\\*\\*\\*\\* .*\\)$" 1 'org-level-4 prepend)
+;;     ("^// ?\\(\\*\\*\\*\\*\\* .*\\)$" 1 'org-level-5 prepend)
+;;     ;; (lel-outline-comment-highlight 1 'default prepend)
+;;     ("`\\([^\n']+\\)'" 1 font-lock-constant-face prepend)))
 
-(defun c-outline-setup ()
-  "Setup outline and orgstruct mode for emacs-lisp code.
-This enables you to use tab to open and close outlines."
-  (setq-local outline-regexp "// ?\\*+\\|\\`")
-  (setq-local orgstruct-heading-prefix-regexp "// ?\\*+\\|\\`")
-  (outline-minor-mode)
-  (orgstruct-mode)
-  (outline-show-branches))
+;; (font-lock-add-keywords 'c-mode lel-font-lock-keywords)
+;; (font-lock-add-keywords 'c++-mode lel-font-lock-keywords)
 
-(add-hook 'c-mode-common-hook
-          #'c-outline-setup)
+;; (defun c-outline-setup ()
+;;   "Setup outline and orgstruct mode for emacs-lisp code.
+;; This enables you to use tab to open and close outlines."
+;;   (setq-local outline-regexp "// ?\\*+\\|\\`")
+;;   (setq-local orgstruct-heading-prefix-regexp "// ?\\*+\\|\\`")
+;;   (outline-minor-mode)
+;;   (orgstruct-mode)
+;;   (outline-show-branches))
+
+;; (add-hook 'c-mode-common-hook
+;;           #'c-outline-setup)
 
 ;; * Styling
 (c-add-style "my-style"

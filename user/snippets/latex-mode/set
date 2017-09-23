@@ -1,5 +1,5 @@
 # -*- mode: snippet -*-
 # name: set
-# key: se
+# key: set
 # --
 \set{$0}

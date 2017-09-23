@@ -12,5 +12,10 @@
   \item[Conclusion]
     \hfill
 
+    Since the claim holds in case $n = 1$, from the inductive step we
+    can deduce that it also holds for all $n\in\NN$ by induction.
+
+    Therefore, for all $n\in \NN$,
+
 
 \end{description}

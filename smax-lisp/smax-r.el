@@ -16,12 +16,6 @@
   (setq ess-ask-for-ess-directory nil)  ;if you don't want to be
                                         ;prompted each time you start
                                         ;an interactive R session
-  (add-hook 'ess-mode-hook
-            (lambda ()
-              (setq outline-regexp "## \\*+"
-                    orgstruct-heading-prefix-regexp "## ?\\*+\\|\\`")
-              (orgstruct-mode)
-              (org-global-cycle 3)))
   )
 
 ;; * End

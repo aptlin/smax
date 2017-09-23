@@ -15,7 +15,8 @@
                            '((vertical-scroll-bars . nil)
                              (horizontal-scroll-bars . nil))))
 (add-hook 'after-make-frame-functions 'smax-disable-scroll-bar)
-
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
+(set-frame-parameter nil 'fullscreen 'maximized)
 ;; ** Locations
 
 (setq custom-file (expand-file-name "user/custom.el" smax-dir))

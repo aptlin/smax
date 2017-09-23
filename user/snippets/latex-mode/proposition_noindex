@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: proposition_index
+# key: prp
+# --
+\begin{proposition*}
+$0
+\end{proposition*}
